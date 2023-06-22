@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>計算總成本</title>
+</head>
+
+<body>
+
+  <form action="http://127.0.0.1:5000/caculate_total_function">  <!-- ....action = 按下新增後 傳到後端....-->
+    <h1>計算總成本</h1>
+    <!-- ....類別選擇 .... -->
+    <select name="class">
+        <option>它是哪一類呢~</option>
+        <option>乳品</option>
+        <option>豆、魚、蛋、肉類</option>
+        <option>全榖雜糧類</option>
+        <option>蔬菜類</option>
+        <option>水果類</option>
+        <option>油脂與堅果種子類</option>
+        <option>其他辛香料</option>  
+    </select>
+    <!-- ....名稱 .... -->
+    <input type="text" name = "name" class="name" placeholder="食材名稱">
+    <!-- ....需求多少(g kg ...) .... -->
+    <input type="text" name = "needness" class="needness" placeholder="需求量">
+    <!-- ....單位 .... -->
+    <select name="unit">
+      <optgroup label="質量">
+        <option>公克</option>
+        <option>公斤</option>
+        <option>台斤</option>
+      </optgroup>
+      <optgroup label="體積">
+        <option>毫升</option>
+        <option>公升</option>
+      </optgroup>
+    </select>
+    <!-- ....提交 .... -->
+    <button type="submit">新增</button>
+  </form>
+  
+
+
+
+</body>
+
+</html>
