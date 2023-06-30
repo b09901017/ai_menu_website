@@ -1,0 +1,102 @@
+<!--
+    記得新增html碼時 id要跟者改
+    var inputCount = 0;
+    inputCount++;
+    利用 id="IdName_${inputCount}"
+
+    像是onchange onclick keyup 呼叫的函數
+    可以用this.value this.name... 當參數
+    就不用在document.getElementById 不如乳果是動態生成的id就不知道怎麼抓了
+    舉例
+    onchange="fetchData(this.value)"
+    function fetchData(value) {
+        console.log(value);
+    }
+
+    把id當參數後 可以用slice(-1)取出最後一位
+    也就是
+    var str = "class_for_fetch_2";
+    var lastIndex = str.lastIndexOf("_"); // 尋找最後一個底線的索引
+    var number = str.slice(lastIndex + 1); // 擷取最後一個底線後的部分
+    console.log(number); // 輸出: 2
+
+    也可以直接 number=str.slice(-2:-1)
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>新增新的輸入欄</title>
+</head>
+
+<body>
+
+    <div id="container"></div>
+    <button onclick="addInput()">新增輸入</button>
+
+
+
+    <script>
+        var inputCount = 0; // 計數器，用於生成唯一的ID
+
+        function addInput() {
+            // 增加計數器以生成唯一的ID
+            inputCount++;
+
+            // 创建新的<div>元素，并设置类名
+            var div = document.createElement("div");
+            div.className = "input_for_caculate_One_food_price";
+
+            // 设置<div>元素内的HTML代码
+            div.innerHTML = `
+                <!-- ....類別選擇(點完選項後 可以直接post到後端 然後取回資料) .... -->
+                <select name="class" onchange="fetchData()" id="class_for_fetch_${inputCount}">                
+                <option>它是哪一類呢~</option>
+                <option>乳品</option>
+                <option>豆、魚、蛋、肉類</option>
+                <option>全榖雜糧類</option>
+                <option>蔬菜類</option>
+                <option>水果類</option>
+                <option>油脂與堅果種子類</option>
+                <option>其他辛香料</option>  
+                </select> 
+
+                <!-- ................建立可快速輸入的輸入框..................................-->
+                <input list="food_option_${inputCount}" type="text" id="food_option_input_${inputCount}" name="name" onkeyup="filterOptions()" placeholder="食材名稱">
+                <!-- ...輸入框的選項 用list和id連結.... -->
+                <datalist id="food_option_${inputCount}">
+                <!-- ...匹配到的食材名稱放入的容器 .... -->
+                </datalist>
+                <!-- ...輸入框的選項  用list和id連結.... -->
+
+                <!-- ....需求多少(g kg ...) .... -->
+                <input type="text" id="needness_${inputCount}" name="needness" class="needness" placeholder="需求量">
+                <!-- ....單位 .... -->
+                <select id="unit_${inputCount}" name="unit">
+                <optgroup label="質量">
+                    <option>公克</option>
+                    <option>公斤</option>
+                    <option>台斤</option>
+                </optgroup>
+                <optgroup label="體積">
+                    <option>毫升</option>
+                    <option>公升</option>
+                </optgroup>
+                </select>
+
+                <!-- ....計算按鈕 .... -->
+                <button onclick="unit_price_transform_and_show_result()">換算</button>
+
+                <!-- ... 顯示結果 .... -->
+                <div id="show_result_${inputCount}"></div>
+            `;
+
+            // 将新的<div>元素添加到父容器中
+            document.getElementById("container").appendChild(div);
+            }
+    </script>
+
+</body>
+
+</html>

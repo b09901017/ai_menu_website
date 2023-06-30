@@ -1,0 +1,244 @@
+body {
+    background-image:url("大蒜背景.jpg") , url("大蒜背景延伸.jpg");
+    background-size: auto 100vh ,auto 100vh ;
+    background-repeat: no-repeat , repeat;
+    background-position: right top; 
+  }
+
+#creat_page_container{
+    height: 100vh;
+    display: grid;
+    /* grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows:1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; */
+    grid-template-columns:10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-rows:10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+}
+
+#title{
+    grid-column: 2/4;
+    grid-row: 2/4;
+}
+
+#inputs{
+    grid-column: 1/6;
+    grid-row: 4/7;
+    display: grid;
+    grid-template-columns:35% 65%;
+    grid-column-gap:1px;
+    grid-template-rows:50% 50%;
+    text-align:center;
+}
+
+#class_option{
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+select{
+    height: 45px;
+    width: 160px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgb(62, 40, 60);
+    border-width:2px;
+    border-color:#403A35;
+    background-color: rgba(0, 0, 0, .05);
+    backdrop-filter: blur(2px);
+    text-align:center;
+    font-size: 16px;
+    font-weight: bolder;
+    color: rgb(35, 32, 32);
+    transition: 1s all;
+
+}
+select:hover{
+  box-shadow: 20px 20px 30px rgb(62, 40, 60);
+}
+select option{
+  backdrop-filter: blur(2px);
+  color: #121729;
+}
+
+#name_input{
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+
+#unit_option{
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+
+#price_input{
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+
+#show_database_notion{
+  grid-column: 2/4;
+  grid-row: 7/6;
+  text-align: center;
+}
+#show_database_notion_text{
+  position: relative;
+  top: 15px;
+}
+
+#show_database{
+  grid-column: 2/4;
+  grid-row: 7/10;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgb(62, 40, 60);
+  border-width:2px;
+  border-color:#403A35;
+  color: rgb(26, 13, 76);
+  font-size: 17px;
+  font-weight: bold;
+  overflow-x:hidden; 
+  overflow-y: scroll;
+  direction: rtl; /*  改動滾輪方向 将内容方向设置为从右到左 */
+  text-align: left; /* 将文本对齐方式设置为左对齐 */
+  
+}
+#show_database ul{
+  direction: ltr; /* 恢复列表项的文本方向为从左到右 */
+}
+#show_database li{
+  margin-bottom: 10px;
+}
+#show_database span{
+  font-size: 26px;
+  font-weight: bolder;
+}
+#show_database span:hover{
+  padding: 5px;
+  background-color: rgba(0, 0, 0, .05);
+  backdrop-filter: blur(3px);
+  border-radius: 8px;
+  box-shadow: 3px 3px 17px rgb(62, 40, 60);
+
+}
+
+
+
+
+/* copy 人家der~~~~ */
+* { box-sizing:border-box; }
+
+/* basic stylings ------------------------------------------ */
+.container 		{ 
+  font-family:'Roboto';
+  width:600px; 
+  margin:30px auto 0; 
+  display:block; 
+  background:#FFF;
+  padding:10px 50px 50px;
+}
+h1 		 { 
+  text-align:center; 
+  margin-bottom:50px; 
+}
+h1 small { 
+  font-weight:normal; 
+  color:#888; 
+  display:block; 
+}
+
+
+/* form starting stylings ------------------------------- */
+.group 			  { 
+  position:relative; 
+  margin-bottom:45px; 
+}
+input 				{
+  font-size:18px;
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:290px;
+  border:none;
+  border-bottom:1px solid #757575;
+  border-radius: 10px;
+  box-shadow: 7px 7px 20px rgb(62, 40, 60);
+}
+input:focus 		{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+  outline: none;
+}
+
+/* LABEL ======================================= */
+label 				 {
+  color:#999; 
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+input:focus ~ label, input:valid ~ label 		{
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+}
+
+/* BOTTOM BARS ================================= */
+.bar 	{ position:relative; display:block; width:290px; }
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:1px; 
+  position:absolute;
+  background:#5264AE; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
+}
+
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+/* copy 人家der~~~~ */

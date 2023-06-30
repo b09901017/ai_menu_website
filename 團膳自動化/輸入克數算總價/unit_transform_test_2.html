@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>首頁</title>
+</head>
+
+<body>
+
+    <!-- ....類別選擇(點完選項後 可以直接post到後端 然後取回資料) .... -->
+    <select name="class" onchange="fetchData()" id="class_for_fetch">                
+            <option>它是哪一類呢~</option>
+            <option>乳品</option>
+            <option>豆、魚、蛋、肉類</option>
+            <option>全榖雜糧類</option>
+            <option>蔬菜類</option>
+            <option>水果類</option>
+            <option>油脂與堅果種子類</option>
+            <option>其他辛香料</option>  
+    </select> 
+    <!-- ....類別選擇(點完選項後 可以直接post到後端 然後取回資料) .... -->
+
+
+
+    <!-- ................建立可快速輸入的輸入框..................................-->
+    <input list="food_option" type="text" id="food_option_input" name="name" onkeyup="filterOptions()" placeholder="食材名稱">
+    <!-- ...輸入框的選項 用list和id連結.... -->
+    <datalist id="food_option">
+            <!-- ...匹配到的食材名稱放入的容器 .... -->
+    </datalist>
+    <!-- ...輸入框的選項  用list和id連結.... -->
+    <!-- ................建立可快速輸入的輸入框..................................-->
+
+
+    <!-- ....需求多少(g kg ...) .... -->
+    <input type="text" id="needness" name = "needness" class="needness" placeholder="需求量">
+    <!-- ....單位 .... -->
+    <select id="unit" name="unit">
+      <optgroup label="質量">
+        <option>公克</option>
+        <option>公斤</option>
+        <option>台斤</option>
+      </optgroup>
+      <optgroup label="體積">
+        <option>毫升</option>
+        <option>公升</option>
+      </optgroup>
+    </select>
+    <!-- ....計算按鈕 .... -->
+    <button onclick="unit_price_transform_and_show_result()">換算</button>
+    <!-- ... 顯示結果 .... -->
+    <div id="show_result"></div>
+
+
+
+
+    <!-- ...定義 上面<slete>選項改變的時候呼叫的函數 fetchData().........終於fetch成功了!!!.........-->
+    <script>//fetchData() => 填充excel_col_data {colA:[] , colB:[] , colC:[] }
+          ///卡了好久 原來可以設全域變數 這邊假設 到fetch函數放入data 到下一個<script>標籤 也還在!!
+          var excel_col_data=[];     
+          //函式定義
+          function fetchData() {
+          //取得所選的類別
+          const input_class = document.getElementById('class_for_fetch').value;
+    
+    
+          //fetch("後端網址",{}) 把{的內容}變成一個變數////////
+          var requestOptions = {                                  
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ data: input_class })         
+          };
+          //fetch("後端網址",{}) 把{的內容}變成一個變數////////
+    
+          
+          // 使用 Ajax 請求從後端獲取資料
+          fetch('http://127.0.0.1:5000/return_excel_data',requestOptions)                                   
+              .then(response => response.json())                     
+              .then(res_json => {   
+              // 更新頁面上的資料內容
+              excel_col_data = res_json     
+              });
+    
+          }
+          // 使用 Ajax 請求從後端獲取資料
+    </script>
+    <!-- ...定義 上面選項改變的時候呼叫的函數 fetchData().........終於fetch成功了!!!.........-->
+
+    
+
+    <!-- ...定義輸入框onkeyup 函式.............................................................................. -->
+    <script>//filterOptions() =>讓食材名稱輸入框 可以有快速搜尋的選單
+      
+        //打字後呼叫的函數
+        function filterOptions() {  
+
+        //重後端拿到的資料
+        var data = excel_col_data["colA"] //放函數裡面才能讓它不會被先執行 而是等函數被呼叫後才執行
+        console.log(data); //可以在F12看 data 有哪些   food_name_for_fast_serch是json格式 要["colA"]
+
+        //先取得打字框中現有的值
+        var input = document.getElementById("food_option_input").value; 
+
+        //指名要放到哪個裡面
+        var optionsContainer = document.getElementById("food_option"); 
+
+        // 清空選項容器
+        optionsContainer.innerHTML = "";
+
+        // 遍歷資料，尋找匹配項目
+        for (let i = 0; i < data.length; i++) { //data =fetchData()回傳的 ["高麗菜", "高雄", "高鐵", "台鐵", "吃飯"]; 93行定義的
+            let item = data[i];
+
+            // 如果資料項目包含輸入的字串，則將其顯示為一個選項 而且不在未輸入時顯示全部
+            if (item.includes(input)&& input!="") {
+
+            //建立一個<option value="符合的data[i]">
+            let option = document.createElement("option");
+            option.value = item;
+
+            //把<option value="符合的data[i]"> 也歸為同一個class (這樣用css調格式 就會統一)
+            option.classList.add("option");
+
+            //把<option value="符合的data[i]">  加到<datalist id="food_option"> 裡面 </datalist>
+            optionsContainer.appendChild(option);
+            }
+        }
+        }
+    </script>
+    <!-- ...定義onkeyup 函式.............................................................................. -->
+
+
+
+    <!--定義需求量轉價錢而且顯示出來的函數-->
+    <script> //在選完類別後 excel_col_data {colA:[] , colB:[] , colC:[] } 就被填充了
+
+
+      //定義函數
+      function unit_price_transform_and_show_result(){
+
+
+
+        //提出input的值
+        //const input_class = document.getElementById('class_for_fetch').value //60行寫過了
+        const input_name=document.getElementById('food_option_input').value;
+        const input_needness=document.getElementById('needness').value;
+        const input_unit=document.getElementById('unit').value;
+        //提出input的值
+
+
+
+        //提出db的值
+          let colA_length = excel_col_data["colA"].length;  //A列長度
+          let colA = excel_col_data["colA"] ;                 //A列的值["","",""...]
+          let col_index = 0 ;                                 //所求名字所在的index   
+          for(i=0;i<=colA_length;i++){                       //翻找和input_name相同名稱的index
+            if(colA[i]==input_name){
+              col_index = i;
+              break
+            }
+          }
+        const db_price=excel_col_data["colB"][col_index];  //excel_col_data = {"colA":[],"colB":[],"colC":[]}
+        const db_unit=excel_col_data["colC"][col_index];   //excel_col_data[colC] = ["","",""...]
+        //提出db的值
+        
+
+
+
+        //單位換算 (5種單位 x 5種單位 25種搭配) 先用if 再用 switch case 
+        var price_result=0.0 //最後換算後 計算出來的價錢
+        if(input_unit=="公克"){
+          switch(db_unit){
+              case "公克":
+                price_result = input_needness*db_price;    // 需求公克數 * 每公克多少錢
+                break;
+
+              case "公斤":
+                price_result = input_needness/1000*db_price;    // 需求公克數 /1000 * 每公斤多少錢
+                break;
+
+              case "台斤":
+                price_result = input_needness/600*db_price;    // 需求公克數 /600  * 每台斤多少錢
+                break;
+
+              case "毫升":
+                price_result = input_needness*db_price;    // 需求公克數  * 每毫升多少錢 (假設密度1)
+                break;
+
+              case"公升":
+                price_result = input_needness/1000*db_price;    // 需求公克數 /1000 * 每公升多少錢 (假設密度1)
+                break;
+
+              // default:
+              //   console.log(`Sorry, you wrong.`);
+            }
+        }
+        else if(input_unit=="公斤"){
+          switch(db_unit){
+              case "公克":
+                price_result = input_needness*1000*db_price;    // 需求公斤數 * 1000 * 每公克多少錢
+                break;
+
+              case "公斤":
+                price_result = input_needness*db_price;    // 需求公斤數 * 每公斤多少錢
+                break;
+
+              case "台斤":
+                price_result = input_needness*1000/600*db_price;    // 需求公斤數 * 1000  /600 * 每台斤多少錢
+                break;
+
+              case "毫升":
+                price_result = input_needness*1000*db_price;    // 需求公斤數 * 1000 * 每毫升多少錢 (假設密度1)
+                break;
+
+              case"公升":
+                price_result = input_needness*db_price;    // 需求公斤數 * 每公升多少錢 (假設密度1)
+                break;
+
+              // default:
+              //   console.log(`Sorry, you wrong.`);
+            }
+        }
+        else if(input_unit=="台斤"){
+          switch(db_unit){
+              case "公克":
+                price_result = input_needness*600*db_price;    // 需求台斤數 * 600 * 每公克多少錢
+                break;
+
+              case "公斤":
+                price_result = input_needness*600/1000*db_price;    // 需求台斤數 * 600 / 1000 * 每公斤多少錢
+                break;
+
+              case "台斤":
+                price_result = input_needness*db_price;    // 需求台斤數 * 每台斤多少錢
+                break;
+
+              case "毫升":
+                price_result = input_needness*600*db_price;    // 需求台斤數 * 600 * 每毫升(公克)多少錢 (假設密度1)
+                break;
+
+              case"公升":
+                price_result = input_needness*600/1000*db_price;    // 需求公克數 * 600 / 1000 * 每公升(公斤)多少錢 (假設密度1)
+                break;
+
+              // default:
+              //   console.log(`Sorry, you wrong.`);
+            }
+        }
+        else if(input_unit=="毫升"){
+          switch(db_unit){
+              case "公克":
+                price_result = input_needness*db_price;    // 需求毫升(公克)數 * 每公克多少錢
+                break;
+
+              case "公斤":
+                price_result = input_needness/1000*db_price;    // 需求毫升(公克)數 /1000 * 每公斤多少錢
+                break;
+
+              case "台斤":
+                price_result = input_needness/600*db_price;    // 需求毫升(公克)數 /600  * 每台斤多少錢
+                break;
+
+              case "毫升":
+                price_result = input_needness*db_price;    // 需求毫升數  * 每毫升多少錢 (假設密度1)
+                break;
+
+              case"公升":
+                price_result = input_needness/1000*db_price;    // 需求毫升數 /1000 * 每公升多少錢 (假設密度1)
+                break;
+
+              // default:
+              //   console.log(`Sorry, you wrong.`);
+            }          
+        }
+        else if(input_unit=="公升"){
+          switch(db_unit){
+              case "公克":
+                price_result = input_needness*1000*db_price;    // 需求公升(公斤)數 * 1000 * 每公克多少錢
+                break;
+
+              case "公斤":
+                price_result = input_needness*db_price;    // 需求公升(公斤)數 * 每公斤多少錢
+                break;
+
+              case "台斤":
+                price_result = input_needness*1000/600*db_price;    // 需求公升(公斤)數 * 1000  /600 * 每台斤多少錢
+                break;
+
+              case "毫升":
+                price_result = input_needness*1000*db_price;    // 需求公升數 * 1000 * 每毫升多少錢 
+                break;
+
+              case"公升":
+                price_result = input_needness*db_price;    // 需求公升數 * 每公升多少錢 
+                break;
+
+              // default:
+              //   console.log(`Sorry, you wrong.`);
+            }
+        }
+        //單位換算 (5種單位 x 5種單位 25種搭配) 先用if 再用 switch case 
+
+
+        //show_result
+        //指名要放到哪個裡面
+        var ResultContainer = document.getElementById("show_result"); 
+        // 清空選項容器
+        ResultContainer.innerHTML = "";
+        //容器內插入結果
+        ResultContainer.append(price_result+"元")
+        //show_result
+        
+      }
+      //定義函數
+
+    </script>
+    <!--定義需求量轉價錢而且顯示出來的函數-->
+
+
+
+</body>
+
+</html>

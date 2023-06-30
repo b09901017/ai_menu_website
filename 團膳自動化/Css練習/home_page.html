@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>首頁</title>
+    <link rel="stylesheet" type="text/css" href="home_page.css">
+</head>
+
+<body>
+
+    <div id="home_page_container">
+        <div id="home_page_title_container">
+
+            <img id="title_text" src="title_zh_en.png" >
+
+        </div>
+
+        <div id="home_page_middle">
+
+            <div id="garlic_picture_container">
+                <img id="garlic_picture" src="garlic_picture.png" >
+            </div>
+            <div id="creat_new_food_button_container">
+                <img id="creat_new_food_button" src="create_new_button.png" >
+                <!-- <button id="creat_new_food_button" >新增</button> -->
+                <div class="text" id="creat_new_food_text">新增食材資料庫</div>
+            </div>
+            <div id="caculate_food_price_button_container">
+                <img id="caculate_food_price_button" src="caculate_button.png" >
+                <!-- <button id="caculate_food_price_button">計算</button> -->
+                <div class="text" id="caculate_food_price_text">算算鍋</div>
+            </div>
+            <div id="button_1_container">
+                <img id="button_1" src="button1.png">
+                <div class="text">搶救中</div>
+            </div>
+            <div id="button_2_container">
+                <img id="button_2" src="button2.png">
+                <div class="text">製作中</div>
+            </div>
+            <div id="button_3_container">
+                <img id="button_3" src="button3.png">
+                <div class="text">還不知到</div>
+            </div>
+
+        </div>
+
+        <div id="home_page_tail"></div>
+    </div>
+
+    <script>
+
+        //讓圖片搖完不會消失(opacity 變0) 
+        const img_1 = document.querySelector('#creat_new_food_button')
+        img_1.addEventListener('mouseover', () => {
+            img_1.classList.add('visible');
+        });
+        const img_2 = document.querySelector('#button_3')
+        img_2.addEventListener('mouseover', () => {
+            img_2.classList.add('visible');
+        });
+
+        
+
+    </script>
+    
+    
+
+
+</body>
+
+
+</html>

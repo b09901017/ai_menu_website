@@ -1,0 +1,187 @@
+<!-- ...
+    如何用html js 實現 我在input打一個字 它會幫我把資料中有這個字都找出來讓我選
+    例如資料中有{高麗菜，高雄，高鐵，台鐵，吃飯} 
+    當我在input中輸入"高"時 可以跳出 高麗菜，高雄，高鐵 讓我選 
+.... -->  
+
+<!-- ...
+    onkeyup !! 在鍵盤打字(按一下)就會呼叫一次
+    onchange !!當改變時會呼叫函數!! 好用
+    onclick !!點擊時呼叫函數
+.... --> 
+
+<!-- ... fetch筆記6/23 凌晨01:26
+    fetch 記得在後端要先 pip install CORS 多加以下這行
+    app = Flask(__name__)
+    CORS(app) ## 就是差這個 bug很久
+    fetch("後端網址",{})  {method : ... , head : ... , body : ... ,......}
+    method 要和後端的一樣  headers 要加!!'Content-Type': 'application/json' 這行不適隨便打得
+    body 要用JSON.stringify({ data: input_class }) 把{字典} 加工成JSON格式
+    <script>
+        function fetchData() {
+                const input_class = document.getElementById('class_for_fetch').value;
+
+                // 使用 Ajax 請求從後端獲取資料
+                fetch('http://127.0.0.1:5000/return_excel_data',{                                  
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ data: input_class })         
+                })                                                
+                    .then(response => response.json())                               
+                    .then(res_json => {                                            
+                    console.log(res_json)                    
+                    });
+                }
+        
+                // 在頁面載入完成後執行 Ajax 請求
+                window.addEventListener('load', fetchData);
+    </script>
+.... --> 
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>首頁</title>
+</head>
+
+<body>
+
+<!-- ... HTML <datalist> input 欄位自動完成，輸入資料選擇清單.... https://www.fooish.com/html/datalist-tag.html 這個網站不錯-->
+<!--    <label>請問你使用什麼瀏覽器:
+        <input list="browsers" name="myBrowser"></label>
+        <datalist id="browsers">
+          <option value="Chrome">
+          <option value="Firefox">
+          <option value="Internet Explorer">
+          <option value="Opera">
+          <option value="Safari">
+        </datalist>
+
+-->
+<!-- ... HTML <datalist> input 欄位自動完成，輸入資料選擇清單.... -->
+
+
+
+
+<!-- ................action = 按下新增後 (當select onchange自動fetch資料)................................................-->
+
+
+    <!-- ....類別選擇(點完選項後 可以直接post到後端 然後取回資料) .... --><!-- ....連結後端的return_excel_data 它會回傳帶有參數的同一個頁面(之後用react useeffect可能更快) .... -->
+        <select name="class" onchange="fetchData()" id="class_for_fetch">                 <!-- ....利用onchange當改變時會呼叫函數!!好用 .... -->
+            <option>它是哪一類呢~</option>
+            <option>乳品</option>
+            <option>豆、魚、蛋、肉類</option>
+            <option>全榖雜糧類</option>
+            <option>蔬菜類</option>
+            <option>水果類</option>
+            <option>油脂與堅果種子類</option>
+            <option>其他辛香料</option>  
+        </select> 
+    <!-- ....類別選擇(點完選項後 可以直接post到後端 然後取回資料) .... -->
+    
+
+    <!-- ...定義 上面選項改變的時候呼叫的函數 .....................終於fetch成功了!!!.............................................................................................. -->
+        <script>
+            //console.log("FAFAasfsadsafdsfasda");  確保它在函數還沒被呼叫前會被執行
+            var excel_col_data=[];     ///卡了好久 原來可以設全域變數 這邊假設 到fetch函數放入data 到下一個<script>標籤 也還在!!
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            function fetchData() {
+            //取得所選的類別
+            const input_class = document.getElementById('class_for_fetch').value;
+           
+
+            //fetch("後端網址",{}) 把{的內容}變成一個變數////////
+            var requestOptions = {                                  //fetch("後端網址",{})  {method : ... , head : ... , body : ... ,......}
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: input_class })          //把一般的字串 變成 json字串 讓body是有點像字典的咚咚{ ... : ... , ...:... , data : ...}
+            };
+            //fetch("後端網址",{}) 把{的內容}變成一個變數////////
+
+            
+            // 使用 Ajax 請求從後端獲取資料
+            fetch('http://127.0.0.1:5000/return_excel_data',requestOptions)          //fetch("",{}).then(a=>).then(b=>).catch(err=>)                                        
+                .then(response => response.json())                               //then(a => {do something with a}) (a是pormise 回傳的產物)
+                .then(res_json => {                                            //a => {} 有點像是函式 a是參數
+                // 更新頁面上的資料內容
+                //console.log(res_json)                     //不是用print 式用console.log
+                excel_col_data = res_json       //excel_col_data 得到{colA : ["番茄","玉米",...], colB : ["20","30",...], colC["公斤","臺斤",...],}
+                });
+
+            }
+    
+            // 在頁面載入完成後執行 Ajax 請求(好像應該放在函式裡 又好像不用)
+            //window.addEventListener('load', fetchData);
+        </script>
+    <!-- ...定義 上面選項改變的時候呼叫的函數 .....用feth函式 完成POST 請求........................................................................................................ -->
+
+
+ <!-- ................action = 按下新增後 (當select onchange自動fetch資料)..................................-->
+
+
+ <!-- ................建立可快速輸入的輸入框..................................-->
+    <input list="food_option" type="text" id="inputBox" onkeyup="filterOptions()"><!-- ....onkeyup !! 在鍵盤打字(按一下)就會呼叫一次 .... -->
+
+
+    <!-- ...輸入框的選項 用list和id連結.... -->
+    <datalist id="food_option">
+            <!-- ...匹配到的食材名稱放入的容器 .... -->
+    </datalist>
+    <!-- ...輸入框的選項  用list和id連結.... -->
+
+    
+    <!-- ...定義onkeyup 函式.............................................................................. -->
+    <script>
+        //重後端拿到的資料 
+        //var data = food_name_for_fast_serch["data"]  不能函數外面 因為吃程式跑太快 fetch()還來不及把data放進去 就把[]給=data了
+        //var data = ["高麗菜", "高雄", "高鐵", "台鐵", "吃飯"];
+        //var data = fetchData();
+        
+        //打字後呼叫的函數
+        function filterOptions() {  
+
+        //重後端拿到的資料
+        var data = excel_col_data["colA"] //放函數裡面才能讓它不會被先執行 而是等函數被呼叫後才執行
+        console.log(data); //可以在F12看 data 有哪些   food_name_for_fast_serch是json格式 要["colA"]
+
+        //先取得打字框中現有的值
+        var input = document.getElementById("inputBox").value; 
+
+        //指名要放到哪個裡面
+        var optionsContainer = document.getElementById("food_option"); 
+
+        // 清空選項容器
+        optionsContainer.innerHTML = "";
+
+        // 遍歷資料，尋找匹配項目
+        for (let i = 0; i < data.length; i++) { //data =fetchData()回傳的 ["高麗菜", "高雄", "高鐵", "台鐵", "吃飯"]; 93行定義的
+            let item = data[i];
+
+            // 如果資料項目包含輸入的字串，則將其顯示為一個選項 而且不在未輸入時顯示全部
+            if (item.includes(input)&& input!="") {
+
+            //建立一個<option value="符合的data[i]">
+            let option = document.createElement("option");
+            option.value = item;
+
+            //把<option value="符合的data[i]"> 也歸為同一個class (這樣用css調格式 就會統一)
+            option.classList.add("option");
+
+            //把<option value="符合的data[i]">  加到<datalist id="food_option"> 裡面 </datalist>
+            optionsContainer.appendChild(option);
+            }
+        }
+        }
+    </script>
+    <!-- ...定義onkeyup 函式.............................................................................. -->
+
+</body>
+
+</html>

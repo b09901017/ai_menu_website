@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>首頁</title>
+</head>
+
+<body>
+    <div class="input_for_caculate_All_food_price" id="input_for_caculate_All_food_price">
+
+        
+
+    </div>
+    <button onclick="creat_new_input()">新增食物</button>
+
+
+
+
+
+
+
+    <script>
+        var inputCount = 0;// 計數器，用於生成唯一的ID
+
+        function creat_new_input() {
+            // 增加計數器以生成唯一的ID
+            inputCount++;
+
+            // 创建新的<div>元素，并设置类名
+            var div = document.createElement("div");
+            div.className = "input_for_caculate_One_food_price";
+
+            // 设置<div>元素内的HTML代码
+            div.innerHTML = `
+                <!-- ....類別選擇(點完選項後 可以直接post到後端 然後取回資料) .... -->
+                <select name="class" onchange="fetchData(this.value)" id="class_for_fetch_${inputCount}">                
+                <option>它是哪一類呢~</option>
+                <option>乳品</option>
+                <option>豆、魚、蛋、肉類</option>
+                <option>全榖雜糧類</option>
+                <option>蔬菜類</option>
+                <option>水果類</option>
+                <option>油脂與堅果種子類</option>
+                <option>其他辛香料</option>  
+                </select> 
+
+                <!-- ................建立可快速輸入的輸入框..................................-->
+                <input list="food_option_${inputCount}" type="text" id="food_option_input_${inputCount}" name="name" placeholder="食材名稱">
+                <!-- ...輸入框的選項 用list和id連結.... -->
+                <datalist id="food_option_${inputCount}">
+                <!-- ...匹配到的食材名稱放入的容器 .... -->
+                </datalist>
+                <!-- ...輸入框的選項  用list和id連結.... -->
+
+                <!-- ....需求多少(g kg ...) .... -->
+                <input type="text" id="needness_${inputCount}" name="needness" class="needness" placeholder="需求量">
+                <!-- ....單位 .... -->
+                <select id="unit_${inputCount}" name="unit">
+                <optgroup label="質量">
+                    <option>公克</option>
+                    <option>公斤</option>
+                    <option>台斤</option>
+                </optgroup>
+                <optgroup label="體積">
+                    <option>毫升</option>
+                    <option>公升</option>
+                </optgroup>
+                </select>
+
+                <!-- ....計算按鈕 .... -->
+                <button id="caculate_${inputCount}" onclick="unit_price_transform_and_show_result(this.id)">換算</button>
+
+                <!-- ... 顯示結果 .... -->
+                <div id="show_result_${inputCount}">result</div>
+            `;
+
+            // 将新的<div>元素添加到父容器中
+            document.getElementById("input_for_caculate_All_food_price").appendChild(div);
+            }
+    </script>
+    <!--新增新的輸入欄 creat_new_input() 小心~id要跟者動-->
+
+
+
+    <script>
+        function unit_price_transform_and_show_result(button_id){
+            let input_count = button_id.slice(-1);
+            console.log("這是第" + input_count + "個新增")
+            const input_name=document.getElementById("food_option_input_"+inputCount).value
+            console.log(input_name )
+
+        }
+    </script>
+
+</body>
+
+</html>
+
+
+<!-- ....食材表單 .... -->
+<form action="">  <!-- ....action = 按下新增後 傳到後端....-->
+    <h1>放入食材</h1>
+    <!-- ....類別選擇 .... -->
+    <select name="class">
+        <option>它是哪一類呢~</option>
+        <option>乳品</option>
+        <option>豆、魚、蛋、肉類</option>
+        <option>全榖雜糧類</option>
+        <option>蔬菜類</option>
+        <option>水果類</option>
+        <option>油脂與堅果種子類</option>
+        <option>其他辛香料</option>  
+    </select>
+    <!-- ....名稱 .... -->
+    <input type="text" name = "name" class="name" placeholder="食材名稱">
+    <!-- ....價格 .... -->
+    <input type="text" name = "price" class="price" placeholder="價格">
+    <!-- ....單位 .... -->
+    <select name="unit">
+    <optgroup label="質量">
+        <option>公克</option>
+        <option>公斤</option>
+        <option>台斤</option>
+    </optgroup>
+    <optgroup label="體積">
+        <option>毫升</option>
+        <option>公升</option>
+    </optgroup>
+    </select>
+    <!-- ....提交 .... -->
+    <button type="submit">新增</button>
+</form>

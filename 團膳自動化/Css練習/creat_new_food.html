@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>首頁</title>
+    <link rel="stylesheet" type="text/css" href="creat_new_food.css">
+</head>
+
+<body>
+    <div id="creat_page_container">
+
+        
+        <div id="title">
+            <h1 >放入 更新<small>Food</small></h1>
+        </div>
+
+
+        <div id="inputs">
+          <!-- 方格1 -->
+          <div id="class_option">
+            <select name="class">
+                <option>~它是哪一類呢~</option>
+                <option>乳品</option>
+                <option>豆、魚、蛋、肉類</option>
+                <option>全榖雜糧類</option>
+                <option>蔬菜類</option>
+                <option>水果類</option>
+                <option>油脂與堅果種子類</option>
+                <option>其他辛香料</option>  
+            </select>
+          </div>
+          <!-- 方格2 -->
+          <div id="name_input" class="group"> 
+            <input type="text" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Name</label>
+          </div>
+          <!-- 方格3 -->
+          <div id="unit_option">
+            <select name="unit">
+                <optgroup label="質量">
+                    <option>公克</option>
+                    <option>公斤</option>
+                    <option>台斤</option>
+                </optgroup>
+                <optgroup label="體積">
+                    <option>毫升</option>
+                    <option>公升</option>
+                </optgroup>
+                </select>
+          </div>
+          <!-- 方格4 -->
+          <div id="price_input" class="group">      
+            <input type="text" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>price(every unit)</label>
+          </div>
+          
+        </div>
+
+        <div id="show_database_notion">
+          <h3 id="show_database_notion_text">點擊名稱更新</h3>
+        </div>
+
+        <div id="show_database">
+          <ul>
+              <li><span>香蕉 </span> 每公克100元</li>
+              <li><span>番茄 </span> 每公克70元</li>
+              <li><span>芒果 </span> 每斤79元</li>
+              <li><span>香蕉 </span> 每公克100元</li>
+              <li><span>番茄香蕉香蕉 </span> 每公克700元</li>
+              <li><span>芒果 </span> 每斤79元</li>
+              <li><span>香蕉 </span> 每公克100元</li>
+              <li><span>番茄 </span> 每公克70元</li>
+              <li><span>芒果 </span> 每斤79元</li>
+          </ul>
+        </div>
+
+    </div>
+
+
+    
+</body>
+
+</html>

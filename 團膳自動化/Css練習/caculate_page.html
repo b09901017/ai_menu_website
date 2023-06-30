@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>換算算鍋</title>
+    <link rel="stylesheet" type="text/css" href="caculate_page.css">
+</head>
+
+<body>
+    <div id="caculate_page_container">
+
+        <div id="title">
+            <h1>出餐嘍<small>換算</small></h1>
+        </div>
+
+        <div id="inputs">
+            <!-- 方格1 -->
+            <div id="class_container">
+                <select>                
+                    <option>它是哪一類呢~</option>
+                    <option>乳品</option>
+                    <option>豆、魚、蛋、肉類</option>
+                    <option>全榖雜糧類</option>
+                    <option>蔬菜類</option>
+                    <option>水果類</option>
+                    <option>油脂與堅果種子類</option>
+                    <option>其他辛香料</option>  
+                </select>
+            </div>
+            <!-- 方格2 -->
+            <div id="name_container" class="group"> 
+                <input type="text" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Name</label>
+                <datalist id="food_option_0">
+                </datalist> 
+            </div>
+            <!-- 方格3 -->
+            <div id="needness_container" class="group"> 
+                <input type="text" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>需求量</label>
+            </div>
+            <!-- 方格4 -->
+            <div id="unit_container">
+                <select>
+                    <optgroup label="質量">
+                        <option>公克</option>
+                        <option>公斤</option>
+                        <option>台斤</option>
+                    </optgroup>
+                    <optgroup label="體積">
+                        <option>毫升</option>
+                        <option>公升</option>
+                    </optgroup>
+                </select>
+            </div>
+            <!-- 方格5 -->
+            <div id="caculate_button container">
+                <button>換算</button>
+            </div>
+            <!-- 方格6 -->
+            <div id="show_result_0">result</div>
+            <!-- 方格7 -->
+            <div id="creat_new_input_button_container">
+                <button onclick="creat_new_input()">新增食物</button>
+            </div>
+            
+        </div>
+
+
+    </div>
+
+
+
+
+    <script>
+        var windowWidth = window.innerWidth;
+var windowHeight = window.innerHeight;
+
+console.log("窗口宽度: " + windowWidth);
+console.log("窗口高度: " + windowHeight);
+    </script>
+</body>
+
+</html>
