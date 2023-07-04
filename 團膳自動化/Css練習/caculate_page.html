@@ -14,59 +14,64 @@
             <h1>出餐嘍<small>換算</small></h1>
         </div>
 
-        <div id="inputs">
-            <!-- 方格1 -->
-            <div id="class_container">
-                <select>                
-                    <option>它是哪一類呢~</option>
-                    <option>乳品</option>
-                    <option>豆、魚、蛋、肉類</option>
-                    <option>全榖雜糧類</option>
-                    <option>蔬菜類</option>
-                    <option>水果類</option>
-                    <option>油脂與堅果種子類</option>
-                    <option>其他辛香料</option>  
-                </select>
+        <div id="inputs_container">
+
+            <div id="input_container">
+                <!-- 方格1 -->
+                <div id="class_container">
+                    <select>                
+                        <option>它是哪一類呢~</option>
+                        <option>乳品</option>
+                        <option>豆、魚、蛋、肉類</option>
+                        <option>全榖雜糧類</option>
+                        <option>蔬菜類</option>
+                        <option>水果類</option>
+                        <option>油脂與堅果種子類</option>
+                        <option>其他辛香料</option>  
+                    </select>
+                </div>
+                <!-- 方格2 -->
+                <div id="name_container" class="group"> 
+                    <input type="text" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Name</label>
+                    <datalist id="food_option_0">
+                    </datalist> 
+                </div>
+                <!-- 方格3 -->
+                <div id="needness_container" class="group"> 
+                    <input type="text" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>需求量</label>
+                </div>
+                <!-- 方格4 -->
+                <div id="unit_container">
+                    <select>
+                        <optgroup label="質量">
+                            <option>公克</option>
+                            <option>公斤</option>
+                            <option>台斤</option>
+                        </optgroup>
+                        <optgroup label="體積">
+                            <option>毫升</option>
+                            <option>公升</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <!-- 方格5 -->
+                <div id="caculate_button_container">
+                    <button onclick="cahnge_class(this)" class="caculate_btn" id="caculate_button_0"></button>
+                </div>
+                <!-- 方格6 -->
+                <div class="show_result" id="show_result_0"> 357 元</div>
+                
             </div>
-            <!-- 方格2 -->
-            <div id="name_container" class="group"> 
-                <input type="text" required>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>Name</label>
-                <datalist id="food_option_0">
-                </datalist> 
-            </div>
-            <!-- 方格3 -->
-            <div id="needness_container" class="group"> 
-                <input type="text" required>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>需求量</label>
-            </div>
-            <!-- 方格4 -->
-            <div id="unit_container">
-                <select>
-                    <optgroup label="質量">
-                        <option>公克</option>
-                        <option>公斤</option>
-                        <option>台斤</option>
-                    </optgroup>
-                    <optgroup label="體積">
-                        <option>毫升</option>
-                        <option>公升</option>
-                    </optgroup>
-                </select>
-            </div>
-            <!-- 方格5 -->
-            <div id="caculate_button container">
-                <button>換算</button>
-            </div>
-            <!-- 方格6 -->
-            <div id="show_result_0">result</div>
+
             <!-- 方格7 -->
             <div id="creat_new_input_button_container">
-                <button onclick="creat_new_input()">新增食物</button>
+                <button class="add_food_btn" onclick="creat_new_input()"></button>
             </div>
             
         </div>
@@ -79,11 +84,80 @@
 
     <script>
         var windowWidth = window.innerWidth;
-var windowHeight = window.innerHeight;
+        var windowHeight = window.innerHeight;
 
-console.log("窗口宽度: " + windowWidth);
-console.log("窗口高度: " + windowHeight);
+        console.log("窗口宽度: " + windowWidth);
+        console.log("窗口高度: " + windowHeight);
     </script>
+    <script>
+       function cahnge_class(btn){
+        if(btn.classList=='writing'){
+            btn.classList.remove('writing')
+            btn.classList.add('erasing')
+            erasing(btn.id)
+            console.log("erasing")
+        }
+        else if(btn.classList=='erasing'){
+            btn.classList.remove('erasing')
+            btn.classList.add('writing')
+            writing(btn.id)
+            console.log("caculate_btn ")
+        }
+        else{
+            btn.classList.add('writing')
+            btn.classList.remove('caculate_btn')
+            writing(btn.id)
+            console.log("writing")
+        }
+       }
+    </script>
+
+    <script>
+        function writing(id){
+            //////////////////////////////////////////分開字母 並依序設delay///////////////////////////////////////////////////////// 
+            //取出"_1" 或 "_2"...
+            clicked_btn_id=id.slice(-2) 
+            //Selector (#show_result_0) div
+            const result = document.querySelector('#show_result'+clicked_btn_id)
+            console.log(result)
+            //把 id 是 show_result_0 中的textContent 一個一個字分開用span包起來 
+            ///\S/g：这是一个正则表达式，用于匹配非空白字符。\S表示非空白字符，g表示全局匹配（即替换所有匹配的子字符串）。
+            result.innerHTML = result.textContent.replace(/\S/g, "<span>$&</span>")
+            //Selector( #show_result_0 span) id=show_result_0底下的全部span 編號從0到n
+            document.querySelectorAll('#show_result'+clicked_btn_id +" span").forEach((span, index) => {
+            //設定delay = n*0.3 s
+            span.style.setProperty('--delay', `${index * .1}s`);
+            //改使用的動畫  
+            span.style.setProperty('--ani_name', `show_onebyone`);
+            //改從0開始~1
+            span.style.setProperty('--opacity', `0`);
+            })
+            //////////////////////////////////////////////分開字母 並依序設delay///////////////////////////////////////////////////////
+        }
+        function erasing(id){
+            //////////////////////////////////////////分開字母 並依序設delay///////////////////////////////////////////////////////// 
+            //取出"_1" 或 "_2"...
+            clicked_btn_id=id.slice(-2) 
+            //Selector (#show_result_0) div
+            const result = document.querySelector('#show_result'+clicked_btn_id)
+            //把 id 是 show_result_0 中的textContent 一個一個字分開用span包起來 
+            ///\S/g：这是一个正则表达式，用于匹配非空白字符。\S表示非空白字符，g表示全局匹配（即替换所有匹配的子字符串）。
+            result.innerHTML = result.textContent.replace(/\S/g, "<span>$&</span>")
+            //Selector( #show_result_0 span) id=show_result_0底下的全部span 編號從0到n
+            document.querySelectorAll('#show_result'+clicked_btn_id +" span").forEach((span, index) => {
+            //設定delay = 1- n*0.3 s (從後面開始消失)
+            span.style.setProperty('--delay', `${1-index * .35}s`);
+            //改使用的動畫 
+            span.style.setProperty('--ani_name', `disappear_onebyone`);
+            //改從1開始~0
+            span.style.setProperty('--opacity', `1`);
+            })
+            //////////////////////////////////////////////分開字母 並依序設delay///////////////////////////////////////////////////////
+        }
+
+    </script>
+
+
 </body>
 
 </html>
