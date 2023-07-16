@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>新增食物到資料庫</title>
+    <link rel="stylesheet" type="text/css" href="creat_new_food.css">
+    <!-- 引入jquery語法 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="creat_new_food.js" async></script>
+</head>
+
+<body>
+    <!-- 整個頁面 用grid 分層 左上: 標題   左中: 輸入們(有四個)  左下: 顯示資料庫有甚麼 -->
+    <div id="creat_page_container">
+
+        <!-- 標題 -->
+        <div id="title">
+            <h1 >放入 更新<small>Food</small></h1>
+        </div>
+
+        <!-- 輸入們 用grid分層 左上:類別 右上:名稱 左下:單位 右下:價錢-->
+        <div id="inputs">
+
+            <!-- 類別選擇 -->
+            <div id="class_option">
+                <select name="class" id="class_for_fetch" onchange="fetch_and_show()" >
+                    <option>~它是哪一類呢~</option>
+                    <option>乳品</option>
+                    <option>豆、魚、蛋、肉類</option>
+                    <option>全榖雜糧類</option>
+                    <option>蔬菜類</option>
+                    <option>水果類</option>
+                    <option>油脂與堅果種子類</option>
+                    <option>其他辛香料</option>  
+                </select>
+            </div>
+
+            <!-- 名稱輸入 -->
+            <div id="name_input" class="group"> 
+                <input type="text" required id="name" >
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Name</label>
+            </div>
+
+            <!-- 單位選擇 -->
+            <div id="unit_option">
+                <select name="unit" id="unit">
+                    <optgroup label="質量">
+                        <option>公克</option>
+                        <option>公斤</option>
+                        <option>台斤</option>
+                    </optgroup>
+                    <optgroup label="體積">
+                        <option>毫升</option>
+                        <option>公升</option>
+                    </optgroup>
+                    </select>
+            </div>
+
+            <!-- 價錢輸入 -->
+            <div id="price_input" class="group">      
+                <input type="text" required id="price" inputmode="numeric">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>price(every unit)</label>
+            </div>
+        </div>
+        <!-- 輸入們 結束-->
+
+        <!-- 展示database 標題 -->
+        <div id="show_database_notion">
+            <h3 id="show_database_notion_text">點擊名稱更新</h3>
+        </div>
+
+        <!-- 展示database -->
+        <div id="show_database">
+            <ul>
+                
+            </ul>
+        </div>
+
+    </div>
+    <!-- 整個頁面 1標題 2輸入們 3資料庫 結束 -->
+
+</body>
+
+
+</html>

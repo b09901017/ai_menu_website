@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>首頁</title>
+    <link rel="stylesheet" type="text/css" href="home_page.css">
+    <script src="home_page.js" async></script>
+</head>
+
+
+<body>
+    <!-- 整個頁面 用div包起來 css用grid 區分標題和中間內容 -->
+    <div id="home_page_container">
+
+        <!-- 交給我蒜 標題 圖片 -->
+        <div id="home_page_title_container">
+            <img id="title_text" src="title.png" >
+        </div>
+
+        <!-- 中間內容 用div包起來 css用grid 區分各個功能頁面連結 -->
+        <div id="home_page_middle">
+
+            <!-- 最中間大蒜圖片 -->
+            <div id="garlic_picture_container">
+                <img id="garlic_picture" src="garlic_picture.png" >
+            </div>
+
+            <!-- 新增食材資料庫的功能連結 -->
+            <div id="creat_new_food_button_container">
+                <img id="creat_new_food_button" src="create_new_button.png" >
+                <div class="text" id="creat_new_food_text">新增食材資料庫</div>
+            </div>
+
+            <!-- 計算總價的功能連結  -->
+            <div id="caculate_food_price_button_container">
+                <img id="caculate_food_price_button" src="caculate_button.png" >
+                <div class="text" id="caculate_food_price_text">算算鍋</div>
+            </div>
+
+            <!-- 其他功能一 -->
+            <div id="button_1_container">
+                <img id="button_1" src="button1.png">
+                <div class="text">搶救中</div>
+            </div>
+
+            <!-- 其他功能二 -->
+            <div id="button_2_container">
+                <img id="button_2" src="button2.png">
+                <div class="text">製作中</div>
+            </div>
+
+            <!-- 其他功能三 -->
+            <div id="button_3_container">
+                <img id="button_3" src="button3.png">
+                <div class="text">還不知到</div>
+            </div>
+
+        </div>
+        <!-- 中間內容結束 -->
+        
+        <!-- 下面墊高 -->
+        <div id="home_page_tail"></div>
+
+    </div>
+    <!-- 整個頁面 結束 -->
+
+</body>
+
+</html>

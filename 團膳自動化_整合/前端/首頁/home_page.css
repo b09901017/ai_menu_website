@@ -1,0 +1,298 @@
+/* 字型引入 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kablammo&display=swap');
+
+/* 功能連結(按鈕) 顯現動畫 */
+@keyframes button_animation{
+    0%{    opacity: 0;  }
+    100%{  opacity: 1;  }
+}
+
+/* 中間大蒜放大動畫 */
+@keyframes garlic_animation{
+    0%{      width: 0%;    height: 0%;    }
+    100%{    width: 100%;  height: 100%;  }
+}
+
+/* 搖晃 搖晃動畫  多加 opacity: 1;*/
+@keyframes upAnimation {
+    0% {
+        transform: rotate(0deg);
+        transition-timing-function: cubic-bezier(0.215, .61, .355, 1);
+    }
+
+    10% {
+        transform: rotate(-12deg);
+        transition-timing-function: cubic-bezier(0.215, .61, .355, 1);  
+    }
+
+    20% {
+        transform: rotate(12deg);
+        transition-timing-function: cubic-bezier(0.215, .61, .355, 1);  
+    }
+
+    28% {
+        transform: rotate(-10deg);
+        transition-timing-function: cubic-bezier(0.215, .61, .355, 1);  
+    }
+
+    36% {
+        transform: rotate(10deg);
+        transition-timing-function: cubic-bezier(0.755, .5, .855, .06);  
+    }
+
+    42% {
+        transform: rotate(-8deg);
+        transition-timing-function: cubic-bezier(0.755, .5, .855, .06);   
+    }
+
+    48% {
+        transform: rotate(8deg);
+        transition-timing-function: cubic-bezier(0.755, .5, .855, .06);   
+    }
+
+    52% {
+        transform: rotate(-4deg);
+        transition-timing-function: cubic-bezier(0.755, .5, .855, .06);   
+    }
+
+    56% {
+        transform: rotate(4deg);
+        transition-timing-function: cubic-bezier(0.755, .5, .855, .06);  
+    }
+
+    60% {
+        transform: rotate(0deg);
+        transition-timing-function: cubic-bezier(0.755, .5, .855, .06);
+    }
+
+    100% {
+        transform: rotate(0deg);
+        transition-timing-function: cubic-bezier(0.215, .61, .355, 1);   
+    }
+}
+
+
+
+
+
+/* 整個頁面 用flex 垂直排版出標題(40%)和中間內容(70%) 下面墊高(16.67%) */
+#home_page_container {
+    background-color: #EFE7E8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;   /* 垂直排版 */ 
+    height: 100vh;            /* 100vh 視窗大小100% */
+}
+/* 標題 置中置中 */
+#home_page_title_container {
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+/* 中間內容 用grid 排版各個功能連結(按鈕) */
+#home_page_middle {
+    height: 70%;
+    display: grid;
+    grid-template-columns:10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-rows:10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+}
+/* 下面緩衝 墊高 */
+#home_page_tail {
+    height: 16.67%;
+    /* background-color: green; */
+}
+
+
+
+
+
+/* 中間內容的各個位置(配置container) */
+/* 中間  大蒜圖片在 行2~9 列1~10   */
+#garlic_picture_container{
+    grid-column-start: 2;
+    grid-column-end: 9;
+    grid-row-start: 1;
+    grid-row-end: 10;
+}
+/* 左上  新增資料庫在 行2~4 列1~3 置中  */
+#creat_new_food_button_container{
+    grid-column: 2/4;
+    grid-row: 1/3;
+    text-align:center;
+    line-height:100%;
+}
+/* 右上  計算總價在 行7~10 列1~3 置中  */
+#caculate_food_price_button_container{
+    grid-column: 7/10;
+    grid-row: 1/3;
+    text-align:center;
+}
+/* 左中  功能一在 行2~4 列6~8 置中  */
+#button_1_container{
+    grid-column: 2/4;
+    grid-row: 6/8;
+    text-align:center;
+}
+/* 右中  功能二在 行8~10 列5~7 置中  */
+#button_2_container{
+    grid-column: 8/10;
+    grid-row: 5/7;
+}
+/* 正下  功能三在 行6~8 列8~10 置中  */
+#button_3_container{
+    grid-column: 6/8;
+    grid-row: 8/10;
+}
+
+
+
+
+
+/* 按鈕的大小位置和出現動畫*/
+/* 中間 大蒜 Delay 0*/
+#garlic_picture {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /*可以根據需要調整圖片的填充方式 */ 
+    animation-name: garlic_animation;
+    animation-duration:3s;  
+}
+/* 左上 新增資料庫 Delay 3s*/
+#creat_new_food_button{
+    /* 大小 */
+    height: 150%;
+    width: auto;
+    /* 動畫 */
+    opacity: 0;                            /*一開始是不可見*/
+    animation-name: button_animation;      /*漸漸可見*/
+    animation-duration:4s;
+    animation-delay:3s;
+    animation-fill-mode:forwards;          /*最後停在可見*/
+}
+/* 新增功能標題位置 */
+#creat_new_food_text{
+    position: relative;
+    top : 5px
+}
+/* 左中 功能一　delay 3.5s */
+#button_1{
+    /* 大小 */
+    height: 120%;
+    width: auto;
+    /* 動畫 */
+    opacity: 0;
+    animation-name: button_animation;
+    animation-duration:4s;
+    animation-delay:3.5s;
+    animation-fill-mode:forwards;
+    /* 漸層轉換 */
+    transition: transform 1s ease;
+}
+/* 正下 功能三　delay 4s */
+#button_3{
+    /* 位置 */
+    height: 120%;
+    width: auto;
+    /* 動畫 */
+    opacity: 0;
+    animation-name: button_animation;
+    animation-duration:4s;
+    animation-delay:4s;
+    animation-fill-mode:forwards;
+}
+/* 右中 功能二　delay 4.5s */
+#button_2{
+    /* 大小位置*/
+    height: 120%;
+    width: auto;
+    z-index: 2;      /* 讓它不會被遮在後面 */
+    /* 動畫 */
+    opacity: 0;
+    animation-name: button_animation;
+    animation-duration:4s;
+    animation-delay:4.5s;
+    animation-fill-mode:forwards;
+    /* 漸層轉換 */
+    transition: transform 0.3s ease;
+}
+/* 右上 計算總價 delay 5s */
+#caculate_food_price_button{
+    /* 大小位置 */
+    height: 200%;
+    width: auto;
+    position:relative;    
+    bottom: 50px;  
+    /* 動畫 */
+    opacity: 0;
+    animation-name: button_animation;
+    animation-duration:4s;
+    animation-delay:5s;
+    animation-fill-mode:forwards;
+    /* 漸層轉換 */
+    transition: transform 0.3s ease;
+}
+/* 算算鍋 功能標題位置 */
+#caculate_food_price_text{
+    position: relative;
+    bottom: 25px ;
+}
+/* 功能標題 出現動畫 delay 5.5s */
+.text{
+    opacity: 0;
+    animation-name: button_animation;
+    animation-duration:4s;
+    animation-delay:5.5s;
+    animation-fill-mode:forwards;
+    /* 字大小 */
+    font-weight: bolder;
+}
+
+
+
+
+
+/* hover 動畫 */
+/* 左上 搖晃 */
+#creat_new_food_button:hover{
+    opacity: 1;                   /* 為了讓搖晃時也是看的見的 */
+    animation-name: upAnimation;
+    transform-origin: center bottom;
+    animation-duration: 2s;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+    animation-delay: .03s;
+}
+/* 左中 旋轉 (有漸層變化) */
+#button_1:hover{
+    transform: rotate(360deg);
+}
+/* 正下 搖晃 */
+#button_3:hover{
+    opacity: 1;                   /* 為了讓搖晃時也是看的見的 */
+    animation-name: upAnimation;
+    transform-origin: center bottom;
+    animation-duration: 2s;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+    animation-delay: .03s;
+}
+/* 右中 放大 (有漸層變化) */
+#button_2:hover{
+    transform: scale3d(1.5,1.5,2);
+}
+/* 右上 放大 (有漸層變化) */
+#caculate_food_price_button:hover{
+    transform: scale3d(1.5,1.5,2);
+}
+
+
+
+
+
+/* 讓圖片搖晃完後不會消失  連結html中最下面的<script>*/
+.visible{
+    opacity: 1 !important;
+}

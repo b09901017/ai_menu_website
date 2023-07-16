@@ -1,0 +1,276 @@
+/* 背景 */
+body {
+    background-image:url("大蒜背景.jpg") , url("大蒜背景延伸.jpg");
+    background-size: auto 100vh ,auto 100vh ;
+    background-repeat: no-repeat , repeat;
+    background-position: right top; 
+}
+
+
+
+
+/* 整個頁面 用grid 分層 左上: 標題   左中: 輸入們(有四個)  左下: 顯示資料庫有甚麼 */
+#creat_page_container{
+    height: 100vh;
+    display: grid;
+    grid-template-columns:10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-rows:10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+}
+/* 標題 左上 */
+#title{
+    grid-column: 2/4;
+    grid-row: 2/4;
+}
+/* 輸入們 左中  自己再grid分層四格  上下平分 左(選單)右(輸入框)三七分*/
+#inputs{
+    grid-column: 1/6;
+    grid-row: 4/7;
+    display: grid;
+    grid-template-columns:35% 65%;
+    grid-column-gap:1px;
+    grid-template-rows:50% 50%;
+    text-align:center;
+}
+/* 資料庫標題 左下 */
+#show_database_notion{
+    grid-column: 2/4;
+    grid-row: 7/6;
+    text-align: center;
+}
+/* 資料庫內容 左下 */
+#show_database{
+    grid-column: 2/4;
+    grid-row: 7/10;   
+}
+
+
+
+
+/* 輸入們排版 左上:類別 右上:名稱 左下:單位 右下:價錢 */
+/* 左上 類別 */
+#class_option{
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+/* 右上 名稱輸入 */
+#name_input{
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+/* 左下 單位 */
+#unit_option{
+    grid-column: 1/2;
+    grid-row: 2/3;
+}
+/* 右下 價錢輸入 */
+#price_input{
+    grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+
+
+
+
+/* 下拉選單 統一美化 */
+select{
+    /* 大小 */
+    height: 45px;
+    width: 160px;
+    /* 圓外框 有陰影  */
+    border-radius: 10px;                            
+    box-shadow: 5px 5px 10px rgb(62, 40, 60);
+    border-width:2px;
+    border-color:#403A35;
+    /* 毛玻璃背景  */
+    background-color: rgba(0, 0, 0, .05);
+    backdrop-filter: blur(2px);
+    /* 字型 */
+    text-align:center;
+    font-size: 16px;
+    font-weight: bolder;
+    color: rgb(35, 32, 32);
+    /* 漸層轉換 */
+    transition: 1s all;
+}
+select:hover{
+    box-shadow: 20px 20px 30px rgb(62, 40, 60);
+}
+select option{
+    /* 好像沒用 option不能調整  這是瀏覽器決定的*/
+    backdrop-filter: blur(2px);
+    color: #121729;
+}
+
+
+
+
+
+/* database 美化 */
+/* 標題的字 */
+#show_database_notion_text{
+    position: relative;
+    top: 15px;
+}
+/* 內容 */
+#show_database{
+    /* 圓外框 有陰影 */
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgb(62, 40, 60);
+    border-width:2px;
+    border-color:#403A35;
+    /* 字形 */
+    color: rgb(26, 13, 76);
+    font-size: 17px;
+    font-weight: bold;
+    /* 當超過版面怎辦   讓滾軸在右邊 並且清單也向右靠齊 */
+    overflow-x:hidden; 
+    overflow-y: scroll;
+    direction: rtl; /*  改動滾輪方向 将内容方向设置为从右到左 */
+    text-align: left; /* 将文本对齐方式设置为左对齐 */
+    
+}
+#show_database ul{
+    direction: ltr; /* 恢复列表项的文本方向为从左到右 */
+}
+#show_database li{
+    margin-bottom: 10px;
+}
+/* 內容中 的名稱可以點擊 直接修改資料庫 */
+#show_database span{
+    font-size: 26px;
+    font-weight: bolder;
+}
+#show_database span:hover{
+    padding: 5px;
+    background-color: rgba(0, 0, 0, .05);
+    backdrop-filter: blur(3px);
+    border-radius: 8px;
+    box-shadow: 3px 3px 17px rgb(62, 40, 60);
+}
+
+
+
+
+
+/* 輸入框美化 (copy 人家的) */
+/* 讓輸入框 有觸及動畫 */
+* { box-sizing:border-box; }
+
+/* basic stylings ------------------------------------------ */
+.container 		{ 
+  font-family:'Roboto';
+  width:600px; 
+  margin:30px auto 0; 
+  display:block; 
+  background:#FFF;
+  padding:10px 50px 50px;
+}
+h1 		 { 
+  text-align:center; 
+  margin-bottom:50px; 
+}
+h1 small { 
+  font-weight:normal; 
+  color:#888; 
+  display:block; 
+}
+
+
+/* form starting stylings ------------------------------- */
+.group 			  { 
+  position:relative; 
+  margin-bottom:45px; 
+}
+input 				{
+  font-size:18px;
+  padding:10px 10px 10px 5px;
+  display:block;
+  width:290px;
+  border:none;
+  border-bottom:1px solid #757575;
+  border-radius: 10px;
+  box-shadow: 7px 7px 20px rgb(62, 40, 60);
+}
+input:focus 		{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
+  outline: none;
+}
+
+/* LABEL ======================================= */
+label 				 {
+  color:#999; 
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+input:focus ~ label, input:valid ~ label 		{
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+}
+
+/* BOTTOM BARS ================================= */
+.bar 	{ position:relative; display:block; width:290px; }
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:1px; 
+  position:absolute;
+  background:#5264AE; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
+}
+
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}

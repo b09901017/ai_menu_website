@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>換算算鍋</title>
+    <link rel="stylesheet" type="text/css" href="caculate_page.css">
+</head>
+
+
+<body>
+
+    <!-- A 整個頁面 用grid 分層 左上的標題 和 右半邊的計算框框  -->
+    <div id="caculate_page_container">
+
+        <!-- A-1 標題 -->
+        <div id="title">
+            <h1>出餐嘍<small>換算</small></h1>
+        </div>
+
+        <!-- A-2 右半邊的計算們的毛玻璃框框 有一條一條的計算框(垂直排版) 和 新增按鈕 -->
+        <div id="inputs_container" >
+
+            <!-- A-2-a 其中一條的計算框 用flex 讓 1類別 2名稱 3需求量 4單位 5答案  水平排列  -->
+            <div class="input_container">
+
+                <!-- A-2-a1 類別 -->
+                <div class="class_container">
+                    <select>                
+                        <option>它是哪一類呢~</option>
+                        <option>乳品</option>
+                        <option>豆、魚、蛋、肉類</option>
+                        <option>全榖雜糧類</option>
+                        <option>蔬菜類</option>
+                        <option>水果類</option>
+                        <option>油脂與堅果種子類</option>
+                        <option>其他辛香料</option>  
+                    </select>
+                </div>
+
+                <!-- A-2-a2 名稱輸入(名稱選擇menu) -->
+                <div  class="group"> 
+                    <!-- 名稱輸入 -->
+                    <input type="text" required onfocus="call_menu(this)" onblur="retreat_menu(this)">
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Name</label>
+                    <!-- 名稱選擇menu -->
+                    <div class="database_price_container" >
+                        <div class="database_price"></div>
+                    </div> 
+                </div>
+
+                <!-- A-2-a3 需求量 -->
+                <div class="group"> 
+                    <input type="text" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>需求量</label>
+                </div>
+
+                <!-- A-2-a4 單位 -->
+                <div class="unit_container" >
+                    <select>
+                        <optgroup label="質量">
+                            <option>公克</option>
+                            <option>公斤</option>
+                            <option>台斤</option>
+                        </optgroup>
+                        <optgroup label="體積">
+                            <option>毫升</option>
+                            <option>公升</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <!-- A-2-a5 答案顯示 (按鈕gif + 所得價錢) -->
+                <!-- 按鈕gif  -->
+                <div class="caculate_button_container">
+                    <button onclick="cahnge_class(this)" class="caculate_btn" id="caculate_button_0"></button>
+                </div>
+                <!-- 所得價錢 -->
+                <div class="show_result" id="show_result_0"> 357 元</div>
+
+            </div>
+            <!-- 其中一條的計算框 用flex 讓 1類別 2名稱 3需求量 4單位 5答案  水平排列 end -->
+
+            <!-- A-2-b 新增按鈕 -->
+            <div id="creat_new_input_button_container">
+                <button class="add_food_btn" onclick="creat_new_input()"></button>
+            </div>
+
+        </div>
+        <!-- A-2 右半邊的計算們的毛玻璃框框 end-->
+
+    </div>
+    <!-- A 整個頁面 用grid 分層 左上的標題 和 右半邊的計算框框  end -->
+
+</body>
+
+
+</html>

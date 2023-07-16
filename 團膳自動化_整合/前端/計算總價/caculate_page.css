@@ -1,0 +1,411 @@
+/* 背景 */
+body {
+    background-image:url("蝦麵背景.png") , url("蝦麵背景延伸.png");
+    background-size: auto 100vh ,auto auto ;
+    background-repeat: no-repeat , repeat;
+    background-position: left bottom; 
+}
+
+
+
+
+
+
+/* 整個頁面 用grid 分層 左上的標題 和 右半邊的計算框框 */
+#caculate_page_container{
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
+    grid-template-rows:5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
+}
+/* 左上標題 */
+#title{
+    grid-column: 3/8;
+    grid-row: 3/7;
+    text-align: center;
+}
+/* 右半邊計算 毛玻璃框框 */
+#inputs_container{
+    grid-column: 8/20;
+    grid-row: 2/19;
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px white;
+    backdrop-filter: blur(20px);
+    border-width:10px;
+    border-color: white;
+}
+
+
+
+
+
+
+
+/* 標題字形 分大標題(出餐嘍) 小標題(計算)*/
+#title h1{
+    color: azure;
+    font-size: 50px;
+}
+#title h1 small { 
+    font-size:30px; 
+    color:#888; 
+    display:block; 
+}
+
+
+
+
+
+
+
+/* 一條一條(inputs)的計算框(垂直排版)  */
+/* 一條(input)內容有 1類別 (2名稱 3需求量) 4單位 5計算按鈕 6顯示答案的位置 (1~6用flex橫向排版+大小配置) */
+.input_container {
+    height:100px;
+    border-width: 10px;
+    display: flex;
+}
+/* 1類別 用div包起來才能橫排版*/
+.class_container{
+    position: relative;
+    margin-top: 30px ;
+    margin-right:5px;
+    margin-left:25px;
+}
+/* 4單位 用div包起來才能橫排版 */
+.unit_container{
+    margin-top:45px;
+    position:relative;
+    right:68px;
+}
+/* 5計算按鈕 */
+.caculate_btn{
+    position: relative;
+    margin-top: 35px ;
+    margin-right:5px;
+    right: 40px;
+    border: none;
+    background-color: transparent;
+    /* 按鈕背景可用gif */
+    background-image: url('light_bow.gif'); 
+    background-size: contain;
+    height: 60px;
+    width: 70px;
+    /* 轉場 */
+    transition: 0.3s all;
+}
+/* 6顯示答案的位置 */
+.show_result{
+    width: 200px;
+    position: relative;
+    margin-top: 55px;
+    right: 100px;
+    color: rgb(211, 253, 253);
+    font-size: 20px;
+    font-weight: 300px;
+    white-space: nowrap;
+    z-index: -1;
+}
+/* 新增一條計算框按鈕 */
+.add_food_btn{
+    border : none;
+    background-color: transparent;
+    background-image: url('add_food.png');
+    background-size: contain;
+    height: 38px;
+    width: 36px;
+    position: relative;
+    top: 15px;
+    left: 45%;
+    transition: 0.3s all;
+}
+
+
+
+
+
+
+
+
+/* 美化select */
+/* 類別的下拉選單 */
+.class_container select{
+    height: 50px;
+    width: 150px;
+    /* 圓角 */
+    border-radius: 25px;
+    border-width:3px;
+    border-color:#d4e5bcbe;
+    /* 毛玻璃感覺 */
+    background-color: transparent;
+    backdrop-filter: blur(2px);
+    /* 字形 */
+    text-align:center;
+    font-size: 16px;
+    font-weight: bolder;
+    color: #dbf4f7 ;
+    /* 漸層轉換 */
+    transition: 0.7s all;
+}
+/* 類別選項 (可能沒用??) */
+.class_container select option{
+    color: #dbf4f7  ;
+    background-color: rgb(22,23,25,1);
+    backdrop-filter: blur(20px);
+}
+/* 單位下拉選單 */
+.unit_container select{
+    /* 透明 */
+    background-color:transparent ;
+    height: 45px;
+    width: 70px;
+    /* 圓角 沒border*/
+    border-radius: 15px;
+    border-color: transparent;
+    /* 字色 */
+    color:white;
+}
+/* 單位的選項 可能有用? */
+.unit_container select optgroup{
+    background-color:black ;
+    height: 45px;
+    width: 70px;
+    border-radius: 15px;
+    border-color: #d1bb33;
+    color:white;
+}
+
+
+   
+
+
+
+
+/* hover動畫 */
+/* 類別 hover 放大 */
+.class_container select:hover{
+     height: 65px;
+     width: 160px;
+}
+/* 計算按鈕 hover 會變開筆的gif */
+.caculate_btn:hover{
+    background-image: url('pen_open.gif');
+}
+/* 新增一條計算框 hover 放大 */
+.add_food_btn:hover{
+    height: 45px;
+    width: 43px;
+    top: 13px;
+    left: 44%;
+}
+
+
+
+
+
+
+
+/* 計算按鈕的動畫 在class=writing 和 class=erasing 互換 */
+/* class=writing 會讓比搖搖晃晃往右 停在橡皮擦圖案在右邊 */
+.writing{
+    position: relative;
+    margin-top: 35px ;
+    margin-right:5px;
+    right: 40px;
+    border: none;
+    background-color: transparent;
+    background-image:url('erase.png');
+    background-size: contain;
+    height: 60px;
+    width: 70px;
+    animation: writing 1s forwards;
+}
+/* 橡皮擦 hover 會放大 */
+.writing:hover{
+    height: 70px;
+    width: 80px;
+    margin-left:-10px;
+}
+/* class變erasing時 會從右邊搖搖晃晃往左 最後停在燈泡gif在左邊  */
+.erasing{
+    position: relative;
+    margin-top: 35px ;
+    margin-right:5px;
+    right: 40px;
+    border: none;
+    background-color: transparent;
+    background-image: url('light_bow.gif');
+    background-size: contain;
+    height: 60px;
+    width: 70px;
+
+    transition: 0.3s all;
+    animation: erasing 1s none;
+}
+/* 燈泡hover時會變開筆gif */
+.erasing:hover{
+    background-image: url('pen_open.gif');
+}
+/* 點擊燈泡會把答案拆成<span>們 這些<sapn>用js控制delay 使它們一一展現或消失  */
+.show_result span {
+    opacity: var(--opacity) ;
+    display: inline-block;
+    animation-name: var(--ani_name);
+    animation-duration: .9s;
+    animation-timing-function: ease-in-out;
+    animation-delay: var(--delay);
+    animation-fill-mode: forwards;
+}
+
+
+
+
+
+
+
+/* 點擊名稱輸入框會跳出的資料庫menu美化 */
+.database_price_container{
+    /* 長寬 */
+    height: 369px;
+    width: 230px;
+    /* 背景 */
+    background-image: url("menu_old.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* 圓框 毛玻璃(可能沒用?) */
+    border-radius: 50px;
+    box-shadow: 10px 10px 20px rgba(230, 226, 150, 0.73);
+    opacity: 0.93;
+    backdrop-filter: blur(200px);
+    /* 相對位置 */
+    position: relative;
+    top: 6px;
+    right: 5px;
+    /* grid 可以放價錢進去 */
+    display: grid;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% ;
+    grid-template-rows:10% 10% 10% 10% 10% 10% 10% 10% 10% 10% ;
+    /* 一開始不顯現 直到輸入框focus才改display=grid (用js) */
+    display: none;
+    /* 顯現動畫 */
+    animation: show_menu .3s ease-out forwards;
+  }
+/* 價錢放入區 */
+.database_price{
+    grid-column: 3/9;
+    grid-row: 2/10;
+}
+
+
+
+
+
+
+
+/* 輸入框美化 copy人家的 */
+
+*, :before, :after {
+    box-sizing: border-box;
+ }
+ .group {
+    position: relative;
+  margin-top: 45px;
+  margin-left: 5px;
+ }
+ input {
+    background: none;
+    color: #c6c6c6;
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 220px;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #c6c6c6;
+ }
+ input:focus {
+    outline: none;
+ }
+ input:focus ~ label, input:valid ~ label {
+    top: -14px;
+    font-size: 12px;
+    color: #d4e5bcec;
+ }
+ input:focus ~ .bar:before {
+    width: 220px;
+ }
+ label {
+    color: #c6c6c6;
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 300ms ease all;
+ }
+ .bar {
+    position: relative;
+    display: block;
+    width: 220px;
+ }
+ .bar:before {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 0px;
+    position: absolute;
+    background: #d4e5bce9;
+    transition: 300ms ease all;
+    left: 0%;
+ }
+ 
+
+
+
+
+
+
+ /* 動畫定義 */
+ @keyframes writing {
+    0% {transform: translateX(0px) translateY(0px) rotate(0deg); background-image: url('pen.png');}
+    10% {transform: translateX(10px) translateY(0px) rotate(-12deg); background-image: url('pen.png');}
+    20% {transform: translateX(20px) translateY(0px) rotate(0deg); background-image: url('pen.png');}
+    30% {transform: translateX(30px) translateY(0px) rotate(12deg);background-image: url('pen.png'); }
+    40% {transform: translateX(40px) translateY(0px) rotate(0deg); background-image: url('pen.png');}
+    50% {transform: translateX(50px) translateY(0px) rotate(-12deg); background-image: url('pen.png');}
+    60% {transform: translateX(60px) translateY(0px) rotate(0deg); background-image: url('pen.png');}
+    70% {transform: translateX(75px) translateY(0px) rotate(12deg); background-image: url('pen.png');}
+    80% {transform: translateX(90px) translateY(0px) rotate(0deg); background-image: url('pen.png');}
+    90% {transform: translateX(105px) translateY(0px) rotate(-12deg); background-image: url('pen.png');}
+    100% {transform: translateX(125px) translateY(0px) rotate(0deg); }
+}
+@keyframes erasing{
+    100% {transform: translateX(0px) translateY(0px) rotate(0deg); }
+    90% {transform: translateX(10px) translateY(0px) rotate(-12deg);background-image: url('erase.png'); }
+    80% {transform: translateX(20px) translateY(0px) rotate(0deg); background-image: url('erase.png');}
+    70% {transform: translateX(30px) translateY(0px) rotate(12deg);background-image: url('erase.png'); }
+    60% {transform: translateX(40px) translateY(0px) rotate(0deg); background-image: url('erase.png');}
+    50% {transform: translateX(50px) translateY(0px) rotate(-12deg); background-image: url('erase.png');}
+    40% {transform: translateX(60px) translateY(0px) rotate(0deg); background-image: url('erase.png');}
+    30% {transform: translateX(70px) translateY(0px) rotate(12deg); background-image: url('erase.png');}
+    20% {transform: translateX(80px) translateY(0px) rotate(0deg); background-image: url('erase.png');}
+    10% {transform: translateX(90px) translateY(0px) rotate(-12deg);background-image: url('erase.png'); }
+    0% {transform: translateX(100px) translateY(0px) rotate(0deg); background-image: url('erase.png');}
+}
+@keyframes show_onebyone {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+@keyframes disappear_onebyone {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+}
+@keyframes show_menu {
+    0% {    width: 0px;     height: 0px;}
+    100% {  height: 368px;  width: 230px;}
+}
+@keyframes close_menu {
+    100% {  width: 0px;     height: 0px;}
+    0% {    height: 368px;  width: 230px;}
+}
