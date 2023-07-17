@@ -28,11 +28,14 @@ body {
 #inputs_container{
     grid-column: 8/20;
     grid-row: 2/19;
-    border-radius: 20px;
+    border-radius: 30px;
     box-shadow: 10px 10px 20px white;
     backdrop-filter: blur(20px);
     border-width:10px;
     border-color: white;
+    /* 超過的話用滾輪 */
+    overflow-y : scroll;
+    overflow-x: visible;
 }
 
 
@@ -190,6 +193,8 @@ body {
 /* 計算按鈕 hover 會變開筆的gif */
 .caculate_btn:hover{
     background-image: url('pen_open.gif');
+    /* 點擊手手 */
+    cursor: pointer;
 }
 /* 新增一條計算框 hover 放大 */
 .add_food_btn:hover{
@@ -197,6 +202,8 @@ body {
     width: 43px;
     top: 13px;
     left: 44%;
+    /* 點擊手手 */
+    cursor: pointer;
 }
 
 
@@ -225,6 +232,7 @@ body {
     height: 70px;
     width: 80px;
     margin-left:-10px;
+    cursor: pointer;
 }
 /* class變erasing時 會從右邊搖搖晃晃往左 最後停在燈泡gif在左邊  */
 .erasing{
@@ -245,6 +253,7 @@ body {
 /* 燈泡hover時會變開筆gif */
 .erasing:hover{
     background-image: url('pen_open.gif');
+    cursor: pointer;
 }
 /* 點擊燈泡會把答案拆成<span>們 這些<sapn>用js控制delay 使它們一一展現或消失  */
 .show_result span {
@@ -265,9 +274,11 @@ body {
 
 /* 點擊名稱輸入框會跳出的資料庫menu美化 */
 .database_price_container{
-    /* 長寬 */
-    height: 369px;
-    width: 230px;
+    /* 長寬  一開始是0 點才展開*/
+    height: 0px;
+    width: 0px;
+    /* height: 363.3px;
+    width: 230px; */
     /* 背景 */
     background-image: url("menu_old.png");
     background-size: contain;
@@ -277,23 +288,67 @@ body {
     box-shadow: 10px 10px 20px rgba(230, 226, 150, 0.73);
     opacity: 0.93;
     backdrop-filter: blur(200px);
+    z-index: 3;
     /* 相對位置 */
     position: relative;
     top: 6px;
     right: 5px;
     /* grid 可以放價錢進去 */
     display: grid;
-    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10% ;
-    grid-template-rows:10% 10% 10% 10% 10% 10% 10% 10% 10% 10% ;
+    grid-template-columns: 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% ;
+    grid-template-rows:5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% ;
     /* 一開始不顯現 直到輸入框focus才改display=grid (用js) */
-    display: none;
-    /* 顯現動畫 */
-    animation: show_menu .3s ease-out forwards;
+    /* display: none; */
+    /* 顯現動畫 出現和消失不同速度 (消失要比較慢 怕點不到石材名稱) */
+    animation: var(--ani_name) .3s ease-out forwards;
   }
 /* 價錢放入區 */
 .database_price{
-    grid-column: 3/9;
-    grid-row: 2/10;
+    grid-column: 1/20;
+    grid-row: 5/17;
+    /* 字形 */
+    color: #6D4C40;
+    /* 滾輪 */
+    overflow-y: scroll;
+    overflow-x: hidden;
+    direction: rtl; /*  改動滾輪方向 将内容方向设置为从右到左 */
+}
+/* 把 項目的. 調回左邊 */
+.database_price ul{
+    direction: ltr; /* 恢复列表项的文本方向为从左到右 */
+}
+/* 每條價錢 */
+.database_price li{
+    margin-bottom: 14px;
+}
+/* 展示出來的名子 */
+.database_price .name_db{
+    /* 置左 */
+    float: left;
+    margin-right: 2px;
+    font-size: 17px;
+    transition: all 0.45s;
+}
+/* 展示出來的單位 */
+.database_price .unit_db{
+    /* 置左 */
+    float:left;
+    position: relative;
+    top: 7px;
+    font-size: 12px;
+    /* 字體最小12 在更小用縮放 */
+    transform: scale(0.75);
+}
+/* 展示出來的價錢 */
+.database_price .price_db{
+    /* 置右 */
+    float: right;
+    font-size: 13px
+}
+.database_price .name_db:hover{
+    transform: scale3d(1.4,1.4,2);
+    cursor: pointer;
+    margin: 4px;
 }
 
 
@@ -403,9 +458,9 @@ body {
 }
 @keyframes show_menu {
     0% {    width: 0px;     height: 0px;}
-    100% {  height: 368px;  width: 230px;}
+    100% {  height: 363.3px;  width: 230px;}
 }
 @keyframes close_menu {
     100% {  width: 0px;     height: 0px;}
-    0% {    height: 368px;  width: 230px;}
+    0% {    height: 363.3px;  width: 230px;}
 }

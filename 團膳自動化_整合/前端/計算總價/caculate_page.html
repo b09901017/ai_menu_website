@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <title>換算算鍋</title>
     <link rel="stylesheet" type="text/css" href="caculate_page.css">
+    <!-- 引入jquery語法 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="caculate_page.js" async></script>
 </head>
 
 
@@ -40,7 +43,7 @@
                 </div>
 
                 <!-- A-2-a2 名稱輸入(名稱選擇menu) -->
-                <div  class="group"> 
+                <div  class="group name_group"> 
                     <!-- 名稱輸入 -->
                     <input type="text" required onfocus="call_menu(this)" onblur="retreat_menu(this)">
                     <span class="highlight"></span>
@@ -48,13 +51,26 @@
                     <label>Name</label>
                     <!-- 名稱選擇menu -->
                     <div class="database_price_container" >
-                        <div class="database_price"></div>
+                        <!-- 放價錢的地方 -->
+                        <div class="database_price">
+                            <ul>
+                                <!-- <li><span class="name_db">芒果 </span><span class="unit_db"> 每斤</span><span class="price_db">$30元</span></li>
+                                <li><span class="name_db">芒果 </span><span class="unit_db"> 每斤</span><span class="price_db">$30元</span></li>
+                                <li><span class="name_db">芒果 </span><span class="unit_db"> 每斤</span><span class="price_db">$30元</span></li>
+                                <li><span class="name_db">芒果 </span><span class="unit_db"> 每斤</span><span class="price_db">$30元</span></li>
+                                <li><span class="name_db">芒果 </span><span class="unit_db"> 每斤</span><span class="price_db">$30元</span></li>
+                                <li><span class="name_db">芒果 </span><span class="unit_db"> 每斤</span><span class="price_db">$30元</span></li>
+                                <li><span class="name_db">芒果 </span><span class="unit_db"> 每斤</span><span class="price_db">$30元</span></li>
+                                <li><span class="name_db">芒果 </span><span class="unit_db"> 每斤</span><span class="price_db">$30元</span></li> -->
+                            </ul>
+                        </div>
+
                     </div> 
                 </div>
-
+                
                 <!-- A-2-a3 需求量 -->
-                <div class="group"> 
-                    <input type="text" required>
+                <div class="group needness_group"> 
+                    <input type="text" required inputmode="numeric" class="needness_input">
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>需求量</label>
@@ -78,10 +94,10 @@
                 <!-- A-2-a5 答案顯示 (按鈕gif + 所得價錢) -->
                 <!-- 按鈕gif  -->
                 <div class="caculate_button_container">
-                    <button onclick="cahnge_class(this)" class="caculate_btn" id="caculate_button_0"></button>
+                    <button class="caculate_btn" ></button>
                 </div>
                 <!-- 所得價錢 -->
-                <div class="show_result" id="show_result_0"> 357 元</div>
+                <div class="show_result" ></div>
 
             </div>
             <!-- 其中一條的計算框 用flex 讓 1類別 2名稱 3需求量 4單位 5答案  水平排列 end -->
