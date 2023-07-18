@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+
+    <input class="name_group">
+    <input class="name_group">
+    <input class="name_group">
+    <input class="name_group">
+    <input class="name_group">
+    <input class="name_group">
+    <input class="name_group">
+    <input class="name_group">
+    <input class="name_group">
+    <input class="name_group">
+    <input class="name_group">
+   
+ 
+
+</body>
+
+<script>
+
+    $(".name_group").on("keydown",function(){
+
+        const inputBoxes = $(".name_group")
+        // const currentIndex = inputBoxes.index(this);
+        if (event.keyCode === 38) {
+            event.preventDefault();
+            const currentIndex = inputBoxes.index(this);
+        const prevIndex = (currentIndex - 1 + inputBoxes.length) % inputBoxes.length;
+        inputBoxes.eq(prevIndex).focus()
+        }
+
+       
+    })
+   
+
+
+
+
+</script>
+
+</html>

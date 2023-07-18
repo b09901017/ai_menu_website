@@ -61,7 +61,7 @@
         const database_price_container = name_group.children(".database_price_container");
         const database_price = database_price_container.children(".database_price");
         const ulElement = database_price.children("ul");
-
+        
         // 獲取要插入的 ul 元素且先清空
         ulElement.html("");
 
@@ -82,7 +82,7 @@
             //插回去(在for迴圈裡面一個一個插)
             ulElement.append(liElement);
         }//for迴圈
-
+        console.log(class_container)
     }
 
 //製作把database放到menu上的函式end
@@ -96,7 +96,9 @@
 //當類別的下拉選單 onchange時 1 一勞永逸的使用fetch函式() 填充excel_col_data {colA:[] , colB:[] , colC:[] }等等會一直用
 //               onchange時  2 把database的資料放到menu上
 
-    $(".class_container select").on("change",function(){
+    //要在父元素上放監聽 當底下的".class_container select" 改變時觸發
+    $("#inputs_container").on("change",".class_container select",function(){
+
         //fetchData()現在是promise了等它跑完在執行下一步
         fetchData($(this)).then(() => {
 
@@ -136,24 +138,24 @@
 
 
 
-// 在輸入框左右跳
-    var inputFields = document.getElementsByTagName("input");
+// // 在輸入框左右跳
+//     var inputFields = document.getElementsByTagName("input");
 
-        for (var i = 0; i < inputFields.length; i++) {
-        inputFields[i].addEventListener("keydown", function(event) {
-            if (event.keyCode === 39) { // 右鍵
-            var currentIndex = Array.from(inputFields).indexOf(this);
-            var nextIndex = (currentIndex + 1) % inputFields.length;
-            inputFields[nextIndex].focus();
-            event.preventDefault();
-            } else if (event.keyCode === 37) { // 左鍵
-            var currentIndex = Array.from(inputFields).indexOf(this);
-            var prevIndex = (currentIndex - 1 + inputFields.length) % inputFields.length;
-            inputFields[prevIndex].focus();
-            event.preventDefault();
-            }
-        });
-        }
+//         for (var i = 0; i < inputFields.length; i++) {
+//         inputFields[i].addEventListener("keydown", function(event) {
+//             if (event.keyCode === 39) { // 右鍵
+//             var currentIndex = Array.from(inputFields).indexOf(this);
+//             var nextIndex = (currentIndex + 1) % inputFields.length;
+//             inputFields[nextIndex].focus();
+//             event.preventDefault();
+//             } else if (event.keyCode === 37) { // 左鍵
+//             var currentIndex = Array.from(inputFields).indexOf(this);
+//             var prevIndex = (currentIndex - 1 + inputFields.length) % inputFields.length;
+//             inputFields[prevIndex].focus();
+//             event.preventDefault();
+//             }
+//         });
+//         }
 
 
 
@@ -279,7 +281,7 @@
             </div>
 
             <!-- A-2-a2 名稱輸入(名稱選擇menu) -->
-            <div  class="group"> 
+            <div  class="group name_group"> 
                 <!-- 名稱輸入 -->
                 <input type="text" required onfocus="call_menu(this)" onblur="retreat_menu(this)">
                 <span class="highlight"></span>
@@ -287,12 +289,18 @@
                 <label>Name</label>
                 <!-- 名稱選擇menu -->
                 <div class="database_price_container" >
-                    <div class="database_price"></div>
-                </div> 
+                    <!-- 放價錢的地方 -->
+                    <div class="database_price">
+                        <ul>
+                        
+                        </ul>
+                    </div>
+
+                </div>
             </div>
 
             <!-- A-2-a3 需求量 -->
-            <div class="group"> 
+            <div class="group needness_group"> 
                 <input type="text" required>
                 <span class="highlight"></span>
                 <span class="bar"></span>
@@ -317,10 +325,10 @@
             <!-- A-2-a5 答案顯示 (按鈕gif + 所得價錢) -->
             <!-- 按鈕gif  -->
             <div class="caculate_button_container">
-                <button onclick="cahnge_class(this)" class="caculate_btn" id="caculate_button_0"></button>
+                <button  class="caculate_btn" ></button>
             </div>
             <!-- 所得價錢 -->
-            <div class="show_result" id="show_result_0"> 357 元</div>
+            <div class="show_result" ></div>
 
         </div>
         <!-- A-2-a 其中一條的計算框 用flex 讓 1類別 2名稱 3需求量 4單位 5答案  水平排列  -->
@@ -431,7 +439,7 @@
 
 
 // 點擊menu中的食材 食材放到name上 並且 focus 到 需求量 // 一樣要先鎖定在父元素監聽
-    $('.database_price').on('click','.name_db', function() {
+    $('#inputs_container').on('click','.name_db', function() {
 
         //取得所點的內容
         name_got_clicked = $(this).text();
@@ -462,8 +470,8 @@
 
 // 名稱選擇menu被點擊時不會close (停留在focus 但是停留一下 又被我放到needness去focus了)~ 
 
-    // 點擊 <div> 區域時阻止 blur 事件
-    $(".database_price_container").on("mousedown", function(event) {
+    // 點擊 <div> 區域時阻止 blur 事件 // 一樣要先鎖定在父元素監聽
+    $('#inputs_container').on("mousedown", ".database_price_container",function(event) {
         // 阻止 blur 事件的觸發 原本mousedown的Default 就是觸發blur~
         event.preventDefault();
         // 在這裡可以執行點擊 <div> 區域後的其他操作
@@ -475,13 +483,15 @@
 
 
 
-//當focus到需求量輸入匡時，可以focus道單位 接著按enter就可以 用上下調控單位
-    $(".group .needness_input").on("keydown",function(event){
-        //按上或下
-        if (event.keyCode === 38 || event.keyCode === 40) {
-            $(".unit_container select").focus()
-        }    
-    })
+// //當focus到需求量輸入匡時，可以focus道單位 接著按enter就可以 用上下調控單位 // 一樣要先鎖定在父元素監聽
+//     $('#inputs_container').on("keydown",".needness_group input",function(event){
+//         //按上或下
+//         if (event.keyCode === 38 || event.keyCode === 40) {
+//             //找到附近的單位選單
+//             near_unit = $(this).parent().siblings(".unit_container").children("select");
+//             near_unit.focus()
+//         }    
+//     })
 
 
 
@@ -692,8 +702,8 @@
 
 
 
-//當計算紐按下的時候，我要先計算好結果 再放到show_result中 在改變class
-    $('.caculate_btn').on('click',function(){
+//當計算紐按下的時候，我要先計算好結果 再放到show_result中 在改變class //在父層監聽
+    $('#inputs_container').on('click',".caculate_btn",function(){
         
         //讓class = writting (就是準備回來的橡皮擦 ) 的時候 不用在執行一次計算
         if($(this).hasClass("caculate_btn") || $(this).hasClass("erasing")){
@@ -707,6 +717,270 @@
     })
 
 //當計算紐按下的時候，我要先計算好結果 再放到show_result中 在改變class
+
+
+
+
+
+
+//當在需求量輸入框被focus時 按下enter 可以直接啟動動畫 展示答案
+
+    $('#inputs_container').on("keydown",".needness_group input",function(event){
+        //按enter
+        if (event.keyCode === 13 ) {
+
+            //找到附近的單位選單
+            near_btn = $(this).parent().siblings(".caculate_button_container").children("button");
+
+            //讓class = writting (就是準備回來的橡皮擦 ) 的時候 不用在執行一次計算
+            if(near_btn.hasClass("caculate_btn") || near_btn.hasClass("erasing")){
+                //先計算好結果 再放到show_result中
+                caculate_and_show(near_btn);
+            }
+                    
+            //等1s後再改變class //避免還沒算完(因為要去後端拿資料)就動
+            setTimeout(CahngeClass_SpanSlice_DelayOneByOne(near_btn),1000)
+                
+        }    
+    })
+
+
+//當單位的選單改變時(代表使用者選好了單位) 這時候吧focus回到 需求量的輸入框 這樣根據上面一個的功能 按enter就可以顯示答案
+
+    $('#inputs_container').on("change",".unit_container select",function(){
+
+        //找到附近的需求輸入框
+        near_needness_input = $(this).parent().siblings(".needness_group").children("input")
+        //focus它
+        near_needness_input.focus()
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+// ----------  上下左右在輸入框之間跳  --------------------------------------------------------------------------------------------------------------------------
+
+//按上下可以讓使用者在不同的名稱輸入框來回跳(使用者可能想一列一列的 一次先填)
+//按左可以跳到類別選單  按右可以跳到需求選單
+    $('#inputs_container').on("keydown",".name_group input",function(event){
+        
+        //取得所有名稱輸入框
+            const inputBoxes = $(".name_group input")
+        //現在所在的輸入框index
+            const currentIndex = inputBoxes.index(this);
+
+        // 按下上箭头，焦点跳到上一个名稱输入框
+            if (event.keyCode === 38) {
+            // 阻止默认行为（避免滚动）
+                event.preventDefault(); // 阻止默认行为（避免滚动）
+            //進行循環切換，即在最後一個輸入框按下下鍵時，切換到第一個輸入框，
+                const prevIndex = (currentIndex - 1 + inputBoxes.length) % inputBoxes.length;
+            //eq() 是 jQuery 中用于获取匹配元素集合中特定索引位置的元素的方法
+                inputBoxes.eq(prevIndex).focus();
+                console.log(inputBoxes)
+            }
+        
+        // 按下下箭头，焦点跳到下一个输入框
+            if (event.keyCode === 40) {
+            // 阻止默认行为（避免滚动）
+                event.preventDefault(); // 阻止默认行为（避免滚动）
+            //同理，在第一個輸入框按下上鍵時，切換到最後一個輸入框。
+                const nextIndex = (currentIndex + 1) % inputBoxes.length;
+            //inputBoxes.eq(prevIndex) 来获取在 prevIndex 索引位置的输入框元素。
+                inputBoxes.eq(nextIndex).focus();
+                }
+
+        // 按下左箭头，焦点跳到上一个類別選單
+            if (event.keyCode === 37) {
+            // 阻止默认行为（避免滚动）
+                event.preventDefault(); 
+            //找到附近的類別選單
+                near_class = $(this).parent().siblings(".class_container").children("select");
+            //跳到類別選單上
+                near_class.focus()
+            }
+
+        // 按下右箭头，焦点跳到下一個需求輸入框
+            if (event.keyCode === 39) {
+            // 阻止默认行为（避免滚动）
+                event.preventDefault(); 
+            //找到附近的類別選單
+                near_needness_input = $(this).parent().siblings(".needness_group").children("input");
+            //跳到類別選單上
+                near_needness_input.focus()
+            }
+    }); 
+//按上下可以讓使用者在不同的名稱輸入框來回跳(使用者可能想一列一列的 一次先填)
+//按左可以跳到類別選單  按右可以跳到需求選單 end
+
+//按上下可以讓使用者在不同的需求輸入框來回跳(使用者可能想一列一列的 一次先填)
+//按左回到名稱輸入框 按右跳到單位選單
+    $('#inputs_container').on("keydown",".needness_group input",function(event){
+        
+        //取得所有名稱輸入框
+            const inputBoxes = $(".needness_group input")
+        //現在所在的輸入框index
+            const currentIndex = inputBoxes.index(this);
+
+        // 按下上箭头，焦点跳到上一个需求输入框
+            if (event.keyCode === 38) {
+             // 阻止默认行为（避免滚动）
+                event.preventDefault();
+            //進行循環切換，即在最後一個輸入框按下下鍵時，切換到第一個輸入框，
+                const prevIndex = (currentIndex - 1 + inputBoxes.length) % inputBoxes.length;
+            //eq() 是 jQuery 中用于获取匹配元素集合中特定索引位置的元素的方法
+                inputBoxes.eq(prevIndex).focus();
+            }
+        
+        // 按下下箭头，焦点跳到下一个需求输入框
+            if (event.keyCode === 40) {
+            // 阻止默认行为（避免滚动）
+                event.preventDefault(); 
+            //同理，在第一個輸入框按下上鍵時，切換到最後一個輸入框。
+                const nextIndex = (currentIndex + 1) % inputBoxes.length;
+            //inputBoxes.eq(prevIndex) 来获取在 prevIndex 索引位置的输入框元素。
+                inputBoxes.eq(nextIndex).focus();
+            }
+        
+        // 按下左箭头，焦点跳到上一个名稱輸入框
+            if (event.keyCode === 37) {
+                // 阻止默认行为（避免滚动）
+                    event.preventDefault(); 
+                //找到附近的類別選單
+                    near_name_input = $(this).parent().siblings(".name_group").children("input");
+                //跳到類別選單上
+                    near_name_input.focus()
+                }
+        
+        // 按下右箭头，焦点跳到下一個單位選單
+            if (event.keyCode === 39) {
+                // 阻止默认行为（避免滚动）
+                    event.preventDefault(); 
+                //找到附近的類別選單
+                    near_unit = $(this).parent().siblings(".unit_container").children("select");
+                //跳到類別選單上
+                    near_unit.focus()
+                }
+    }); 
+//按上下可以讓使用者在不同的需求輸入框來回跳(使用者可能想一列一列的 一次先填)
+//按左回到名稱輸入框 按右跳到單位選單
+
+//按上下可以讓使用者在不同的類別選單來回跳 ( 要記得preventDefult 就是選單按上下會自動改變選擇 ) (使用者可能想一列一列的 一次先填)
+//按左回到單位選單 按右跳到名稱輸入框
+    $('#inputs_container').on("keydown",".class_container select",function(event){
+            
+        //取得所有類別選單
+            const inputBoxes = $(".class_container select")
+        //現在所在的輸入框index
+            const currentIndex = inputBoxes.index(this);
+
+        // 按下上箭头，焦点跳到上一个類別選單
+            if (event.keyCode === 38) {
+            // 阻止默认行为（避免滚动）
+                event.preventDefault();
+            //進行循環切換，即在最後一個輸入框按下下鍵時，切換到第一個輸入框，
+                const prevIndex = (currentIndex - 1 + inputBoxes.length) % inputBoxes.length;
+            //eq() 是 jQuery 中用于获取匹配元素集合中特定索引位置的元素的方法
+                inputBoxes.eq(prevIndex).focus();
+            }
+        
+        // 按下下箭头，焦点跳到下一个類別選單
+            if (event.keyCode === 40) {
+            // 阻止默认行为（避免滚动）
+                event.preventDefault(); 
+            //同理，在第一個輸入框按下上鍵時，切換到最後一個輸入框。
+                const nextIndex = (currentIndex + 1) % inputBoxes.length;
+            //inputBoxes.eq(prevIndex) 来获取在 prevIndex 索引位置的输入框元素。
+                inputBoxes.eq(nextIndex).focus();
+            }
+        
+        // 按下左箭头，焦点跳到回到單位選單
+            if (event.keyCode === 37) {
+                // 阻止默认行为（避免滚动）
+                    event.preventDefault(); 
+                //找到附近的類別選單
+                    near_unit = $(this).parent().siblings(".unit_container").children("select");
+                //跳到類別選單上
+                    near_unit.focus()
+                }
+        
+        // 按下右箭头，焦点跳到下一個單位選單
+            if (event.keyCode === 39) {
+                // 阻止默认行为（避免滚动）
+                    event.preventDefault(); 
+                //找到附近的類別選單
+                    near_name_input = $(this).parent().siblings(".name_group").children("input");
+                //跳到類別選單上
+                    near_name_input.focus()
+                }
+    }); 
+//按上下可以讓使用者在不同的類別輸入框來回跳(使用者可能想一列一列的 一次先填)
+//按右回到名稱輸入框 按左跳到單位選單
+
+//按上下可以讓使用者在不同的單位選單來回跳 ( 要記得preventDefult 就是選單按上下會自動改變選向 ) (使用者可能想一列一列的 一次先填)
+//按左回到需求輸入框 按右跳回類別選單
+$('#inputs_container').on("keydown",".unit_container select",function(event){
+            
+    //取得所有類別選單
+        const inputBoxes = $(".unit_container select")
+    //現在所在的輸入框index
+        const currentIndex = inputBoxes.index(this);
+
+    // 按下上箭头，焦点跳到上一个單位選單
+        if (event.keyCode === 38) {
+        // 阻止默认行为（避免滚动）
+            event.preventDefault();
+        //進行循環切換，即在最後一個輸入框按下下鍵時，切換到第一個輸入框，
+            const prevIndex = (currentIndex - 1 + inputBoxes.length) % inputBoxes.length;
+        //eq() 是 jQuery 中用于获取匹配元素集合中特定索引位置的元素的方法
+            inputBoxes.eq(prevIndex).focus();
+        }
+    
+    // 按下下箭头，焦点跳到下一个單位選單
+        if (event.keyCode === 40) {
+        // 阻止默认行为（避免滚动）
+            event.preventDefault(); 
+        //同理，在第一個輸入框按下上鍵時，切換到最後一個輸入框。
+            const nextIndex = (currentIndex + 1) % inputBoxes.length;
+        //inputBoxes.eq(prevIndex) 来获取在 prevIndex 索引位置的输入框元素。
+            inputBoxes.eq(nextIndex).focus();
+        }
+    
+    // 按下左箭头，焦点跳到回到需求輸入框
+        if (event.keyCode === 37) {
+            // 阻止默认行为（避免滚动）
+                event.preventDefault(); 
+            //找到附近的需求輸入框
+                near_unit = $(this).parent().siblings(".needness_group").children("input");
+            //跳到需求輸入框
+                near_unit.focus()
+            }
+    
+    // 按下右箭头，焦点跳到下一個類別選單
+        if (event.keyCode === 39) {
+            // 阻止默认行为（避免滚动）
+                event.preventDefault(); 
+            //找到附近的類別選單
+                near_name_input = $(this).parent().siblings(".class_container").children("select");
+            //跳到類別選單上
+                near_name_input.focus()
+            }
+}); 
+//按上下可以讓使用者在不同的需求輸入框來回跳(使用者可能想一列一列的 一次先填)
+//按左回到名稱輸入框 按右跳到單位選單
+
+// ----------  上下左右在輸入框之間跳  --------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 
 
