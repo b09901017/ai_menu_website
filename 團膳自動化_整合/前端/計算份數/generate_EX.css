@@ -16,6 +16,10 @@ body{
     display: grid;
     grid-template-columns: repeat(20, 1fr);
     grid-template-rows: repeat(20, 1fr);
+
+    /* 點開頭圖片後 讓它延伸 */
+    /* width: 350vh; */
+    /* grid-template-columns: repeat(40, 1fr);   */
 }
 
 
@@ -270,7 +274,7 @@ background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 
 
 /* <!-- 份數表格 --> */
 #EX_table{
-  grid-column: 12/19; 
+  grid-column: 12/22; 
   grid-row: 2/20; 
   /* 分成20*20 */
   display: grid;
@@ -390,4 +394,60 @@ background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 
 /* error 的內容排版 */
 .many_ex div p{
   margin-left: 10px;
+}
+
+
+
+/* <!-- ############################################ 右上 ############################################ -->
+<!-- 份配份數到不同餐次的表格 AETMT --> */
+#Allocate_EX_to_meals_table{
+  grid-column: 23/40; 
+  grid-row: 2/20; 
+  /* 分成20*20 */
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  /* 一開始不顯現 */
+  display: none;
+}
+/* 底下的所有input */
+#Allocate_EX_to_meals_table input{
+  background-color: transparent;
+  border: none;
+  height: 60%;
+  width: 60%;
+}
+/* 表格排版 */
+.AETMT_food_class_text{
+  grid-column: 1/3; 
+  grid-row: 1/3; 
+}
+.AETMT_milk_text{
+  grid-column: 3/5;
+  grid-row: 1/2; 
+}
+.AETMT_feg_text{
+  grid-row: 1/3; 
+}
+.AETMT_fruit_text{
+  grid-row: 1/3; 
+}
+.AETMT_grains_text{
+  grid-row: 1/3; 
+}
+.AETMT_egg_text{
+  grid-column: 8/11; 
+  grid-row: 1/2; 
+}
+.AETMT_nuts_text{
+  grid-row: 1/3; 
+}
+.AETMT_susugar_text{
+  grid-row: 1/3; 
+}
+.AETMT_EX_text{
+  grid-column: 1/3;  
+}
+.AETMT_meals_text{
+  grid-row: 4/11; 
 }

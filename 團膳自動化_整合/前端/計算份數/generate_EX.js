@@ -14,6 +14,12 @@
       display : 'none'
     })
 
+    //畫面可以向右延伸
+    $('#top_container').css({
+      width: '330vh',
+      gridTemplateColumns: 'repeat(40, 1fr)'
+    })
+
     // 表格顯現
     $('#slp_ratio_table').css({
       display : 'grid'
@@ -34,6 +40,11 @@
       display : 'grid'
     })
     
+    //分配餐次表格出現
+    $('#Allocate_EX_to_meals_table').css({
+      display : 'grid'
+    })
+
   })
 // ############################## 點擊開頭圖片 就會跑上去並顯示表格 #####################################
 
