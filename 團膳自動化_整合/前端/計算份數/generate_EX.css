@@ -1,0 +1,393 @@
+
+
+
+/* 背景 */
+body{
+    background-color: #F5EFD7;
+}
+
+
+
+
+ /* 上半部的容器*/
+#top_container{
+    height: 100vh;
+    /* 分成20*20 */
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+}
+
+
+
+
+/* 開頭圖片 */
+#main_icon{
+    /* 所占格子 */
+    grid-column: 9/13; 
+    grid-row: 5/11; 
+    /* 根據格子的大小自動縮放，並保持其原有的長寬比例，不會撐大格子 */
+    max-width: 100%;
+    max-height: 100%;
+
+    transition: all 1.5s ease;
+}
+#big_bite{
+    /* 所占格子 */
+    grid-column: 7/19; 
+    grid-row:10/15; 
+    margin-top: 3px;
+    /* 根據格子的大小自動縮放，並保持其原有的長寬比例，不會撐大格子 */
+    max-width: 150%;
+    max-height: 100%;
+
+    transition: all 1.5s ease;
+}
+#food_drink{
+    /* 所占格子 */
+    grid-column: 10/14; 
+    grid-row: 13/15; 
+    margin-top: 2px;
+    margin-left: 24px;
+    /* 根據格子的大小自動縮放，並保持其原有的長寬比例，不會撐大格子 */
+    max-width: 100%;
+    max-height: 100%;
+
+    transition: all .5s ease;
+}
+/* 開頭圖片 hover */
+#main_icon:hover{
+    transform: scale3d(1.3,1.3,5);
+    margin-bottom: 10px;
+}
+#big_bite:hover{
+    transform: scale3d(1.3,1.3,5);
+}
+#food_drink:hover{
+    transform: scale3d(1.3,1.3,5);
+}
+
+
+
+
+
+
+/* 糖(s)脂(l)蛋(p)比例表格 */
+#slp_ratio_table{
+    /* background-color: aquamarine; */
+    /* 所占格子 */
+    grid-column: 2/11; 
+    grid-row: 4/12; 
+    /* 也分格 */
+    /* 分成20*20 */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    /* 一開始不顯現 */
+    display: none;
+    transition: all 1s ease;
+
+}
+/* 統一的格式 */
+.table_text , .table_num{
+    display: flex;
+    justify-content: center; /* 將內容水平置中 */
+    align-items: center; /* 將內容垂直置中 */
+    /* 顯示框限 */
+    border: 1px solid black;
+}
+/* 表格排版 */
+#total_kcal_container{
+    grid-column: 2/5; 
+    grid-row: 1/2; 
+    position: relative;
+    
+}
+/* 大卡輸入 */
+#total_kcal{
+  /* 將內容水平置中 */
+  text-align:center; 
+  background-color: transparent;
+  /* 只要下框線有顏色 */
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom-color: #6f5335;
+  height: 30%;
+  width: 10%;
+  margin-right: 5px;
+}
+/* 誤差輸入 */
+#error{
+  /* 將內容水平置中 */
+  text-align: center; 
+  background-color: transparent;
+  border: none;
+  height: 30%;
+  width: 15%;
+}
+
+
+
+
+
+
+/* 滑桿桿美化 */
+.slider-container {
+    grid-column: 2/11; 
+    grid-row: 13/14; 
+    width: 600px;
+    height: 30px;
+    /* 一開始不顯現 */
+    display: none;
+  }
+  .slider{
+    width: 500px;
+    height: 3px;
+    border-radius : 30px;
+    background-color: #738678;
+  }
+  .node_ref_head{
+    display : inline;
+    border-radius : 50%;
+    height : 30px;
+    width : 30px;
+    position: relative;
+    bottom : 50%;
+    left:0px;
+    background-color: black;
+  }
+  .node1{
+    border-radius : 50%;
+    height : 30px;
+    width : 30px;
+    position: relative;
+    bottom : 50%;
+    left:120px;
+    background-color: #e4af3a;
+  }
+  .node2{
+    border-radius : 50%;
+    height : 30px;
+    width : 30px;
+    position: relative;
+    bottom : 150%;
+    left:300px;
+    background-color: #6f5335;
+  }
+  .node_ref_end{
+    display : inline;
+    border-radius : 50%;
+    height : 30px;
+    width : 30px;
+    position: relative;
+    bottom : 250%;
+    left:500px;
+    background-color: black;
+  }
+  .node1:hover,.node2:hover{
+    cursor: e-resize;
+  }
+
+
+
+
+
+/* <!-- ai run 計算鈕 美化-->  copy 人家的*/
+.ai_run_contaniner{
+  grid-column: 3/9; 
+  grid-row: 15/18; 
+  /* 一開始不顯現 */
+  display: none;
+}
+.custom-btn {
+  /* width: 130px;
+  height: 40px; */
+  width: 390px;
+  height: 120px;
+  color: #e6f9f4;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-family: 'Permanent Marker';
+  font-weight: 300;
+  font-size: 45px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+.btn-5 {
+  /* width: 130px;
+  height: 40px; */
+  width: 390px;
+  height: 120px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+  /* background: rgb(255,27,0);
+background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%); */
+background: rgb(247,150,192);
+background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 100%);
+}
+.btn-5:hover {
+  color: #f0094a;
+  background: transparent;
+   box-shadow:none;
+}
+.btn-5:before,
+.btn-5:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #f0094a;
+  box-shadow:
+   -1px -1px 5px 0px #fff,
+   7px 7px 20px 0px #0003,
+   4px 4px 5px 0px #0002;
+  transition:400ms ease all;
+}
+.btn-5:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn-5:hover:before,
+.btn-5:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
+
+/* <!-- 份數表格 --> */
+#EX_table{
+  grid-column: 12/19; 
+  grid-row: 2/20; 
+  /* 分成20*20 */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  /* 一開始不顯現 */
+  display: none;
+
+  /* 父層需要設置為相對定位，以便絕對定位的子層相對於父層定位  為了讓 error 不會影響排版 */
+  position: relative;
+}
+/* 表格排版 */
+/* 名稱 行一 */
+.food_class_text{
+  grid-column: 1/3; 
+  grid-row: 1/2; 
+}
+.ex_text{
+  grid-column: 3/4; 
+  grid-row: 1/2; 
+}
+.many_ex_text{
+  grid-column: 4/8; 
+  grid-row: 1/2;
+}
+/* 奶類 行二三 */
+.milk_text{
+  grid-column: 1/2; 
+  grid-row: 2/4;
+}
+/* 蔬菜 水果 無榖雜糧 */
+.feg_text{
+  grid-column: 1/3;
+}
+.fruit_text{
+  grid-column: 1/3;
+}
+.grains_text{
+  grid-column: 1/3;
+}
+/* 豆蛋源肉類 789行 */
+.egg_text{
+  grid-column: 1/2; 
+  grid-row: 7/10;
+}
+/* 堅果 糖  */
+.nuts_text{
+  grid-column: 1/3;
+}
+.susugar_text{
+  grid-column: 1/3;
+}
+/* 份數表格底下的所有輸入 */
+#EX_table input{
+  background-color: transparent;
+  border: none;
+  height: 60%;
+  width: 60%;
+}
+/* 份數表格的好多份數 */
+.many_ex_container{
+  grid-column: 4/8; 
+  grid-row: 2/12;
+  /* 分成1*10 */
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  /* 超過的話用滾輪 */
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.many_ex{
+  /* 不換行 */
+  white-space: nowrap;
+  /* 顯示框限 */
+  border: 1px solid black;
+  /* 置中 */
+  display: flex;
+  justify-content: center; /* 將內容水平置中 */
+  align-items: center; /* 將內容垂直置中 */
+
+  /* 父層需要設置為相對定位，以便絕對定位的子層相對於父層定位  為了讓 error 不會影響排版
+  position: relative; */
+
+}
+/* 份數的text */
+.many_ex span{
+  margin: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform .3s;
+}
+
+/* 懸浮顯示ｅｒｒｏｒ */
+.many_ex div{
+  /* display: inline; */
+  height: 140px;
+  width: 180px;
+  background-color: #1f7a828d;
+  border-radius: 40px 200% 200% 40px;
+  z-index: 3;
+  /* 毛玻璃背景 */
+  backdrop-filter: blur(8px);
+  /* border-color: rgb(11, 13, 14);
+  border-width: 10px; */
+  /* 陰影 */
+  box-shadow: 25px 50px 50px 10px rgba(0,0,0,0.5);
+  font-size: 18px;
+  font-weight: 600;
+  color: #e2eeeb;
+  /* 漸層 */
+  /* background: rgb(247,150,192);
+  background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 100%); */
+  /* 設置子層為絕對定位  這樣它會去找具有 position: relative;的父層去絕對定位自己的位置  (找到#EX_table)*/
+  position: absolute; 
+}
+/* error 的內容排版 */
+.many_ex div p{
+  margin-left: 10px;
+}

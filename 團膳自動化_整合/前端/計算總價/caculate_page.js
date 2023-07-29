@@ -75,10 +75,17 @@
             const db_price= excel_col_data.colB[index];
             const db_unit= excel_col_data.colC[index];
 
-            //CREAT 新的元素 並定義元素內容
-            const liElement = document.createElement("li");
-            liElement.innerHTML = `<span class="name_db">${db_name}</span><span class="unit_db">每${db_unit}</span><span class="price_db">$${db_price}元</span>`;
+            // //CREAT 新的元素 並定義元素內容
+            // const liElement = document.createElement("li");
+            // liElement.innerHTML = `<span class="name_db">${db_name}</span><span class="unit_db">每${db_unit}</span><span class="price_db">$${db_price}元</span>`;
         
+            //CREAT 新的元素 並定義元素內容 (想呈現每公斤多少~)
+            const liElement = document.createElement("li");
+            // 等於換算需求一公斤 多少價錢
+            let db_price_every_kg = convert_needness_to_price( 1 ,'公斤',db_unit,db_price)
+            db_price_every_kg = db_price_every_kg.toFixed(1) //取道小數點後一位
+            liElement.innerHTML = `<span class="name_db">${db_name}</span><span class="unit_db">每公斤</span><span class="price_db">$${db_price_every_kg}元</span>`;
+
             //插回去(在for迴圈裡面一個一個插)
             ulElement.append(liElement);
         }//for迴圈
@@ -172,7 +179,7 @@
 
             //呼叫erasing 函式 把357元 一個字一個字用span包起來 一個一個都設置delay
             erasing(clicked_caculate_btn)
-            console.log("writing")
+            console.log("remove writing add erasing")
         }
         else if(clicked_caculate_btn.hasClass('erasing')){
             
@@ -181,7 +188,7 @@
 
             ////呼叫wrutting 函式 把357元 一個字一個字用span包起來 一個一個都設置delay
             writing(clicked_caculate_btn)
-            console.log("erasing")
+            console.log("remove erasing add writing")
         }
         else{
             //移除caculate_btn 改成writing
@@ -189,7 +196,7 @@
 
             ////呼叫wrutting 函式 把357元 一個字一個字用span包起來 一個一個都設置delay
             writing(clicked_caculate_btn)
-            console.log("caculate_btn")
+            console.log("remove caculate_btn add writing")
         }
     }
 //改變class 顯示答案的按鈕的class在 writting 和 erasing 中切換 並呼叫一一分割(span)一一delay 函式 end
@@ -204,21 +211,22 @@
         
         //clicked_caculate_btn 傳入 $(this) 是被點擊的btn
         const show_result = clicked_caculate_btn.parent().siblings(".show_result")
-
+        
         // 将文本内容"文字"拆分为每个字(用""隔開)
         const letters = show_result.text().split('');
-
+        
         // 用<span>包裹每个字，并重新设置HTML内容 //字串把每個字元都包上<span> 放到新的newHtml中
         let newHtml = '';
         letters.forEach(character => {
           newHtml += `<span>${character}</span>`;
         });
-          
+        
         //把包好的放入原本的裡面
         show_result.html(newHtml);
-
+        
         //對於<div class="show_result"> 底下的所有span 都給予編號 並依據編號設置delay 和其他的東西~
         show_result.children("span").each(function(index) {
+            
             // 設定delay = n*0.3 s // 改使用的動畫 //透明度改從0開始~1
             $(this).css(
                 {
@@ -330,13 +338,36 @@
             <!-- 所得價錢 -->
             <div class="show_result" ></div>
 
+            <!-- 刪除按鈕 -->
+            <img class="delete" src="minus.png">
+
         </div>
         <!-- A-2-a 其中一條的計算框 用flex 讓 1類別 2名稱 3需求量 4單位 5答案  水平排列  -->
         `
     //當按下新增按鈕就appendChild
         function creat_new_input(){
-            $("#creat_new_input_button_container").before(new_food_input)
+            $(".add_food_btn").before(new_food_input)
         }
+
+
+
+
+
+
+
+
+
+//刪掉一個計算框
+    $('#inputs_container').on('click','.delete', function() {
+        $(this).parent().remove();
+    })
+
+
+
+
+
+
+
 
 
 
@@ -652,7 +683,21 @@
 
 
 
+//-----------------------------------儲存計算出來的結果 (for 算最終總價 和 傳到後端)-----------------------------------------
+            var results = [];
+            var total_price=0.0;
+//-----------------------------------儲存計算出來的結果---------------------------------------------------------------------
 
+
+//-----------------------------------儲存輸入框的內容 (for 傳到後端)-----------------------------------------
+            var meal_name = ''
+            var class_inputs = [];
+            var name_inputs = [];
+            var needness_inputs = [];
+            var unit_inputs = [];
+            var prices_db = [];
+            var  units_db = [];
+//-----------------------------------儲存輸入框的內容---------------------------------------------------------
 
 
 
@@ -663,32 +708,61 @@
     function caculate_and_show(clicked_caculate_btn){
     
         // 提出input值 //放裡面是為了用到$(this)
+        const class_select = clicked_caculate_btn.parent().siblings(".class_container").children("select");  //fetch(吃變化的class_select)
+        const input_class=clicked_caculate_btn.parent().siblings(".class_container").children("select").val();
         const input_name=clicked_caculate_btn.parent().siblings(".name_group").children("input").val();
         const input_unit=clicked_caculate_btn.parent().siblings(".unit_container").children("select").val();
         const input_needness=clicked_caculate_btn.parent().siblings(".needness_group").children("input").val();
         // 提出input值
+        
+        
+        //先fetchdata (不然當按下計算總價 雖然fetch很多次 但excel_col_data只會保存最後一個的結果) 再執行原本要執行的東東 提出db的值...儲存輸入框的內容 ...把值儲存到 results [] 裡 等等
+            fetchData(class_select).then(() => {
 
-        //提出db的值
-        let colA_length = excel_col_data["colA"].length;  //A列長度
-        let colA = excel_col_data["colA"] ;                 //A列的值["","",""...]
-        let col_index = 0 ;                                 //所求名字所在的index   
-        for(i=0;i<=colA_length;i++){                       //翻找和input_name相同名稱的index
-            if(colA[i]==input_name){
-            col_index = i;
-            break
-            }
-        }
-        const db_price=excel_col_data["colB"][col_index];  //excel_col_data = {"colA":[],"colB":[],"colC":[]}
-        const db_unit=excel_col_data["colC"][col_index];   //excel_col_data[colC] = ["","",""...]
-        //提出db的值
+                //再提出db的值
+                let colA_length = excel_col_data["colA"].length;  //A列長度
+                let colA = excel_col_data["colA"] ;                 //A列的值["","",""...]
+                let col_index = 0 ;                                 //所求名字所在的index   
+                for(i=0;i<=colA_length;i++){                       //翻找和input_name相同名稱的index
+                    if(colA[i]==input_name){
+                    col_index = i;
+                    break
+                    }
+                }
+    
+                const db_price=excel_col_data["colB"][col_index];  //excel_col_data = {"colA":[],"colB":[],"colC":[]}
+                const db_unit=excel_col_data["colC"][col_index];   //excel_col_data[colC] = ["","",""...]
+                //提出db的值
 
-        //呼叫換算函式 // 把換算出來的值存起來 //取到小數點第三位
-        result_price = convert_needness_to_price(input_needness,input_unit,db_unit,db_price). toFixed(3); 
+                // 傳到後端前~ 把資料庫的價格都換成 每公斤多少 ( 使用者要求 )         
+                    let db_price_every_kg = convert_needness_to_price( 1 ,'公斤',db_unit,db_price)// 等於換算需求一公斤 多少價錢
+                    db_price_every_kg = db_price_every_kg.toFixed(1) //取道小數點後一位
 
-        //放到show_result中
-        const show_result = clicked_caculate_btn.parent().siblings(".show_result")
-        show_result.html("$"+result_price+"元")
-        console.log(show_result.html())
+                //-----------------------------------儲存輸入框的內容 (for 傳到後端)-----------------------------------------
+                    class_inputs.push(input_class);
+                    name_inputs.push(input_name);
+                    needness_inputs.push(input_needness);
+                    unit_inputs.push(input_unit);
+                    prices_db.push(db_price_every_kg);
+                    units_db.push('公斤'); 
+                    // prices_db.push(db_price);
+                    // units_db.push(db_unit); 
+                //-----------------------------------儲存輸入框的內容---------------------------------------------------------
+
+                //呼叫換算函式 // 把換算出來的值存起來 //取到小數點第三位
+                result_price = convert_needness_to_price(input_needness,input_unit,db_unit,db_price). toFixed(2);
+                
+                //-------------------------------把值儲存到 results [] 裡---------------------------------
+                    results.push(result_price);
+                //-------------------------------把值儲存到 results [] 裡---------------------------------
+
+                //放到show_result中 //////////但不是!!!!!放入<span>
+                const show_result = clicked_caculate_btn.parent().siblings(".show_result")
+                show_result.html("$"+result_price+"元")
+                console.log(show_result.html())
+
+            });//fetchdata的
+
     }
 //把計算好的結果放的show_result中 // 吃$(this) = clicked_caculate_btn
 
@@ -698,25 +772,8 @@
 
 
 
+//檢驗有沒有輸入
 
-
-
-
-//當計算紐按下的時候，我要先計算好結果 再放到show_result中 在改變class //在父層監聽
-    $('#inputs_container').on('click',".caculate_btn",function(){
-        
-        //讓class = writting (就是準備回來的橡皮擦 ) 的時候 不用在執行一次計算
-        if($(this).hasClass("caculate_btn") || $(this).hasClass("erasing")){
-            //先計算好結果 再放到show_result中
-            caculate_and_show($(this));
-        }
-        
-        //等1s後再改變class //避免還沒算完(因為要去後端拿資料)就動
-        setTimeout(CahngeClass_SpanSlice_DelayOneByOne($(this)),1000)
-
-    })
-
-//當計算紐按下的時候，我要先計算好結果 再放到show_result中 在改變class
 
 
 
@@ -729,7 +786,7 @@
         //按enter
         if (event.keyCode === 13 ) {
 
-            //找到附近的單位選單
+            //找到附近的計算按鈕
             near_btn = $(this).parent().siblings(".caculate_button_container").children("button");
 
             //讓class = writting (就是準備回來的橡皮擦 ) 的時候 不用在執行一次計算
@@ -737,12 +794,36 @@
                 //先計算好結果 再放到show_result中
                 caculate_and_show(near_btn);
             }
-                    
-            //等1s後再改變class //避免還沒算完(因為要去後端拿資料)就動
+            console.log()
+            //等1s後再改變class //避免還沒算完(因為要去後端拿資料)就動 //////但~~~ 就沒有改道<span之前 >就show出答案了
             setTimeout(CahngeClass_SpanSlice_DelayOneByOne(near_btn),1000)
                 
         }    
     })
+
+
+
+//當按下燈泡(計算按鈕) 啟動動畫 展示答案
+
+$('#inputs_container').on("click",".caculate_button_container button",function(){
+
+    //讓class = writting (就是準備回來的橡皮擦 ) 的時候 不用在執行一次計算
+        if($(this).hasClass("caculate_btn") || $(this).hasClass("erasing")){
+            //先計算好結果 再放到show_result中
+                caculate_and_show($(this));
+        }
+            
+    //等1s後再改變class //避免還沒算完(因為要去後端拿資料)就動
+        setTimeout(CahngeClass_SpanSlice_DelayOneByOne($(this)),1000)
+
+})
+
+
+
+
+
+
+
 
 
 //當單位的選單改變時(代表使用者選好了單位) 這時候吧focus回到 需求量的輸入框 這樣根據上面一個的功能 按enter就可以顯示答案
@@ -756,6 +837,18 @@
     })
 
 
+
+
+
+//當類別選單改變時 跳到名稱輸入框
+
+    $('#inputs_container').on("change",".class_container select",function(){
+
+        //找到附近的名稱輸入框
+            near_name_input = $(this).parent().siblings(".name_group").children("input")
+        //focus它
+            near_name_input.focus()
+    })
 
 
 
@@ -981,6 +1074,203 @@ $('#inputs_container').on("keydown",".unit_container select",function(event){
 
 
 
+
+
+
+
+
+
+
+
+
+
+//計算全部總和輸出excell 當按下嘎李 
+
+    $('.curry_hover').on("click",function(){
+        
+        //全部筆一起動 //就算有些先變橡皮擦了有沒關係
+
+            //--------------每次重新算總價 都先把results歸零---------------
+                results = [];
+            //--------------每次重新算總價 都先把results歸零---------------
+
+            //-----------------------------------每次重新算總價 都先把已經儲存的輸入框內容歸零-----------------------------------------
+                class_inputs = [];
+                name_inputs = [];
+                needness_inputs = [];
+                unit_inputs = [];
+                prices_db = [];
+                units_db = [];
+            //-----------------------------------每次重新算總價 都先把已經儲存的輸入框內容歸零---------------------------------------------------------
+
+            //如果在右邊(是橡皮擦) 那就先點一次(變earsing後隔1s在點一次)
+            $('.writing').click();
+            
+            //如果在左邊(是燈泡)就典籍所有是caculate_btn或 earsing一次
+            $('.caculate_btn').click();//點完變writing
+            setTimeout(function haah(){$('.erasing').click()},1000) 
+
+        //計算總總價~ (要等至少1s後才開始算 (要等$('.erasing').click()))
+            setTimeout(
+                //等玩1.5s再執行計算總價
+                function caculate_total_price(){
+
+                    //把陣列中的字串先全部轉float
+                    results_num = results.map(str => parseFloat(str));
+
+                    //accumulator是累積結果 currentValue現在處理的值 0是初始值
+                    total_price = results_num.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+                    total_price = total_price.toFixed(2)//小數點第二位
+                    console.log(total_price);
+
+                    //(先清空)再放到id="total_price"裡
+                    $('#total_price').html("")
+                    $('#total_price').append(`總共是<p>${total_price}元</p>`)
+
+
+                }
+                //等1.5s
+                ,1500
+            )
+            
+        
+    })
+
+    
+
+
+
+
+
+
+
+
+
+
+
+//生成excel
+    $('.rice_hover').on('click',function(){
+
+        //--------------取得meal_name (早餐 午餐...)---------------------------------------------
+            meal_name = $(this).parent().siblings('.meal_name_container').children('input').val()
+        //--------------取得meal_name (早餐 午餐...)---------------------------------------------
+
+        //印出來看看 到底傳了甚麼給後端
+            console.log({ 
+                meal_name :       meal_name,
+                class_inputs :    class_inputs,
+                name_inputs :     name_inputs,
+                needness_inputs : needness_inputs,
+                unit_inputs :     unit_inputs,
+                prices_db :       prices_db,
+                units_db :        units_db,
+                results :         results,
+                total_price :     total_price
+            })
+
+        //把前端東東傳給後端
+            export_excel();
+
+        //下載動畫
+        download_animation();
+
+    })
+
+
+// 回傳的東東 舉例
+    // {
+    //     class_inputs: (3) ['乳品', '豆、魚、蛋、肉類', '蔬菜類']
+    //     name_inputs: (3) ['寶乃', '巴沙魚', '高麗菜']
+    //     needness_inputs: (3) ['23', '43', '56']
+    //     unit_inputs: (3) ['台斤', '公斤', '公升']
+    //     prices_db: (3) ['80', '80', '20']
+    //     units_db: (3) ['台斤', '台斤', '公克']
+    //     results: (3) ['1840.000', '5733.333', '1120000.000']
+    //     total_price: 1127573.333
+    // }
+//
+
+
+
+
+//把前端的東東 (輸入框內容 總價 最終總價等) 傳到後端
+function export_excel() {
+
+            
+    //fetch("後端網址",{}) 把{的內容}變成一個變數
+        var requestOptions = {   
+            //回傳的類別                               
+            method: 'POST',
+            //一些必須加的東東?
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            //回傳的東東
+            body: JSON.stringify(
+                    {   
+                        meal_name :       meal_name,
+                        class_inputs :    class_inputs,
+                        name_inputs :     name_inputs,
+                        needness_inputs : needness_inputs,
+                        unit_inputs :     unit_inputs,
+                        prices_db :       prices_db,
+                        units_db :        units_db,
+                        results :         results,
+                        total_price :     total_price
+                    }
+                )         
+        };
+    //fetch("後端網址",{}) 把{的內容}變成一個變數
+              
+    // 使用 Ajax 請求從後端獲取資料 fetch("網址",...).then().then()
+        fetch('http://127.0.0.1:5000/export_excel',requestOptions)                                   
+        .then(response => {
+                if (response.ok) {
+                    console.log('Data transmit successfully!');
+                } else {
+                    console.log('Something went wrong:', response.status);
+                }
+            })                     
+   
+
+}  // export_excel(){      的 "}"
+
+
+
+
+
+
+
+//下載的動畫~~
+function download_animation() {
+    //背景透明
+    $('#inputs_container').css({
+        opacity: 0.2
+    })
+
+    // 出現圖片動畫
+    $('.download_animation').css({
+        top: '100vh',
+        opacity: '1',
+        zIndex: '100'
+    })
+
+    //1.7s後恢復
+    setTimeout(
+        function(){
+            $('#inputs_container').css({
+                opacity: 1
+            })
+
+            $('.download_animation').css({
+                top: '5vh',
+                opacity: '0',
+                zIndex: '-100'
+            })
+        },
+        1000
+    )
+}  // download_animation()      的 "}"
 
 
 

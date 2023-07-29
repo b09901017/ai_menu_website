@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+  <meta charset="UTF-8">
+  <title>產生份數</title>
+  <!-- 引入jquery語法 -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- 引入字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="generate_EX.css">
+  <script src="generate_EX.js" async></script>
+</head>
+
+<body>
+
+<!-- 分成上下 (右邊超過 可延生) -->
+
+  <!-- 左上放開頭圖片 =>點一下變 (糖脂蛋比例 + 份數生成) => 份數選完後 (變餐次分配份數) 超果右邊 就可以往右滾輪  -->
+  <div id="top_container">
+
+      <!-- 開頭圖片 -->
+        <img id="main_icon" src="愛心刀叉.png">
+        <img id="big_bite" src="bigbite.png">
+        <img id="food_drink" src="food_drink.png">
+      
+      <!--  糖(s)脂(l)蛋(p)比例表格  -->
+        <div id="slp_ratio_table">
+          <!-- 總熱量 -->
+          <div class="table_text">總熱量</div>
+          <div class="table_num" id="total_kcal_container"><input id="total_kcal">大卡</div>
+          <!-- 誤差 -->
+          <div class="table_num" >每類誤差<input id="error">克</div>
+          <!-- 類別文字 -->
+          <div class="table_text" >百分比</div>
+          <div class="table_text" >熱量(kcal)</div>
+          <div class="table_text" >重量(g)</div>
+          <!-- 百分比-->
+          <div class="table_text" style="background-color: #DAE49D;">醣類</div>
+          <div class="table_num" id="sugal_ratio">20%</div>
+          <div class="table_num" id="sugal_kcal">200k</div>
+          <div class="table_num" id="sugal_g">200g</div>
+          <!-- 熱量 -->
+          <div class="table_text" style="background-color: #DAE49D;">脂質</div>
+          <div class="table_num" id="lipid_ratio">30%</div>
+          <div class="table_num" id="lipid_kcal">300k</div>
+          <div class="table_num" id="lipid_g">300g</div>
+          <!-- 重量 -->
+          <div class="table_text" style="background-color: #DAE49D;">蛋白質</div>
+          <div class="table_num" id="protain_ratio">50%</div>
+          <div class="table_num" id="protain_kcal">500k</div>
+          <div class="table_num" id="protain_g">500g</div>
+        </div>
+        <!--  糖(s)脂(l)蛋(p)比例表格  -->
+        
+        <!-- 滑桿桿 -->
+        <div class="slider-container">
+          <div class="slider"></div>
+          <div class="node_ref_head"></div>
+          <div class="node1"></div>
+          <div class="node2"></div>
+          <div class="node_ref_end"></div>
+        </div>
+
+        <!-- ai run 計算鈕 -->
+        <div class="ai_run_contaniner">
+          <button class="custom-btn btn-5"><span>AI  RUN</span></button>
+        </div>
+
+        <!-- 份數表格 -->
+        <div id="EX_table">
+          <!-- 類別名稱 (行一)-->
+          <div class="table_text food_class_text" >食物類別</div>
+          <div class="table_text" >份數</div>
+          <div class="table_text many_ex_text" >好多份數~</div>
+          <!-- 奶類份數 (行 二三)-->
+          <div class="table_text milk_text" >奶類</div>
+          <div class="table_text" >全脂</div>
+          <div class="table_text"  ><input class="table_num" id="full_milk"></div>
+          <!-- <div class="table_text many_ex_1" >2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6</div> -->
+          <div class="table_text" >低脂</div>
+          <div class="table_text"  ><input class="table_num" id="low_milk"></div>
+        
+          <!-- 蔬菜份數 (行 四)-->
+          <div class="table_text feg_text" >蔬菜類</div>
+          <div class="table_text"  ><input class="table_num" id="feg"></div>
+        
+          <!-- 水果份數 (行 5)-->
+          <div class="table_text fruit_text" >水果類</div>
+          <div class="table_text"  ><input class="table_num" id="fruit"></div>
+        
+          <!-- 全榖雜糧份數 (行 6)-->
+          <div class="table_text grains_text" >全榖雜糧類</div>
+          <div class="table_text"  ><input class="table_num" id="grains"></div>
+        
+          <!-- 豆蛋魚肉類份數 (行 789)-->
+          <div class="table_text egg_text" >豆蛋魚肉類</div>
+          <div class="table_text" >高脂</div>
+          <div class="table_text"  ><input class="table_num" id="egg_h"></div>
+        
+          <div class="table_text" >中脂</div>
+          <div class="table_text"  ><input class="table_num" id="egg_m"></div>
+        
+          <div class="table_text" >低脂</div>
+          <div class="table_text"  ><input class="table_num" id="egg_l"></div>
+        
+          <!-- 油脂與種子堅果類 (行10) -->
+          <div class="table_text nuts_text" >油脂與種子堅果類</div>
+          <div class="table_text"  > <input class="table_num" id="nuts"> </div>
+        
+          <!-- 精緻糖 susu gar (行11) -->
+          <div class="table_text susugar_text" >精緻糖</div>
+          <div class="table_text"  ><input  class="table_num" id="susugar"></div>
+          
+          <!-- 好多份數們的container -->
+          <div class="many_ex_container"> 
+              <div class="many_ex" id="full_milk_exs_container" > </div>
+              <div class="many_ex" id="low_milk_exs_container" > </div>
+              <div class="many_ex" id="feg_exs_container" > </div>
+              <div class="many_ex" id="fruit_exs_container" > </div>
+              <div class="many_ex" id="grains_exs_container" > </div>
+              <div class="many_ex" id="egg_h_exs_container" > </div>
+              <div class="many_ex" id="egg_m_exs_container" > </div>
+              <div class="many_ex" id="egg_l_exs_container" > </div>
+              <div class="many_ex" id="nuts_exs_container" > </div>
+              <div class="many_ex" id="susugar_exs_container" > </div>
+          </div>
+        </div>
+        <!-- 份數表格 -->
+
+        </div>
+
+  </div>
+
+
+
+  <div id="botton_container">
+
+
+
+  </div>
+
+<!-- 分成左上左下 右上右下 (可以滾輪上下左右) end-->
+
+ 
+</body>
+
+
+</html>

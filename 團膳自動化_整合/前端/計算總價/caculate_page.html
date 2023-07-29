@@ -25,6 +25,11 @@
         <!-- A-2 右半邊的計算們的毛玻璃框框 有一條一條的計算框(垂直排版) 和 新增按鈕 -->
         <div id="inputs_container" >
 
+            <!-- 填入早餐 午餐 晚餐 晚點 -->
+            <div class="meal_name_container"> 
+                <input class="meal_name_input" type="text" required>
+            </div>
+
             <!-- A-2-a 其中一條的計算框 用flex 讓 1類別 2名稱 3需求量 4單位 5答案  水平排列  -->
             <div class="input_container">
 
@@ -99,21 +104,127 @@
                 <!-- 所得價錢 -->
                 <div class="show_result" ></div>
 
+                <!-- 刪除按鈕 -->
+                <img class="delete" src="minus.png">
+
             </div>
             <!-- 其中一條的計算框 用flex 讓 1類別 2名稱 3需求量 4單位 5答案  水平排列 end -->
 
-            <!-- A-2-b 新增按鈕 -->
-            <div id="creat_new_input_button_container">
+            <!-- A-2-b 新增按鈕   和總價-->
+            <div id="AddBtn_and_TotalPrice_container">
                 <button class="add_food_btn" onclick="creat_new_input()"></button>
+                <div id="total_price"></div>
             </div>
+
+            <!-- A-2-c 總價和輸出excel的框框 -->
+            <div class="for_aling">
+                <div class="fork"></div>
+                <div class="plate"></div>
+                <div class="knife"></div>
+                <div class="for_hover"></div>
+                <div class="curry"></div>
+                <div class="rice"></div>
+                <!-- 計算總價鈕 -->
+                <div class="curry_hover"></div>
+                <div class="rice_hover"></div>
+                <div class="caculate_total_price_text"></div>
+                <div class="export_excel_text"></div>
+            </div>
+            
+            <!-- <div class="download_animation"> <img src="download.png"> </div> -->
 
         </div>
         <!-- A-2 右半邊的計算們的毛玻璃框框 end-->
+
+        <!-- 下載動畫 -->
+        <div class="download_animation"> <img src="download.png"> </div>
 
     </div>
     <!-- A 整個頁面 用grid 分層 左上的標題 和 右半邊的計算框框  end -->
 
 </body>
+
+<script>
+    // 原本是空盤_交叉餐具   
+    //如果hover到中間(.for_hover) 餐具打開 空盤圖片變旮哩飯(旮哩+白飯+有塗白的旮李返)
+    //hover到上面 餐具打開 空盤圖片變旮哩飯(旮哩放大  +白飯+有塗白的旮李返) 計算總價文字
+    //hover到下面 餐具打開 空盤圖片變旮哩飯(旮哩  +白飯放大+旮李飯) 生成excel文字
+    $(".for_hover").hover(
+        //懸停
+        function(){
+            $('.fork').css({transform  :'translate(-100%, 0%) rotate(0deg) '})
+            $('.knife').css({transform  :'translate(470%, 0%) rotate(0deg) '})
+            $('.plate').css('background-image' , 'url("加哩飯(white).png")' )
+            $('.curry').css({
+                opacity: '1',
+            })
+            $('.rice').css({
+                opacity: '1',
+            })
+        },
+        //沒懸停
+        function(){
+            $('.fork').css({transform  :'translateX(180%) rotate(45deg) rotateY(180deg) scaleY(1.3)'})
+            $('.knife').css({transform  :'translateX(180%) rotate(-45deg) rotateY(180deg) scaleY(1.3)'})
+            $('.plate').css('background-image' , 'url("plate.png")' )
+            $('.curry').css({
+                opacity: '0',
+            })
+            $('.rice').css({
+                opacity: '0',
+            })
+        }
+        )
+    $(".curry_hover").hover(
+        //懸停
+        function(){
+            $('.fork').css({transform  :'translate(-100%, 0%) rotate(0deg) '})
+            $('.knife').css({transform  :'translate(470%, 0%) rotate(0deg) '})
+            $('.plate').css('background-image' , 'url("加哩飯(white).png")' )
+            $('.curry').css({
+                opacity: '1',
+                transform: 'scale3d(1.3,1.3,2)'
+            })
+            $('.caculate_total_price_text').css('opacity','1')
+        },
+        //沒懸停
+        function(){
+            $('.fork').css({transform  :'translateX(180%) rotate(45deg) rotateY(180deg) scaleY(1.3)'})
+            $('.knife').css({transform  :'translateX(180%) rotate(-45deg) rotateY(180deg) scaleY(1.3)'})
+            $('.plate').css('background-image' , 'url("plate.png")' )
+            $('.curry').css({
+                opacity: '0',
+                transform: 'scale3d(1,1,1)'
+            })
+            $('.caculate_total_price_text').css('opacity','0')
+        }
+        )
+    $(".rice_hover").hover(
+        //懸停
+        function(){
+            $('.fork').css({transform  :'translate(-100%, 0%) rotate(0deg) '})
+            $('.knife').css({transform  :'translate(470%, 0%) rotate(0deg) '})
+            $('.plate').css('background-image' , 'url("加哩飯.png")' )
+            $('.rice').css({
+                opacity: '1',
+                transform: 'scale3d(1.3,1.3,2)'
+            })
+            $('.export_excel_text').css('opacity','1')
+        },
+        //沒懸停
+        function(){
+            $('.fork').css({transform  :'translateX(180%) rotate(45deg) rotateY(180deg) scaleY(1.3)'})
+            $('.knife').css({transform  :'translateX(180%) rotate(-45deg) rotateY(180deg) scaleY(1.3)'})
+            $('.plate').css('background-image' , 'url("plate.png")' )
+            $('.rice').css({
+                opacity: '0',
+                transform: 'scale3d(1,1,1)'
+            })
+            $('.export_excel_text').css('opacity','0')
+        }
+        )
+
+</script>
 
 
 </html>

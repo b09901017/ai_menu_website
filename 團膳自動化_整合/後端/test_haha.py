@@ -1,3 +1,4 @@
+note_1 ="  盡然要放在後端資料夾外面!?   hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 # 盡然要放在後端資料夾外面!?
     # from openpyxl import Workbook, load_workbook 
@@ -5,6 +6,12 @@
     # wb = load_workbook('haha.xlsx')     
     # ws = wb["乳品"]
     # print(ws) 
+
+
+
+
+
+note_2 ="      看檔案所在資料夾有什麼     hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 # 看檔案所在資料夾有什麼
     # import os
@@ -17,6 +24,12 @@
 
     # # 输出所有内容
     # print(contents)
+
+
+
+
+
+note_3 ="         promise 讓地一個函式跑完才進下一個函是          hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 # promise 讓地一個函式跑完才進下一個函是
     # new Promise((resolve, reject) => { ... ... ... resolve()() ...     })
@@ -51,6 +64,10 @@
         # }
 
 
+
+
+note_4 ="            如果後端不需要回傳任何資料，你可以將第二個.then()移除             hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
 # 如果後端不需要回傳任何資料，你可以將第二個.then()移除，只保留第一個.then()處理成功的情況，以及使用.catch()處理錯誤的情況，例如：
 
     # fetch('http://127.0.0.1:5000/add_to_excel', {
@@ -78,10 +95,18 @@
 
 
 
+
+
+note_5 ="               讓server不用一直重開                hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
 ## 讓server不用一直重開
     # if __name__ == '__main__':
     #     app.run(debug=True)
 
+
+
+
+note_6 ="                          作假回應                      hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 ## 作假回應
     # from flask import Flask, make_response
@@ -103,6 +128,11 @@
     #     app.run(debug=True)
 
 
+
+
+
+note_7 ="                                  在jquery中使用this                         hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
 ## 在jquery中使用this
     # // 監聽 span 元素的點擊事件
     # $("#mySpan").on("click", function() {
@@ -110,6 +140,12 @@
     # var spanValue = $(this).text();
     # console.log(spanValue);
     # });
+
+
+
+
+
+note_8 ="                              發現動態生成的<span>沒辦法被監聽到                             hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 ## 發現動態生成的<span>沒辦法被監聽到
     #不成功的 
@@ -126,6 +162,12 @@
         #     .
         #     . 
         # });
+
+
+
+
+
+note_9 ="                       jquery 取得子元素 父元素 兄弟元素 $(.class) $(#id) $(tag #id .class) 跟css的選擇器一樣                        hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 ## jquery 取得子元素 父元素 兄弟元素 $(.class) $(#id) $(tag #id .class) 跟css的選擇器一樣
     ## $(this) 直接選~
@@ -169,6 +211,11 @@
         # </div>
 
 
+
+
+
+note_10 ="                        preventDefault !! 點擊某些區域 不會觸發blur~                           hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
 #  preventDefault !! 點擊某些區域 不會觸發blur~
 
     # // 名稱選擇menu被點擊時不會close (停留在focus 但是停留一下 又被我放到needness去focus了)~ 
@@ -178,6 +225,12 @@
     #         event.preventDefault();
     #         // 在這裡可以執行點擊 <div> 區域後的其他操作
     #     });
+
+
+
+
+
+note_11 ="                   js 控制css                                 hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 #js 控制css 
     #css
@@ -201,6 +254,11 @@
         # })
 
 
+
+
+
+note_13 ="                                    #jquery 動態插入的方法                           hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
 #jquery 動態插入的方法
     # // append：在指定元素內部最後面插入新的內容
     #     $("#container").append('<p>新的段落 (append)</p>');
@@ -223,11 +281,24 @@
     #     // 獲取要插入的 ul 元素且先清空
     #     $(ul).html(""); 取代  liElement.innerHTML = ``
 
+    # 藥用反引號``才能插入變數 
+        # $('#total_price').append(`總共是<p>${total_price}元</p>`)
 
+
+
+
+
+note_14 ="                            點擊menu中的食材 食材放到name上 並且 focus 到 需求量 // 一樣要先鎖定在父元素監聽                      hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 # 點擊menu中的食材 食材放到name上 並且 focus 到 需求量 // 一樣要先鎖定在父元素監聽
 #     $('.database_price').on('click','.name_db', function() {}
 
+
+
+
+
+
+note_15 ="                              jquery 改寫                            hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 #jquery 改寫
 
@@ -282,7 +353,12 @@
         # js  :  if(this.classList=='writing' )
 
         # jquery  :   if ($(this).hasClass('writing'))
-    
+
+
+
+
+
+note_16 ="             如果是動態生成的  要放在父元素監聽 (因為監聽是一開始就放上去的 )                          hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 # 如果是動態生成的  要放在父元素監聽 (因為監聽是一開始就放上去的 )
 
@@ -322,6 +398,8 @@
 
 
 
+note_17 ="                        有辦法用jquery 取得頁面上所有input 然後依序編後嗎?                                hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
 #有辦法用jquery 取得頁面上所有input 然後依序編後嗎?
     # $(document).ready(function() {
     #   // 获取页面上所有的 input 元素
@@ -337,6 +415,7 @@
 
 
 
+note_18 ="                     实现按上下键在多个输入框之间跳动：                           hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
 
 # 实现按上下键在多个输入框之间跳动：
         # <!-- HTML -->
@@ -378,6 +457,12 @@
         # 通过使用 eq() 方法，我们可以很方便地在多个输入框中进行索引的切换，并且对焦点的切换非常方便。
     
 
+
+
+
+
+note_18 ="                       (currentIndex - 1 + inputBoxes.length) % inputBoxes.length                      hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
 # 為什麼要這樣 (currentIndex - 1 + inputBoxes.length) % inputBoxes.length
 
         #     這樣的寫法是為了實現在輸入框之間循環切換的效果。讓我解釋一下：
@@ -393,3 +478,219 @@
         # 如果此時在第一個輸入框按下上鍵，我們希望切換到前一個輸入框，也就是第5個輸入框，但實際上索引會是-1。此時 (currentIndex - 1 + inputBoxes.length) % inputBoxes.length 的計算是 (0 - 1 + 5) % 5，結果是4，所以同樣切換到了第5個輸入框。
 
         # 這樣，不管當前在第幾個輸入框上，按下上下鍵都能實現在所有輸入框之間循環切換的效果。
+
+
+
+
+
+note_19 ="                    後端 post 的簡單模板                                                   hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
+# 後端 post 的簡單模板    ####################################   post   ##################################################
+
+        # server 主程式 引入
+                # @app.route('/generate_EXs', methods=['POST'])
+                # def help_you_up_EXs():
+                #     data_json = generate_EXs()
+                #     return data_json ##回傳json格式
+
+        # # 打包函式
+                # from flask import  request
+                # from flask import jsonify ##回傳json格式用的
+
+                # def generate_EXs():
+
+                    # ##-----------把前端傳的東東存在變數裡--------------
+                    # food_class_JSON = request.get_json()  ##得到{"data" : "類別"}
+                    # food_class = food_class_JSON['data']  ##取出"data"的值 {key : value}
+                    # ##-----------把前端傳的東東存在變數裡--------------
+
+                    # ##------------回傳資料-------------
+                    # response_data = {
+                    #     'result': 'success',
+                    #     'colA': "...",
+                    #     'colB': "...",
+                    #     'colC': "..."
+                    # }
+                    # ##------------回傳資料-------------
+
+                    # return jsonify(response_data) ##回傳json格式
+
+        # 前端js 模板
+                    #  //  ***** 製作fetchData() => 填充excel_col_data {colA:[] , colB:[] , colC:[] } *****
+
+                    #  //卡了好久 原來可以設全域變數 這邊假設 到fetch函數放入data 到下一個<script>標籤 也還在!!
+                    #   var excel_col_data=[];     
+                    #     //函式定義
+                    #     function fetchData(this_select) {
+                    #         // 建立promise 讓他跑完後才會執行下一步 30~56
+                    #         return new Promise((resolve, reject) => {
+
+                            #     //取得所選的類別
+                            #     const input_class =this_select.val();
+                                    
+                            #     //fetch("後端網址",{}) 把{的內容}變成一個變數////////
+                            #     var requestOptions = {                                  
+                            #     method: 'POST',
+                            #     headers: {
+                            #         'Content-Type': 'application/json'
+                            #     },
+                            #     body: JSON.stringify({ data: input_class })         
+                            #     };
+                            #     //fetch("後端網址",{}) 把{的內容}變成一個變數////////
+                                        
+                            #     // 使用 Ajax 請求從後端獲取資料 fetch("網址",...).then().then()
+                            #     fetch('http://127.0.0.1:5000/return_excel_data',requestOptions)                                   
+                            #     .then(response => response.json())                     
+                            #     .then(res_json => {   
+
+                            #     // 更新頁面上的資料內容
+                            #     excel_col_data = res_json
+                                
+                            # // 表示 fetchData() 把值甜到excel_col_data裡面了   resolve要放在fetch裡面 剛剛放外面一直失敗
+                            # resolve(); 
+
+                            #     });//then(res_json => {        的 "})"
+
+                                
+                            # });//Promise((resolve, reject) => {       的")}"
+
+                    #     }  // fetchData(){      的 "}"
+
+                    # //製作fetchData()韓式end
+
+# 後端 post 的簡單模板    ####################################   post   ##################################################
+
+
+
+
+
+
+note_20 ="                            監聽hover 的方法                               hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
+############ 監聽hover 的方法##################
+
+
+        # //當璇停在EX眾多選項中的其中一個 那一整列都會放大
+        #       // 下面這樣不能監聽到 動態生成的
+        #       // $('.many_ex span').hover(
+        #       //   //移入
+        #       //       function(){
+        #       //       //取得所hover的class
+        #       //         var class_name = $(this).attr('class');
+        #       //       //讓屬於這類class的都放大
+        #       //         $("."+class_name).css({
+        #       //           transform : 'scale(2.5)'
+        #       //         })
+        #       //         console.log(class_name)
+        #       //       },
+        #       //   //移出
+        #       //       function(){
+        #       //         //取得所hover的class
+        #       //           var class_name = $(this).attr('class');
+        #       //         //復原
+        #       //           $('.'+class_name).css({
+        #       //             transform : 'scale(1)'
+        #       //           })
+        #       //       }
+        #       // )
+        #       // 使用事件委派監聽動態生成的子元素的 鼠標進入
+        #       $('.many_ex').on('mouseenter', 'span', function() {
+        #           //取得所hover的class
+        #                 var class_name = $(this).attr('class');
+        #               //讓屬於這類class的都放大
+        #                 $("."+class_name).css({
+        #                   transform : 'scale(2.5)'
+        #                 })
+        #                 console.log(class_name)
+        #       });
+        #       $('.many_ex').on('mouseleave', 'span', function() {
+        #           //取得所hover的class
+        #                 var class_name = $(this).attr('class');
+        #               //讓屬於這類class的都放大
+        #                 $("."+class_name).css({
+        #                   transform : 'scale(1)'
+        #                 })
+        #       });
+############ 監聽hover 的方法##################
+
+
+
+
+
+
+
+note_21 ="                                  jquery 遍歷的方法                               hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
+############# jquery 遍歷的方法#################
+        # 您可以使用jQuery的.each()方法來依序遍歷數組中的元素。這樣您就可以逐一取出1~7。以下是示例代碼：
+
+        # html
+        # Copy code
+        # <!DOCTYPE html>
+        # <html>
+        # <head>
+        #   <title>依序取出數組元素</title>
+        #   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        # </head>
+        # <body>
+
+        # <ul id="result"></ul>
+
+        # <script>
+        #   $(document).ready(function() {
+        #     const arr = [1, 2, 3, 4, 5, 6, 7];
+
+        #     $.each(arr, function(index, value) {
+        #       // 將每個元素添加到<ul>中
+        #       $('#result').append('<li>' + value + '</li>');
+        #     });
+        #   });
+        # </script>
+
+        # </body>
+        # </html>
+        # 這段代碼會在網頁上顯示1~7的數字。您可以在arr中放入任何數組，然後使用.each()方法遍歷並將元素顯示在頁面上。
+############# jquery 遍歷的方法#################
+
+
+
+
+
+
+
+note_22 ="                         篩選and顯示的函式                          hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
+# //######################################################篩選and顯示的函式 7/29成功!! ######################################################
+#   function filter_and_display() {
+#     //取得所有input值
+#     var full_milk_input = parseInt($('#full_milk').val());
+#     var low_milk_input = parseInt($('#low_milk').val());
+#     var feg_input = parseInt($('#feg').val());
+#     var fruit_input = parseInt($('#fruit').val());
+#     var grains_input = parseInt($('#grains').val());
+#     var egg_h_input = parseInt($('#egg_h').val());
+#     var egg_m_input = parseInt($('#egg_m').val());
+#     var egg_l_input = parseInt($('#egg_l').val());
+#     var nuts_input = parseInt($('#nuts').val());
+#     var susugar_input = parseInt($('#susugar').val());
+
+#     //#################################################好屌的篩選方法#####################################################################################################################################
+#           // (a) ? (b) : (c)     (a)true則(c) (a)false則(b)  (b)也可以放判斷式  => 如果a是數字(false) 就在看是否b值等於輸入值可能 true or false 如果a是 NAN = not a number 則返回 (c)。 
+#           var filteredData = EXs.filter(function(obj) {
+#             return (!isNaN(full_milk_input)   ? obj['full_milk']   === full_milk_input : true) &&
+#                   (!isNaN(low_milk_input)     ? obj['low_milk']    === low_milk_input : true)&&
+#                   (!isNaN(feg_input)          ? obj['feg']         === feg_input : true)&&
+#                   (!isNaN(fruit_input)        ? obj['fruit']       === fruit_input : true)&&
+#                   (!isNaN(grains_input)       ? obj['grains']      === grains_input : true)&&
+#                   (!isNaN(egg_h_input)        ? obj['egg_h']       === egg_h_input : true)&&
+#                   (!isNaN(egg_m_input)        ? obj['egg_m']       === egg_m_input : true)&&
+#                   (!isNaN(egg_l_input)        ? obj['egg_l']       === egg_l_input : true)&&
+#                   (!isNaN(nuts_input)         ? obj['nuts']        === nuts_input : true)&&
+#                   (!isNaN(susugar_input)      ? obj['susugar']     === susugar_input : true);
+#           });
+#           //EXs.filter(放條件  true可能是 NAN 或 是數字且符合(b))
+#   //#################################################好屌的篩選方法#####################################################################################################################################
+          
+#           setTimeout( put_to_EXs_table(filteredData) , 1500)
+#   }
+# //######################################################篩選and顯示的函式######################################################
