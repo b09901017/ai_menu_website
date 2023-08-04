@@ -21,6 +21,13 @@ body{
     /* width: 350vh; */
     /* grid-template-columns: repeat(40, 1fr);   */
 }
+ /* 下半部的容器*/
+#botton_container{
+  display: none;
+    height: 50vh;
+    /* 點開頭圖片後 讓它延伸 */
+    /* width: 350vh; */
+}
 
 
 
@@ -450,4 +457,87 @@ background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 
 }
 .AETMT_meals_text{
   grid-row: 4/11; 
+}
+
+
+
+/* ################################下面 菜單 table##################################################### */
+table {
+  /* border-collapse: collapse; 可以讓框線都連起來 */
+  margin-right: 60px; /* 讓早餐早點有尖閣 */
+  
+}
+th, td {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+}
+/* 早(午晚)餐 早(午晚)點 不換行 */
+.meal_and_snack{
+  display: flex;
+}
+/* 新增按鈕 */
+.expand-button{
+  background:none;
+  border:none;
+  cursor : pointer;
+}
+/* 材料名稱 EX */
+table input{
+  background: none;
+  height:30px;
+  width : 100px;
+  border : none; 
+  text-align: center;
+  white-space: nowrap; /* 使文字不換行 */
+}
+
+
+/* ################ 顯示材料名稱們 ################## */
+#ingredients_container{
+  position: fixed;  /* 固定定位，讓元素始終固定在視窗中的某個位置 */
+  top: 50%;         /* 距離視窗頂部 50% */
+  left: 50%;        /* 距離視窗左側 50% */
+  transform: translate(-50%, -50%); /* 使元素的中心與視窗的中心對齊 */
+  width: 700px;     /* 你可以根據需要設置寬度 */
+  height: 400px;    /* 你也可以根據需要設置高度 */
+  overflow-y: scroll;
+
+  /* 毛玻璃 */
+  /* background: rgba(255, 255, 255, 0.1); 白色背景，10% 的不透明度 */
+  /* backdrop-filter: blur(10px); 背景模糊效果 */
+  /* border-radius: 50px; 圓角 */
+  /* backdrop-filter: invert(80%); */
+
+  border: 20px ridge #c9a96fab; /* 3D脊梁邊框，效果取決於邊框的寬度和顏色值 */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 5 列，每列的寬度相等 */
+  gap: 10px;                      /* 指定元素之間的間隙 */
+  
+  /* 一開始不出現 */
+  display: none;
+
+}
+/* 包住材料名稱的span */
+#ingredients_container span{
+  text-align: center;             /* 文字居中對齊 */
+  padding: 10px;                  /* 內部間隙 */
+  border: 1px solid #ccc;         /* 邊框 */
+
+  background: rgba(255, 255, 255, 0.1); /* 白色背景，10% 的不透明度 */
+  backdrop-filter: blur(10px); /* 背景模糊效果 */
+  border-radius: 20px;
+
+  /* 字體 */
+  font-size: 20px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all .4s ease;
+}
+/* span 被懸浮 */
+#ingredients_container span:hover{
+  transform: scale3d(1.5,1.5,4);
+  margin: 15px;
+  background: rgba(114, 9, 195, 0.336); /* 白色背景，10% 的不透明度 */
 }

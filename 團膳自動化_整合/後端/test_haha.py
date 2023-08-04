@@ -694,3 +694,46 @@ note_22 ="                         篩選and顯示的函式                     
 #           setTimeout( put_to_EXs_table(filteredData) , 1500)
 #   }
 # //######################################################篩選and顯示的函式######################################################
+
+
+note_23 ="                        地一次遇到冒泡事件 8/4 (監聽裡面放監聽)                          hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha"
+
+# //######################################################每focus一次 就會幫span多加一個監聽器######################################################
+            # $('table').on('focus', '.ingredient_input', function () {
+            #   //背景變暗
+            #   $('#botton_container,#top_container').css("opacity", .2)
+            #   //顯現
+            #   $('#ingredients_container').css('display', 'grid');
+            #   //放入輸入框
+            #   var ingredient_input = $(this)
+            
+            #   $('#ingredients_container').on('click', 'span', function () {
+            #     var ingredient = $(this).text();
+            #     ingredient_input.val(ingredient);
+            #   })
+            # })
+            # 哪裡可能有錯 
+            # ChatGPT
+            # 您的代碼裡有一個可能的邏輯錯誤，每次觸發focus事件時都會給#ingredients_container元素添加一個新的點擊事件處理器。如果用戶多次觸發focus事件，就會添加多個點擊事件處理器，這可能會導致不期望的行為。
+            # 當然，讓我為您詳細解釋一下。
+
+            # 首先，我們來看一下原始的代碼：
+
+            # 每次聚焦到 .ingredient_input 元素時，都會觸發 focus 事件處理器。
+            # 在 focus 事件處理器中，您向 #ingredients_container 元素添加了一個 click 事件處理器。
+            # 現在，假設用戶聚焦到一個 .ingredient_input 元素，然後失焦，再聚焦到另一個 .ingredient_input 元素。在這個過程中，focus 事件處理器將被觸發兩次，因此 #ingredients_container 元素將具有兩個相同的 click 事件處理器。
+
+            # 現在，如果用戶點擊一個 span 元素，兩個 click 事件處理器都會被觸發，所以相同的值將被插入到輸入框兩次。
+
+            # 我所提出的解決方案是在 focus 事件處理器外部添加 click 事件處理器，並使用一個變數（ingredient_input）來跟踪當前的 .ingredient_input 元素。這樣，不管 focus 事件處理器被觸發多少次，都只有一個 click 事件處理器。
+
+            # 具體步驟如下：
+
+            # 定義一個變數 ingredient_input 來保存當前聚焦的 .ingredient_input 元素的引用。
+            # 在 .ingredient_input 元素上的 focus 事件處理器中，更新 ingredient_input 變數的值。
+            # 在 #ingredients_container 元素上的 click 事件處理器中，使用 ingredient_input 變數的值將文本插入到正確的輸入框中。
+            # 這樣，不論用戶聚焦到多少個不同的 .ingredient_input 元素，#ingredients_container 元素都只有一個 click 事件處理器，而且這個處理器知道應該向哪個輸入框插入文本。
+
+            # 這個解決方案能夠避免多個 click 事件處理器的問題，並確保代碼的行為符合您的預期。希望這個解釋有助於您理解這個問題和解決方案！如果您還有任何疑問，請隨時提問。
+
+            # //######################################################每focus一次 就會幫span多加一個監聽器######################################################

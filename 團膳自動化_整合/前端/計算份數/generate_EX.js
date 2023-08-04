@@ -45,6 +45,17 @@ $('#main_icon , #big_bite').on('click', function () {
     display: 'grid'
   })
 
+  //下面向右延伸
+  $('#botton_container').css({
+    width: '1000vh'
+  })
+
+  //下面菜單出現
+  $('#botton_container').show()
+
+  //把option放入 下面菜單中的select中
+  set_option()
+
 })
 /* #endregion */
 // ############################## 點擊開頭圖片 就會跑上去並顯示表格 #####################################
@@ -760,31 +771,304 @@ $('.meal_susugar_ex input').on('input', function () {
 
 // ############### 在AETMT 輸入框間跳來跳去 我好強~~~~~~~ 直接學會之前的循環切換 7/30 ################################################################
 /* #region   */
-  $('#Allocate_EX_to_meals_table input').on('keydown',function(event){
-    //取得當下的index
-    const currentIndex = $('#Allocate_EX_to_meals_table input').index(this);
+$('#Allocate_EX_to_meals_table input').on('keydown', function (event) {
+  //取得當下的index
+  const currentIndex = $('#Allocate_EX_to_meals_table input').index(this);
 
-    // 按上
-    if (event.keyCode === 38) {
-      var next_index = currentIndex-10
-      $('#Allocate_EX_to_meals_table input').eq(next_index).focus()
-    }
-    // 按下
-    if (event.keyCode === 40) {
-      var next_index = (currentIndex+10+60)%60
-      $('#Allocate_EX_to_meals_table input').eq(next_index).focus()
-    }
-    // 按左
-    if (event.keyCode === 37) {
-      var next_index = currentIndex-1
-      $('#Allocate_EX_to_meals_table input').eq(next_index).focus()
-    }
-    // 按右
-    if (event.keyCode === 39) {
-      var next_index = (currentIndex+1+60)%60
-      $('#Allocate_EX_to_meals_table input').eq(next_index).focus()
-    }
+  // 按上
+  if (event.keyCode === 38) {
+    var next_index = currentIndex - 10
+    $('#Allocate_EX_to_meals_table input').eq(next_index).focus()
+  }
+  // 按下
+  if (event.keyCode === 40) {
+    var next_index = (currentIndex + 10 + 60) % 60
+    $('#Allocate_EX_to_meals_table input').eq(next_index).focus()
+  }
+  // 按左
+  if (event.keyCode === 37) {
+    var next_index = currentIndex - 1
+    $('#Allocate_EX_to_meals_table input').eq(next_index).focus()
+  }
+  // 按右
+  if (event.keyCode === 39) {
+    var next_index = (currentIndex + 1 + 60) % 60
+    $('#Allocate_EX_to_meals_table input').eq(next_index).focus()
+  }
 
-  })
+})
 /* #endregion */
 // ############### 輸入框間跳來跳去  ################################################################
+
+
+
+//#################下面的 菜單表格 新增功能終於成功了 8/3 ###################################################################################################
+
+// ################ 新增新的菜名######################
+/* #region   */
+var dish_count = 3;
+//浮到菜名 出現新增按鈕
+$("table").on('mouseenter', '.dish_name', function () {
+  //出現加號按鈕
+  $(this).append('<button class="expand-button"><i class="fa-solid fa-circle-plus fa-beat fa-lg" style="color: #41955f;"></i></button>');
+
+  //按下按鈕 ( 放在裡面 因為這樣才能取得 this!! )
+  $(this).children('.expand-button').on('click', function () {
+
+    //取得現在是dish_多少
+    var this_dish_name = $(this).parent()
+    var dish_n = this_dish_name.attr('id')
+    var new_dish_class = 'dish_' + dish_count
+    dish_count++
+
+    //菜名 + 1 +在旁邊  小心 它的id 要和下面一欄的class都一樣
+    this_dish_name.after("<th colspan='1' class='dish_name' id='" + new_dish_class + "'> 蒸蛋 </th>");
+
+    // dish_n 旁加一
+    // $('tr:contains("材料名稱") td.' + dish_n + ':last, tr:contains("食物成分表類別") td.' + dish_n + ':last, tr:contains("食物代換表類別") td.' + dish_n + ':last, tr:contains("EX") td.' + dish_n + ':last, tr:contains("可食重量(g)") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> ' + new_dish_class + ' </td>');
+    $('tr:contains("材料名稱") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input class="ingredient_input"> </td>');
+    $('tr:contains("食物成分表類別") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <select class="ingredient_class_select"> </td>');
+    $('tr:contains("食物代換表類別") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <select class="food_class_select"> </td>');
+    $('tr:contains("EX") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input> </td>');
+    $('tr:contains("可食重量(g)") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input> </td>');
+
+    //剩餘份數 行+1
+    var remain_col = $(".remain").attr("colspan")
+    remain_col++
+    $(".remain").attr("colspan", remain_col)
+
+    //放入option
+    set_option();
+  })
+
+})
+
+//滑鼠離開菜名
+$("table").on('mouseleave', '.dish_name', function () {
+  //加號按鈕消失
+  $(this).find(".expand-button").remove();
+})
+/* #endregion */
+// ################ 新增新的菜名######################
+
+// ################ 新增新的食材######################
+/* #region   */
+//滑鼠進入材料名稱  tr:contains("材料名稱") td神奇用法
+$("table").on('mouseenter', 'tr:contains("材料名稱") td', function () {
+  //出現加號按鈕
+  $(this).append('<button class="expand-button"><i class="fa-solid fa-circle-plus fa-beat fa-lg" style="color: #41955f;"></i></button>');
+
+  //按下按鈕 ( 放在裡面 因為這樣才能取得 this!! )
+  $(this).children('.expand-button').on('click', function () {
+
+    //取得現在是dish_多少
+    var this_dish_td = $(this).parent()
+    var dish_n = this_dish_td.attr('class')
+
+    //取得現在的button的 td 是父tr的第幾個td -1因為  <th>材料名稱</th>不算
+    var index = this_dish_td.parent().children().index(this_dish_td) - 1;
+    console.log(index)
+    //菜名 + 1 +在旁邊  小心 它的id 要和下面一欄的class都一樣
+    var dish_n_col = $("#" + dish_n).attr("colspan")
+    dish_n_col++
+    $("#" + dish_n).attr("colspan", dish_n_col)
+
+    // dish_n 旁加一
+    // $('tr:contains("材料名稱") td.' + dish_n + ':last, tr:contains("食物成分表類別") td.' + dish_n + ':last, tr:contains("食物代換表類別") td.' + dish_n + ':last, tr:contains("EX") td.' + dish_n + ':last, tr:contains("可食重量(g)") td.' + dish_n + ':last').after('<td class="' + dish_n + '"> ' + dish_n + ' </td>');
+
+
+    // 在材料名稱下新增一個空白欄位
+    $("tr:nth-child(2)").find("td").eq(index).after("<td class='" + dish_n + "'> <input class='ingredient_input'> </td>");
+
+    // 在食物成分表類別、食物代換表類別、EX、可食重量(g) 下新增空白欄位
+    $("tr:nth-child(3)").find("td").eq(index).after("<td class='" + dish_n + "'> <select class='ingredient_class_select'> </td>");
+    $("tr:nth-child(4)").find("td").eq(index).after("<td class='" + dish_n + "'> <select class='food_class_select'> </td>");
+    $("tr:nth-child(5)").find("td").eq(index).after("<td class='" + dish_n + "'> <input> </td>");
+    $("tr:nth-child(6)").find("td").eq(index).after("<td class='" + dish_n + "'> <input> </td>");
+
+    //剩餘份數 行+1
+    var remain_col = $(".remain").attr("colspan")
+    remain_col++
+    $(".remain").attr("colspan", remain_col)
+
+    //放入option
+    set_option();
+  })
+
+})
+
+//滑鼠離開材料名稱
+$("table").on('mouseleave', 'tr:contains("材料名稱") td', function () {
+  //加號按鈕消失
+  $(this).find(".expand-button").remove();
+})
+/* #endregion */
+// ################ 新增新的食材######################
+
+//#################下面的 菜單表格 新增功能終於成功了 8/3 ###################################################################################################
+
+
+
+//################################ 食物成分表類別 下拉選單的選項 8/3  做成函式 這樣當按下新增紐時 就可以一起調用 8/4################################
+/* #region   */
+function set_option() {
+  var ingredient_options = [
+    { text: '穀物類' },
+    { text: '澱粉類' },
+    { text: '肉類' },
+    { text: '魚貝類' },
+    { text: '豆類' },
+    { text: '蛋類' },
+    { text: '乳品類' },
+    { text: '蔬菜類' },
+    { text: '水果類' },
+    { text: '油脂類' },
+    { text: '堅果及種子類' },
+    { text: '菇類' },
+    { text: '藻類' },
+    { text: '糖類' },
+    { text: '飲料類' },
+    { text: '糕餅點心類' },
+    { text: '加工調理食品及其他類' },
+    { text: '調味料及香辛料類' }
+  ];
+
+  $.each(ingredient_options, function (index, optionData) {
+    $('.ingredient_class_select').append($('<option>', {
+      text: optionData.text
+    }));
+  });
+
+  var food_class_options = [
+    { text: '奶 全脂' },
+    { text: '奶 低脂' },
+    { text: '蔬菜類' },
+    { text: '水果類' },
+    { text: '全榖雜糧類' },
+    { text: '豆蛋魚肉 高' },
+    { text: '豆蛋魚肉 中' },
+    { text: '豆蛋魚肉 低' },
+    { text: '油脂與種子堅果類' },
+    { text: '精緻糖' }
+  ];
+
+  $.each(food_class_options, function (index, optionData) {
+    $('.food_class_select').append($('<option>', {
+      text: optionData.text
+    }));
+  });
+}
+/* #endregion */
+//################################ 食物成分表類別 下拉選單的選項 8/3################################
+
+
+
+// ############################### 當focus 在材料的時候 跳出menu 反之收回menu 當點材料名稱 就放到材料名稱輸入哪裡 8/4##################################
+/* #region   */
+var ingredient_input // 為了防止冒泡 把click事件移出去  冒泡事件第一次遇到 ~~~8/4
+// 顯現+放入
+$('table').on('focus', '.ingredient_input', function () {
+  //背景變暗
+  $('#botton_container,#top_container').css("opacity", .2)
+  //顯現
+  $('#ingredients_container').css('display', 'grid');
+  //放入輸入框 (把所focus在的輸入框存下來)
+  ingredient_input = $(this)
+})
+//放入輸入框
+$('#ingredients_container').on('click', 'span', function () {
+  var ingredient = $(this).text();
+  ingredient_input.val(ingredient);
+})
+// 收回 (延遲.5s 避免還沒按到就消失)
+$('table').on('blur', '.ingredient_input', function () {
+  setTimeout(function () {
+    $('#ingredients_container').hide()
+    $('#botton_container,#top_container').css("opacity", 1)
+  }, 300);
+})
+/* #endregion */
+// ############################### 當focus 在材料的時候 跳出menu ##################################
+
+
+
+//############################### 當材料名稱輸入框被focus 把類別的所有食材放入 menu中 8/4 ##################################
+
+//###########先取得Database的食材名稱#############
+var ingrident_name_data = [];
+/* #region   */
+//函式定義
+function fetchData(this_select) {
+  // 建立promise 讓他跑完後才會執行下一步 30~56
+  return new Promise((resolve, reject) => {
+
+    //取得所選的類別
+    const input_class = this_select.val();
+
+    //fetch("後端網址",{}) 把{的內容}變成一個變數////////
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ data: input_class })
+    };
+    //fetch("後端網址",{}) 把{的內容}變成一個變數////////
+
+    // 使用 Ajax 請求從後端獲取資料 fetch("網址",...).then().then()
+    fetch('http://127.0.0.1:5000/return_ingrident_name_data', requestOptions)
+      .then(response => response.json())
+      .then(res_json => {
+
+        // 更新頁面上的資料內容
+        ingrident_name_data = res_json
+
+        // 表示 fetchData() 把值甜到excel_col_data裡面了   resolve要放在fetch裡面 剛剛放外面一直失敗
+        resolve();
+
+      });//then(res_json => {        的 "})"
+
+
+  });//Promise((resolve, reject) => {       的")}"
+
+}  // fetchData(){      的 "}"
+/* #endregion */
+//###########先取得Database的食材名稱#############
+
+//###########把取得Database的食材名稱 放入menu中#############
+/* #region   */
+function show_ingrident_database() {
+  //清空
+  $('#ingredients_container').html('')
+  //放入
+  $.each(ingrident_name_data.colA, function (index, ingrident_name) {
+    $('#ingredients_container').append($('<span>', {
+      text: ingrident_name
+    }));
+  });
+}
+/* #endregion */
+//###########把取得Database的食材名稱 放入menu中#############
+
+//########### 當材料名稱輸入框被focus ######################
+/* #region   */
+$("table").on("focus", ".ingredient_input", function () {
+
+  //取得這輸入框下面的 select 
+  // this(input) . parent = td .index 是指 這個td是第幾個
+  var this_index = $(this).parent().index()
+  var this_select = $(this).parent().parent().siblings('.ingredient_select_tr').children().eq(this_index).children('select')
+
+  //fetchData()現在是promise了等它跑完在執行下一步
+  fetchData(this_select).then(() => {
+
+    show_ingrident_database();
+
+  });
+})
+/* #endregion */
+  //########### 當材料名稱輸入框被focus ######################
+
+//############################### 當材料名稱輸入框被focus 把類別的所有食材放入 menu中 ##################################
+
+

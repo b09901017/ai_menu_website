@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+  <!--  引入+號icon  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <link rel="stylesheet" type="text/css" href="generate_EX.css">
   <script src="generate_EX.js" async></script>
@@ -18,262 +20,398 @@
 
 <body>
 
-<!-- 分成上下 (右邊超過 可延生) -->
+  <!-- 分成上下 (右邊超過 可延生) -->
 
   <!-- 左上放開頭圖片 =>點一下變 (糖脂蛋比例 + 份數生成) => 份數選完後 (變餐次分配份數) 超果右邊 就可以往右滾輪  -->
   <div id="top_container">
 
-<!-- ############################################ 左上 ############################################ -->
+    <!-- ############################################ 左上 ############################################ -->
 
-      <!-- 開頭圖片 -->
-        <img id="main_icon" src="愛心刀叉.png">
-        <img id="big_bite" src="bigbite.png">
-        <img id="food_drink" src="food_drink.png">
-      
-      <!--  糖(s)脂(l)蛋(p)比例表格  -->
-        <div id="slp_ratio_table">
-          <!-- 總熱量 -->
-          <div class="table_text">總熱量</div>
-          <div class="table_num" id="total_kcal_container"><input id="total_kcal">大卡</div>
-          <!-- 誤差 -->
-          <div class="table_num" >每類誤差<input id="error">克</div>
-          <!-- 類別文字 -->
-          <div class="table_text" >百分比</div>
-          <div class="table_text" >熱量(kcal)</div>
-          <div class="table_text" >重量(g)</div>
-          <!-- 百分比-->
-          <div class="table_text" style="background-color: #DAE49D;">醣類</div>
-          <div class="table_num" id="sugal_ratio">20%</div>
-          <div class="table_num" id="sugal_kcal">200k</div>
-          <div class="table_num" id="sugal_g">200g</div>
-          <!-- 熱量 -->
-          <div class="table_text" style="background-color: #DAE49D;">脂質</div>
-          <div class="table_num" id="lipid_ratio">30%</div>
-          <div class="table_num" id="lipid_kcal">300k</div>
-          <div class="table_num" id="lipid_g">300g</div>
-          <!-- 重量 -->
-          <div class="table_text" style="background-color: #DAE49D;">蛋白質</div>
-          <div class="table_num" id="protain_ratio">50%</div>
-          <div class="table_num" id="protain_kcal">500k</div>
-          <div class="table_num" id="protain_g">500g</div>
-        </div>
-        <!--  糖(s)脂(l)蛋(p)比例表格  -->
-        
-        <!-- 滑桿桿 -->
-        <div class="slider-container">
-          <div class="slider"></div>
-          <div class="node_ref_head"></div>
-          <div class="node1"></div>
-          <div class="node2"></div>
-          <div class="node_ref_end"></div>
-        </div>
+    <!-- 開頭圖片 -->
+    <img id="main_icon" src="愛心刀叉.png">
+    <img id="big_bite" src="bigbite.png">
+    <img id="food_drink" src="food_drink.png">
 
-        <!-- ai run 計算鈕 -->
-        <div class="ai_run_contaniner">
-          <button class="custom-btn btn-5"><span>AI  RUN</span></button>
-        </div>
+    <!--  糖(s)脂(l)蛋(p)比例表格  -->
+    <!-- #region  -->
+    <div id="slp_ratio_table">
+      <!-- 總熱量 -->
+      <div class="table_text">總熱量</div>
+      <div class="table_num" id="total_kcal_container"><input id="total_kcal">大卡</div>
+      <!-- 誤差 -->
+      <div class="table_num">每類誤差<input id="error">克</div>
+      <!-- 類別文字 -->
+      <div class="table_text">百分比</div>
+      <div class="table_text">熱量(kcal)</div>
+      <div class="table_text">重量(g)</div>
+      <!-- 百分比-->
+      <div class="table_text" style="background-color: #DAE49D;">醣類</div>
+      <div class="table_num" id="sugal_ratio">20%</div>
+      <div class="table_num" id="sugal_kcal">200k</div>
+      <div class="table_num" id="sugal_g">200g</div>
+      <!-- 熱量 -->
+      <div class="table_text" style="background-color: #DAE49D;">脂質</div>
+      <div class="table_num" id="lipid_ratio">30%</div>
+      <div class="table_num" id="lipid_kcal">300k</div>
+      <div class="table_num" id="lipid_g">300g</div>
+      <!-- 重量 -->
+      <div class="table_text" style="background-color: #DAE49D;">蛋白質</div>
+      <div class="table_num" id="protain_ratio">50%</div>
+      <div class="table_num" id="protain_kcal">500k</div>
+      <div class="table_num" id="protain_g">500g</div>
+    </div>
+    <!-- #endregion -->
+    <!--  糖(s)脂(l)蛋(p)比例表格  -->
 
-        <!-- 份數表格 -->
-        <div id="EX_table">
-          <!-- 類別名稱 (行一)-->
-          <div class="table_text food_class_text" >食物類別</div>
-          <div class="table_text" >份數</div>
-          <div class="table_text many_ex_text" >好多份數~</div>
-          <!-- 奶類份數 (行 二三)-->
-          <div class="table_text milk_text" >奶類</div>
-          <div class="table_text" >全脂</div>
-          <div class="table_text"  ><input class="table_num" id="full_milk"></div>
-          <!-- <div class="table_text many_ex_1" >2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6</div> -->
-          <div class="table_text" >低脂</div>
-          <div class="table_text"  ><input class="table_num" id="low_milk"></div>
-        
-          <!-- 蔬菜份數 (行 四)-->
-          <div class="table_text feg_text" >蔬菜類</div>
-          <div class="table_text"  ><input class="table_num" id="feg"></div>
-        
-          <!-- 水果份數 (行 5)-->
-          <div class="table_text fruit_text" >水果類</div>
-          <div class="table_text"  ><input class="table_num" id="fruit"></div>
-        
-          <!-- 全榖雜糧份數 (行 6)-->
-          <div class="table_text grains_text" >全榖雜糧類</div>
-          <div class="table_text"  ><input class="table_num" id="grains"></div>
-        
-          <!-- 豆蛋魚肉類份數 (行 789)-->
-          <div class="table_text egg_text" >豆蛋魚肉類</div>
-          <div class="table_text" >高脂</div>
-          <div class="table_text"  ><input class="table_num" id="egg_h"></div>
-        
-          <div class="table_text" >中脂</div>
-          <div class="table_text"  ><input class="table_num" id="egg_m"></div>
-        
-          <div class="table_text" >低脂</div>
-          <div class="table_text"  ><input class="table_num" id="egg_l"></div>
-        
-          <!-- 油脂與種子堅果類 (行10) -->
-          <div class="table_text nuts_text" >油脂與種子堅果類</div>
-          <div class="table_text"  > <input class="table_num" id="nuts"> </div>
-        
-          <!-- 精緻糖 susu gar (行11) -->
-          <div class="table_text susugar_text" >精緻糖</div>
-          <div class="table_text"  ><input  class="table_num" id="susugar"></div>
-          
-          <!-- 好多份數們的container -->
-          <div class="many_ex_container"> 
-              <div class="many_ex" id="full_milk_exs_container" > </div>
-              <div class="many_ex" id="low_milk_exs_container" > </div>
-              <div class="many_ex" id="feg_exs_container" > </div>
-              <div class="many_ex" id="fruit_exs_container" > </div>
-              <div class="many_ex" id="grains_exs_container" > </div>
-              <div class="many_ex" id="egg_h_exs_container" > </div>
-              <div class="many_ex" id="egg_m_exs_container" > </div>
-              <div class="many_ex" id="egg_l_exs_container" > </div>
-              <div class="many_ex" id="nuts_exs_container" > </div>
-              <div class="many_ex" id="susugar_exs_container" > </div>
-          </div>
-        </div>
-        <!-- 份數表格 -->
+    <!-- 滑桿桿 -->
+    <div class="slider-container">
+      <div class="slider"></div>
+      <div class="node_ref_head"></div>
+      <div class="node1"></div>
+      <div class="node2"></div>
+      <div class="node_ref_end"></div>
+    </div>
 
-<!-- ############################################ 左上 ############################################ -->
+    <!-- ai run 計算鈕 -->
+    <div class="ai_run_contaniner">
+      <button class="custom-btn btn-5"><span>AI RUN</span></button>
+    </div>
 
+    <!-- 份數表格 -->
+    <!-- #region  -->
+    <div id="EX_table">
+      <!-- 類別名稱 (行一)-->
+      <div class="table_text food_class_text">食物類別</div>
+      <div class="table_text">份數</div>
+      <div class="table_text many_ex_text">好多份數~</div>
+      <!-- 奶類份數 (行 二三)-->
+      <div class="table_text milk_text">奶類</div>
+      <div class="table_text">全脂</div>
+      <div class="table_text"><input class="table_num" id="full_milk"></div>
+      <!-- <div class="table_text many_ex_1" >2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6 2 4 5 6</div> -->
+      <div class="table_text">低脂</div>
+      <div class="table_text"><input class="table_num" id="low_milk"></div>
 
-<!-- ############################################ 右上 ############################################ -->
-      <!-- 份配份數到不同餐次的表格 AETMT -->
-        <div id="Allocate_EX_to_meals_table"> 
-          <!-- 第一行 -->
-          <div class="table_text AETMT_food_class_text" >食物類別</div>
-          <div class="table_text AETMT_milk_text" >奶類</div>
-          <div class="table_text AETMT_feg_text" >蔬菜類</div>
-          <div class="table_text AETMT_fruit_text" >水果類</div>
-          <div class="table_text AETMT_grains_text" >全榖雜糧類</div>
-          <div class="table_text AETMT_egg_text" >豆蛋魚肉類</div>
-          <div class="table_text AETMT_nuts_text" >油脂與種子堅果類</div>
-          <div class="table_text AETMT_susugar_text" >精緻糖</div>
-          <!-- 第二行 -->
-          <div class="table_text" >全脂</div>
-          <div class="table_text" >低脂</div>
-          <div class="table_text" >高脂</div>
-          <div class="table_text" >中脂</div>
-          <div class="table_text" >低脂</div>
-          <!-- 第三行 -->
-          <div class="table_text AETMT_EX_text" >份數</div>
-          <div class="table_text AETMT_EX AETMT_full_milk_ex"></div>
-          <div class="table_text AETMT_EX AETMT_low_milk_ex"></div>
-          <div class="table_text AETMT_EX AETMT_feg_ex"></div>
-          <div class="table_text AETMT_EX AETMT_fruit_ex"></div>
-          <div class="table_text AETMT_EX AETMT_grains_ex"></div>
-          <div class="table_text AETMT_EX AETMT_egg_h_ex"></div>
-          <div class="table_text AETMT_EX AETMT_egg_m_ex"></div>
-          <div class="table_text AETMT_EX AETMT_egg_l_ex"></div>
-          <div class="table_text AETMT_EX AETMT_nuts_ex"></div>
-          <div class="table_text AETMT_EX AETMT_susugar_ex"></div>
-          <!-- 第四行 -->
-          <div class="table_text AETMT_meals_text" >餐次</div>
-          <div class="table_text" >早餐</div>
-          <div class="table_text meal_full_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_low_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_feg_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_fruit_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_grains_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_h_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_m_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_l_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_nuts_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_susugar_ex">  <input class="AETMT_">  </div>
-          <!-- 第五行 -->
-          <div class="table_text" >早點</div>
-          <div class="table_text meal_full_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_low_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_feg_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_fruit_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_grains_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_h_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_m_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_l_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_nuts_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_susugar_ex">  <input class="AETMT_">  </div>
-          <!-- 第六行 -->
-          <div class="table_text" >午餐</div>
-          <div class="table_text meal_full_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_low_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_feg_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_fruit_ex">  <input class="AETclass_"AETMT_>  </div>
-          <div class="table_text meal_grains_ex">  <input id="">  </div>
-          <div class="table_text meal_egg_h_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_m_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_l_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_nuts_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_susugar_ex">  <input class="AETMT_">  </div>
-          <!-- 第七行 -->
-          <div class="table_text" >午點</div>
-          <div class="table_text meal_full_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_low_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_feg_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_fruit_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_grains_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_h_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_m_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_l_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_nuts_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_susugar_ex">  <input class="AETMT_">  </div>
-          <!-- 第八行 -->
-          <div class="table_text" >晚餐</div>
-          <div class="table_text meal_full_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_low_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_feg_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_fruit_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_grains_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_h_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_m_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_l_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_nuts_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_susugar_ex">  <input class="AETMT_">  </div>
-          <!-- 第九行 -->
-          <div class="table_text" >晚點</div>
-          <div class="table_text meal_full_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_low_milk_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_feg_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_fruit_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_grains_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_h_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_m_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_egg_l_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_nuts_ex">  <input class="AETMT_">  </div>
-          <div class="table_text meal_susugar_ex">  <input class="AETMT_">  </div>
-          <!-- 第十行 -->
-          <div class="table_text" >剩餘</div>
-          <div class="table_text AETMT_remains remain_full_milk_ex"></div>
-          <div class="table_text AETMT_remains remain_low_milk_ex"></div>
-          <div class="table_text AETMT_remains remain_feg_ex"></div>
-          <div class="table_text AETMT_remains remain_fruit_ex"></div>
-          <div class="table_text AETMT_remains remain_grains_ex"></div>
-          <div class="table_text AETMT_remains remain_egg_h_ex"></div>
-          <div class="table_text AETMT_remains remain_egg_m_ex"></div>
-          <div class="table_text AETMT_remains remain_egg_l_ex"></div>
-          <div class="table_text AETMT_remains remain_nuts_ex"></div>
-          <div class="table_text AETMT_remains remain_susugar_ex"></div>
-        </div>
-      <!-- 份配份數到不同餐次的表格 -->
+      <!-- 蔬菜份數 (行 四)-->
+      <div class="table_text feg_text">蔬菜類</div>
+      <div class="table_text"><input class="table_num" id="feg"></div>
 
-<!-- ############################################ 右上 ############################################ -->
+      <!-- 水果份數 (行 5)-->
+      <div class="table_text fruit_text">水果類</div>
+      <div class="table_text"><input class="table_num" id="fruit"></div>
+
+      <!-- 全榖雜糧份數 (行 6)-->
+      <div class="table_text grains_text">全榖雜糧類</div>
+      <div class="table_text"><input class="table_num" id="grains"></div>
+
+      <!-- 豆蛋魚肉類份數 (行 789)-->
+      <div class="table_text egg_text">豆蛋魚肉類</div>
+      <div class="table_text">高脂</div>
+      <div class="table_text"><input class="table_num" id="egg_h"></div>
+
+      <div class="table_text">中脂</div>
+      <div class="table_text"><input class="table_num" id="egg_m"></div>
+
+      <div class="table_text">低脂</div>
+      <div class="table_text"><input class="table_num" id="egg_l"></div>
+
+      <!-- 油脂與種子堅果類 (行10) -->
+      <div class="table_text nuts_text">油脂與種子堅果類</div>
+      <div class="table_text"> <input class="table_num" id="nuts"> </div>
+
+      <!-- 精緻糖 susu gar (行11) -->
+      <div class="table_text susugar_text">精緻糖</div>
+      <div class="table_text"><input class="table_num" id="susugar"></div>
+
+      <!-- 好多份數們的container -->
+      <div class="many_ex_container">
+        <div class="many_ex" id="full_milk_exs_container"> </div>
+        <div class="many_ex" id="low_milk_exs_container"> </div>
+        <div class="many_ex" id="feg_exs_container"> </div>
+        <div class="many_ex" id="fruit_exs_container"> </div>
+        <div class="many_ex" id="grains_exs_container"> </div>
+        <div class="many_ex" id="egg_h_exs_container"> </div>
+        <div class="many_ex" id="egg_m_exs_container"> </div>
+        <div class="many_ex" id="egg_l_exs_container"> </div>
+        <div class="many_ex" id="nuts_exs_container"> </div>
+        <div class="many_ex" id="susugar_exs_container"> </div>
+      </div>
+    </div>
+    <!-- #endregion -->
+    <!-- 份數表格 -->
+
+    <!-- ############################################ 左上 ############################################ -->
 
 
-        </div> 
-        <!-- 上 -->
+    <!-- ############################################ 右上 ############################################ -->
+    <!-- #region  -->
+    <!-- 份配份數到不同餐次的表格 AETMT -->
+    <div id="Allocate_EX_to_meals_table">
+      <!-- 第一行 -->
+      <div class="table_text AETMT_food_class_text">食物類別</div>
+      <div class="table_text AETMT_milk_text">奶類</div>
+      <div class="table_text AETMT_feg_text">蔬菜類</div>
+      <div class="table_text AETMT_fruit_text">水果類</div>
+      <div class="table_text AETMT_grains_text">全榖雜糧類</div>
+      <div class="table_text AETMT_egg_text">豆蛋魚肉類</div>
+      <div class="table_text AETMT_nuts_text">油脂與種子堅果類</div>
+      <div class="table_text AETMT_susugar_text">精緻糖</div>
+      <!-- 第二行 -->
+      <div class="table_text">全脂</div>
+      <div class="table_text">低脂</div>
+      <div class="table_text">高脂</div>
+      <div class="table_text">中脂</div>
+      <div class="table_text">低脂</div>
+      <!-- 第三行 -->
+      <div class="table_text AETMT_EX_text">份數</div>
+      <div class="table_text AETMT_EX AETMT_full_milk_ex"></div>
+      <div class="table_text AETMT_EX AETMT_low_milk_ex"></div>
+      <div class="table_text AETMT_EX AETMT_feg_ex"></div>
+      <div class="table_text AETMT_EX AETMT_fruit_ex"></div>
+      <div class="table_text AETMT_EX AETMT_grains_ex"></div>
+      <div class="table_text AETMT_EX AETMT_egg_h_ex"></div>
+      <div class="table_text AETMT_EX AETMT_egg_m_ex"></div>
+      <div class="table_text AETMT_EX AETMT_egg_l_ex"></div>
+      <div class="table_text AETMT_EX AETMT_nuts_ex"></div>
+      <div class="table_text AETMT_EX AETMT_susugar_ex"></div>
+      <!-- 第四行 -->
+      <div class="table_text AETMT_meals_text">餐次</div>
+      <div class="table_text">早餐</div>
+      <div class="table_text meal_full_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_low_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_feg_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_fruit_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_grains_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_h_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_m_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_l_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_nuts_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_susugar_ex"> <input class="AETMT_"> </div>
+      <!-- 第五行 -->
+      <div class="table_text">早點</div>
+      <div class="table_text meal_full_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_low_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_feg_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_fruit_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_grains_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_h_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_m_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_l_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_nuts_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_susugar_ex"> <input class="AETMT_"> </div>
+      <!-- 第六行 -->
+      <div class="table_text">午餐</div>
+      <div class="table_text meal_full_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_low_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_feg_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_fruit_ex"> <input class="AETclass_" AETMT_> </div>
+      <div class="table_text meal_grains_ex"> <input id=""> </div>
+      <div class="table_text meal_egg_h_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_m_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_l_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_nuts_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_susugar_ex"> <input class="AETMT_"> </div>
+      <!-- 第七行 -->
+      <div class="table_text">午點</div>
+      <div class="table_text meal_full_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_low_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_feg_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_fruit_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_grains_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_h_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_m_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_l_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_nuts_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_susugar_ex"> <input class="AETMT_"> </div>
+      <!-- 第八行 -->
+      <div class="table_text">晚餐</div>
+      <div class="table_text meal_full_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_low_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_feg_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_fruit_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_grains_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_h_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_m_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_l_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_nuts_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_susugar_ex"> <input class="AETMT_"> </div>
+      <!-- 第九行 -->
+      <div class="table_text">晚點</div>
+      <div class="table_text meal_full_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_low_milk_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_feg_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_fruit_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_grains_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_h_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_m_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_egg_l_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_nuts_ex"> <input class="AETMT_"> </div>
+      <div class="table_text meal_susugar_ex"> <input class="AETMT_"> </div>
+      <!-- 第十行 -->
+      <div class="table_text">剩餘</div>
+      <div class="table_text AETMT_remains remain_full_milk_ex"></div>
+      <div class="table_text AETMT_remains remain_low_milk_ex"></div>
+      <div class="table_text AETMT_remains remain_feg_ex"></div>
+      <div class="table_text AETMT_remains remain_fruit_ex"></div>
+      <div class="table_text AETMT_remains remain_grains_ex"></div>
+      <div class="table_text AETMT_remains remain_egg_h_ex"></div>
+      <div class="table_text AETMT_remains remain_egg_m_ex"></div>
+      <div class="table_text AETMT_remains remain_egg_l_ex"></div>
+      <div class="table_text AETMT_remains remain_nuts_ex"></div>
+      <div class="table_text AETMT_remains remain_susugar_ex"></div>
+    </div>
+    <!-- 份配份數到不同餐次的表格 -->
+    <!-- #endregion -->
+    <!-- ############################################ 右上 ############################################ -->
+
 
   </div>
+  <!-- 上 -->
 
 
-
+  <!-- 下 -->
   <div id="botton_container">
-
-
-
+    <div class="meal_and_snack">
+    <!-- #######################################早餐菜單 table################################################ -->
+    <!-- #region  -->
+        <table>
+          <tr>
+            <th rowspan="7">早餐</th>
+            <th>菜名</th>
+            <th colspan="3" class="dish_name" id="dish_1">香油拌麵線</th>
+            <th colspan="2" class="dish_name" id="dish_2">高麗菜</th>
+          </tr>
+          <tr>
+            <th>材料名稱</th>
+            <td class="dish_1"> <input class="ingredient_input"> </td>
+            <td class="dish_1"> <input class="ingredient_input"> </td>
+            <td class="dish_1"> <input class="ingredient_input"> </td>
+            <td class="dish_2"> <input class="ingredient_input"> </td>
+            <td class="dish_2"> <input class="ingredient_input"> </td>
+          </tr>
+          <tr class="ingredient_select_tr">
+            <th>食物成分表類別</th>
+            <td class="dish_1"> <select class="ingredient_class_select"> </td>
+            <td class="dish_1"> <select class="ingredient_class_select"> </td>
+            <td class="dish_1"> <select class="ingredient_class_select"> </td>
+            <td class="dish_2"> <select class="ingredient_class_select"> </td>
+            <td class="dish_2"> <select class="ingredient_class_select"> </td>
+          </tr>
+          <tr>
+            <th>食物代換表類別</th>
+            <td class="dish_1"> <select class="food_class_select"> </td>
+            <td class="dish_1"> <select class="food_class_select"> </td>
+            <td class="dish_1"> <select class="food_class_select"> </td>
+            <td class="dish_2"> <select class="food_class_select"> </td>
+            <td class="dish_2"> <select class="food_class_select"> </td>
+          </tr>
+          <tr>
+            <th>EX</th>
+            <td class="dish_1"> <input> </td>
+            <td class="dish_1"> <input> </td>
+            <td class="dish_1"> <input> </td>
+            <td class="dish_2"> <input> </td>
+            <td class="dish_2"> <input> </td>
+          </tr>
+          <tr>
+            <th>可食重量(g)</th>
+            <td class="dish_1"> <input> </td>
+            <td class="dish_1"> <input> </td>
+            <td class="dish_1"> <input> </td>
+            <td class="dish_2"> <input> </td>
+            <td class="dish_2"> <input> </td>
+          </tr>
+          <tr>
+            <th>剩餘份數</th>
+            <td colspan="5" class="remain"> </td>
+          </tr>
+        </table>
+    <!-- #endregion -->
+    <!-- #######################################早餐菜單 table################################################ -->
+    <!-- #######################################早點菜單 table################################################ -->
+    <!-- #region  -->
+      <!-- <table>
+        <tr>
+          <th rowspan="7">早點</th>
+          <th>菜名</th>
+          <th colspan="3" class="dish_name" id="dish_1">香油拌麵線</th>
+          <th colspan="2" class="dish_name" id="dish_2">高麗菜</th>
+        </tr>
+        <tr>
+          <th>材料名稱</th>
+          <td class="dish_1"> <input> </td>
+          <td class="dish_1"> <input> </td>
+          <td class="dish_1"> <input> </td>
+          <td class="dish_2"> <input> </td>
+          <td class="dish_2"> <input> </td>
+        </tr>
+        <tr>
+          <th>食物成分表類別</th>
+          <td class="dish_1"> <select class="ingredient_class_select"> </td>
+          <td class="dish_1"> <select class="ingredient_class_select"> </td>
+          <td class="dish_1"> <select class="ingredient_class_select"> </td>
+          <td class="dish_2"> <select class="ingredient_class_select"> </td>
+          <td class="dish_2"> <select class="ingredient_class_select"> </td>
+        </tr>
+        <tr>
+          <th>食物代換表類別</th>
+          <td class="dish_1"> <select class="food_class_select"> </td>
+          <td class="dish_1"> <select class="food_class_select"> </td>
+          <td class="dish_1"> <select class="food_class_select"> </td>
+          <td class="dish_2"> <select class="food_class_select"> </td>
+          <td class="dish_2"> <select class="food_class_select"> </td>
+        </tr>
+        <tr>
+          <th>EX</th>
+          <td class="dish_1"> <input> </td>
+          <td class="dish_1"> <input> </td>
+          <td class="dish_1"> <input> </td>
+          <td class="dish_2"> <input> </td>
+          <td class="dish_2"> <input> </td>
+        </tr>
+        <tr>
+          <th>可食重量(g)</th>
+          <td class="dish_1"> <input> </td>
+          <td class="dish_1"> <input> </td>
+          <td class="dish_1"> <input> </td>
+          <td class="dish_2"> <input> </td>
+          <td class="dish_2"> <input> </td>
+        </tr>
+        <tr>
+          <th>剩餘份數</th>
+          <td colspan="5" class="remain"> </td>
+        </tr>
+      </table> -->
+  <!-- #endregion -->
+    <!-- #######################################早點菜單 table################################################ -->
   </div>
+<!-- 早餐早點 -->
 
-<!-- 分成左上左下 右上右下 (可以滾輪上下左右) end-->
+</div>
+<!-- botton_contain -->
 
- 
+<!-- 顯示材料名單的menu 要讓它不論滾輪 一直出現在 畫面的正中央 -->
+<div id="ingredients_container">
+<!-- <span>小麥胚芽</span>
+<span>去筋麵粉</span>
+<span>低筋麵粉</span>
+<span>中筋麵粉</span>
+<span>高筋麵粉</span>
+<span>全麥麵粉</span>
+<span>雜糧中筋麵粉</span>
+<span> 雜糧高筋麵粉</span>
+<span> 水餃皮</span>
+<span> 春捲皮</span>
+<span> 餛飩皮</span>
+<span> 乾麵條</span>
+<span> 油麵條</span>
+<span> 紅蘿蔔麵</span>
+<span> 通心麵</span>
+<span> 菠菜條</span>
+<span> 鍋燒意麵</span> -->
+</div>
+<!-- 顯示材料名單的menu 要讓它不論滾輪 一直出現在 畫面的正中央 -->
+
 </body>
 
 

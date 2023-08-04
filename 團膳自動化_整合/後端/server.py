@@ -8,6 +8,8 @@ from add_to_excel import add_to_excel ##新增到資料庫的函示
 from get_excel_data import get_excel_data ##從資料庫拿資料的函式
 from export_excel import export_excel ##匯出excel的函式
 from generate_EXs import generate_EXs ##生產好多好多份數選擇 2023/7/27
+from get_ingrident_name_data import get_ingrident_name_data ##回傳老師的食材庫的所有材料名稱(幾千筆) 2023/8/4
+
 
 app = Flask(__name__)
 CORS(app) ## 就是差這個 bug很久
@@ -74,6 +76,13 @@ def help_you_up_EXs():
     data_json = generate_EXs()
     return data_json ##回傳json格式
 ##---------幫前端計算份數 (js真的跑太慢了) 讓py幫你吧~------------------------------------------
+
+##---------接收前端傳來的食材成分表類別，回傳此類別的所有名稱------------------------------------------
+@app.route('/return_ingrident_name_data', methods=['POST'])
+def return_ingrident_name_data():
+    data_json = get_ingrident_name_data()
+    return data_json ##回傳json格式
+##---------接收前端傳來的食材成分表類別，回傳此類別的所有名稱------------------------------------------
 
 
 
