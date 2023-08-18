@@ -525,34 +525,34 @@ note_19 ="                    後端 post 的簡單模板                       
                     #         // 建立promise 讓他跑完後才會執行下一步 30~56
                     #         return new Promise((resolve, reject) => {
 
-                            #     //取得所選的類別
-                            #     const input_class =this_select.val();
+                    #             //取得所選的類別
+                    #             const input_class =this_select.val();
                                     
-                            #     //fetch("後端網址",{}) 把{的內容}變成一個變數////////
-                            #     var requestOptions = {                                  
-                            #     method: 'POST',
-                            #     headers: {
-                            #         'Content-Type': 'application/json'
-                            #     },
-                            #     body: JSON.stringify({ data: input_class })         
-                            #     };
-                            #     //fetch("後端網址",{}) 把{的內容}變成一個變數////////
+                    #             //fetch("後端網址",{}) 把{的內容}變成一個變數////////
+                    #             var requestOptions = {                                  
+                    #             method: 'POST',
+                    #             headers: {
+                    #                 'Content-Type': 'application/json'
+                    #             },
+                    #             body: JSON.stringify({ data: input_class })         
+                    #             };
+                    #             //fetch("後端網址",{}) 把{的內容}變成一個變數////////
                                         
-                            #     // 使用 Ajax 請求從後端獲取資料 fetch("網址",...).then().then()
-                            #     fetch('http://127.0.0.1:5000/return_excel_data',requestOptions)                                   
-                            #     .then(response => response.json())                     
-                            #     .then(res_json => {   
+                    #             // 使用 Ajax 請求從後端獲取資料 fetch("網址",...).then().then()
+                    #             fetch('http://127.0.0.1:5000/return_excel_data',requestOptions)                                   
+                    #             .then(response => response.json())                     
+                    #             .then(res_json => {   
 
-                            #     // 更新頁面上的資料內容
-                            #     excel_col_data = res_json
+                    #             // 更新頁面上的資料內容
+                    #             excel_col_data = res_json
                                 
-                            # // 表示 fetchData() 把值甜到excel_col_data裡面了   resolve要放在fetch裡面 剛剛放外面一直失敗
-                            # resolve(); 
+                    #         // 表示 fetchData() 把值甜到excel_col_data裡面了   resolve要放在fetch裡面 剛剛放外面一直失敗
+                    #         resolve(); 
 
-                            #     });//then(res_json => {        的 "})"
+                    #             });//then(res_json => {        的 "})"
 
                                 
-                            # });//Promise((resolve, reject) => {       的")}"
+                    #         });//Promise((resolve, reject) => {       的")}"
 
                     #     }  // fetchData(){      的 "}"
 

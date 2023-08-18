@@ -476,8 +476,20 @@ th, td {
 .meal_and_snack{
   display: flex;
 }
-/* 新增按鈕 */
-.expand-button{
+/* 菜名輸入 */
+.dish_name_input{
+  border-bottom: groove;
+  border-bottom-color: #6f5335;
+  border-bottom-width: 2px;
+}
+/* 新增 和 刪除 按鈕 */
+.expand-button , .delete_button ,.fold_button{
+  background:none;
+  border:none;
+  cursor : pointer;
+}
+/* 計算營養成分按鈕 */
+.caculate_nutrition{
   background:none;
   border:none;
   cursor : pointer;
@@ -541,3 +553,83 @@ table input{
   margin: 15px;
   background: rgba(114, 9, 195, 0.336); /* 白色背景，10% 的不透明度 */
 }
+/* ################ 顯示材料名稱們 ################## */
+
+
+
+/* 剩餘份數~~ */
+.remain span{
+  transition: all .3s ease;
+}
+
+
+
+/* ################ 按下計算營養成分按鈕的等待圖示 ################## */
+#loader_container{
+  display:none;  /* 預設是隱藏的 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;  /* 保證它在其他元素之上 */
+  background: rgba(0,0,0,0.3); /*半透明背景*/
+
+  /* 將loader置中 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#loader_container .fa-spinner {
+  font-size: 60px;
+  color: #3498db;
+}
+/* ################ 按下計算營養成分按鈕的等待圖示 ################## */
+
+
+
+
+/* ################# 廣義擴充版的每個餐次給予不同顏色和margin ############################################### */
+.meal_and_snack{
+  margin-top: 30px;
+  margin-bottom:70px ;
+}
+.AETMT_1_table th{
+  background-color: #e6adcfab;
+}
+.AETMT_1_table td{
+  background-color: #e6adcf45;
+}
+.AETMT_2_table th{
+  background-color: #C9ADBBab;
+}
+.AETMT_2_table td{
+  background-color: #C9ADBB45;
+}
+.AETMT_3_table th{
+  background-color: #ACADA7ab;
+}
+.AETMT_3_table td{
+  background-color: #ACADA745;
+}
+.AETMT_4_table th{
+  background-color: #8FAD93ab;
+}
+.AETMT_4_table td{
+  background-color: #8FAD9345;
+}
+.AETMT_5_table th{
+  background-color: #72AD7Fab;
+}
+.AETMT_5_table td{
+  background-color: #72AD7F45;
+}
+.AETMT_6_table th{
+  background-color: #54AB6Aab;
+}
+.AETMT_6_table td{
+  background-color: #54AB6A45;
+}
+/* ################# 廣義擴充版的每個餐次給予不同顏色和margin ############################################### */
+
+

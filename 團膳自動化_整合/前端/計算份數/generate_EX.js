@@ -82,21 +82,21 @@ var isDragging2 = false;
 // 點1 按下的時候
 $(".node1").on('mousedown', function (event) {
   isDragging1 = true;
-  console.log("mousedown1")
+  // console.log("mousedown1")
 }
 )
 // 點2 按下的時候
 $(".node2").on('mousedown', function (event) {
   isDragging2 = true;
-  console.log("mousedown2")
+  // console.log("mousedown2")
 }
 )
 // 當放開滑鼠的時候
 $(document).on('mouseup', function (event) {
   isDragging1 = false;
-  console.log("mouseup1")
+  // console.log("mouseup1")
   isDragging2 = false;
-  console.log("mouseup2")
+  // console.log("mouseup2")
 }
 )
 // 移動滑鼠的時候
@@ -802,7 +802,7 @@ $('#Allocate_EX_to_meals_table input').on('keydown', function (event) {
 
 
 
-//#################下面的 菜單表格 新增功能終於成功了 8/3 ###################################################################################################
+//#################下面的 菜單表格 新增功能終於成功了 8/3  擴充到全部都可以用 廣義的形式8/18 ###################################################################################################
 
 // ################ 新增新的菜名######################
 /* #region   */
@@ -811,6 +811,9 @@ var dish_count = 3;
 $("table").on('mouseenter', '.dish_name', function () {
   //出現加號按鈕
   $(this).append('<button class="expand-button"><i class="fa-solid fa-circle-plus fa-beat fa-lg" style="color: #41955f;"></i></button>');
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent('table').attr('class')
 
   //按下按鈕 ( 放在裡面 因為這樣才能取得 this!! )
   $(this).children('.expand-button').on('click', function () {
@@ -822,20 +825,20 @@ $("table").on('mouseenter', '.dish_name', function () {
     dish_count++
 
     //菜名 + 1 +在旁邊  小心 它的id 要和下面一欄的class都一樣
-    this_dish_name.after("<th colspan='1' class='dish_name' id='" + new_dish_class + "'> 蒸蛋 </th>");
+    this_dish_name.after("<th colspan='1' class='for_fold dish_name' id='" + new_dish_class + "'> <input class='dish_name_input' placeholder='你的菜名'> </th>");
 
-    // dish_n 旁加一
+    // dish_n 旁加一   //  8/18 多加 "."+this_table_class+" "+
     // $('tr:contains("材料名稱") td.' + dish_n + ':last, tr:contains("食物成分表類別") td.' + dish_n + ':last, tr:contains("食物代換表類別") td.' + dish_n + ':last, tr:contains("EX") td.' + dish_n + ':last, tr:contains("可食重量(g)") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> ' + new_dish_class + ' </td>');
-    $('tr:contains("材料名稱") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input class="ingredient_input"> </td>');
-    $('tr:contains("食物成分表類別") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <select class="ingredient_class_select"> </td>');
-    $('tr:contains("食物代換表類別") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <select class="food_class_select"> </td>');
-    $('tr:contains("EX") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input> </td>');
-    $('tr:contains("可食重量(g)") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input> </td>');
+    $("." + this_table_class + " " + 'tr:contains("材料名稱") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input class="ingredient_input"> </td>');
+    $("." + this_table_class + " " + 'tr:contains("食物成分表類別") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <select class="ingredient_class_select"> </td>');
+    $("." + this_table_class + " " + 'tr:contains("食物代換表類別") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <select class="food_class_select"> </td>');
+    $("." + this_table_class + " " + 'tr:contains("EX") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input class="EX_input for_switch"> </td>');
+    $("." + this_table_class + " " + 'tr:contains("可食重量(g)") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input class="edible_weight for_switch"> </td>');
 
     //剩餘份數 行+1
-    var remain_col = $(".remain").attr("colspan")
+    var remain_col = $("." + this_table_class + " " + ".remain").attr("colspan")//  8/18 多加 "."+this_table_class+" "+
     remain_col++
-    $(".remain").attr("colspan", remain_col)
+    $("." + this_table_class + " " + ".remain").attr("colspan", remain_col)   //  8/18 多加 "."+this_table_class+" "+
 
     //放入option
     set_option();
@@ -851,12 +854,15 @@ $("table").on('mouseleave', '.dish_name', function () {
 /* #endregion */
 // ################ 新增新的菜名######################
 
-// ################ 新增新的食材######################
+// ################ 新增新的食材 ######################
 /* #region   */
 //滑鼠進入材料名稱  tr:contains("材料名稱") td神奇用法
 $("table").on('mouseenter', 'tr:contains("材料名稱") td', function () {
   //出現加號按鈕
   $(this).append('<button class="expand-button"><i class="fa-solid fa-circle-plus fa-beat fa-lg" style="color: #41955f;"></i></button>');
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent('table').attr('class')
 
   //按下按鈕 ( 放在裡面 因為這樣才能取得 this!! )
   $(this).children('.expand-button').on('click', function () {
@@ -867,29 +873,29 @@ $("table").on('mouseenter', 'tr:contains("材料名稱") td', function () {
 
     //取得現在的button的 td 是父tr的第幾個td -1因為  <th>材料名稱</th>不算
     var index = this_dish_td.parent().children().index(this_dish_td) - 1;
-    console.log(index)
+
     //菜名 + 1 +在旁邊  小心 它的id 要和下面一欄的class都一樣
-    var dish_n_col = $("#" + dish_n).attr("colspan")
+    var dish_n_col = $("." + this_table_class + " " + "#" + dish_n).attr("colspan") //8/18 加上"."+this_table_class+" "
     dish_n_col++
-    $("#" + dish_n).attr("colspan", dish_n_col)
+    $("." + this_table_class + " " + "#" + dish_n).attr("colspan", dish_n_col)//8/18 加上"."+this_table_class+" "
 
     // dish_n 旁加一
     // $('tr:contains("材料名稱") td.' + dish_n + ':last, tr:contains("食物成分表類別") td.' + dish_n + ':last, tr:contains("食物代換表類別") td.' + dish_n + ':last, tr:contains("EX") td.' + dish_n + ':last, tr:contains("可食重量(g)") td.' + dish_n + ':last').after('<td class="' + dish_n + '"> ' + dish_n + ' </td>');
 
 
-    // 在材料名稱下新增一個空白欄位
-    $("tr:nth-child(2)").find("td").eq(index).after("<td class='" + dish_n + "'> <input class='ingredient_input'> </td>");
+    // 在材料名稱下新增一個空白欄位  //8/18 加上"."+this_table_class+" "
+    $("." + this_table_class + " " + "tr:nth-child(2)").find("td").eq(index).after("<td class='" + dish_n + "'> <input class='ingredient_input'> </td>");
 
-    // 在食物成分表類別、食物代換表類別、EX、可食重量(g) 下新增空白欄位
-    $("tr:nth-child(3)").find("td").eq(index).after("<td class='" + dish_n + "'> <select class='ingredient_class_select'> </td>");
-    $("tr:nth-child(4)").find("td").eq(index).after("<td class='" + dish_n + "'> <select class='food_class_select'> </td>");
-    $("tr:nth-child(5)").find("td").eq(index).after("<td class='" + dish_n + "'> <input> </td>");
-    $("tr:nth-child(6)").find("td").eq(index).after("<td class='" + dish_n + "'> <input> </td>");
+    // 在食物成分表類別、食物代換表類別、EX、可食重量(g) 下新增空白欄位  //8/18 加上"."+this_table_class+" "
+    $("." + this_table_class + " " + "tr:nth-child(3)").find("td").eq(index).after("<td class='" + dish_n + "'> <select class='ingredient_class_select'> </td>");
+    $("." + this_table_class + " " + "tr:nth-child(4)").find("td").eq(index).after("<td class='" + dish_n + "'> <select class='food_class_select'> </td>");
+    $("." + this_table_class + " " + "tr:nth-child(5)").find("td").eq(index).after("<td class='" + dish_n + "'> <input class='EX_input for_switch'> </td>");
+    $("." + this_table_class + " " + "tr:nth-child(6)").find("td").eq(index).after("<td class='" + dish_n + "'> <input class='edible_weight for_switch'> </td>");
 
-    //剩餘份數 行+1
-    var remain_col = $(".remain").attr("colspan")
+    //剩餘份數 行+1 
+    var remain_col = $("." + this_table_class + " " + ".remain").attr("colspan") //  8/18 多加 "."+this_table_class+" "+
     remain_col++
-    $(".remain").attr("colspan", remain_col)
+    $("." + this_table_class + " " + ".remain").attr("colspan", remain_col)  //8/18 加上"."+this_table_class+" "
 
     //放入option
     set_option();
@@ -1067,8 +1073,584 @@ $("table").on("focus", ".ingredient_input", function () {
   });
 })
 /* #endregion */
-  //########### 當材料名稱輸入框被focus ######################
+//########### 當材料名稱輸入框被focus ######################
 
 //############################### 當材料名稱輸入框被focus 把類別的所有食材放入 menu中 ##################################
+
+
+
+
+//################################ get_ex_and_put_to_remain 在餐次份數分配那邊按下enter 所調用的韓式 8/5 ##################################
+//把份數取出 好棒的韓式阿~~~~meal _ class = "AETMT_1"
+function get_ex_and_put_to_remain(meal_class) {
+
+  //get_meal_ex
+  //$('.text1') 選擇器來選取所有擁有 text1 類別的 <span> 元素。然後使用 .map() 方法來進行迭代處理，並將文字數字轉換成整數並返回。
+  var array = $("." + meal_class).map(function () {
+    return parseFloat($(this).val());
+  }).get();
+  //最後使用 .get() 方法來取得由 .map() 回傳的值組成的陣列 
+
+  //put_to_remain ('.AETMT_1_table .remain')
+  var spans = $("." + meal_class + "_table .remain span")
+
+  //把陣列的數字依序放入spans  如果nan那就放0               
+  spans.map(function (index) {
+    if (isNaN(array[index])) {
+      $(this).html('0')
+    }
+    else {
+      $(this).html(array[index])
+    }
+
+  })
+
+}
+//################################ 在餐次份數分配那邊按下enter 所調用的韓式 ##################################
+
+
+
+//################################ 在餐次份數分配那邊按下enter 就可以跳到菜單8/5 早餐 擴充到6餐8/18 ##################################
+/* #region   */
+//AETMT_1 = 早餐被點 就跳到早餐的菜單
+$(".AETMT_1").on('keydown', function (event) {
+
+  if (event.keyCode === 13) {
+    // get_ex_and_put_to_remain('AETMT_1')
+    $(".AETMT_1_table .for_focus").focus()
+  }
+
+});
+//AETMT_2 = 早點
+$(".AETMT_2").on('keydown', function (event) {
+
+  if (event.keyCode === 13) {
+    // get_ex_and_put_to_remain('AETMT_2')
+    $(".AETMT_2_table .for_focus").focus()
+  }
+
+});
+//AETMT_3 = 午餐
+$(".AETMT_3").on('keydown', function (event) {
+
+  if (event.keyCode === 13) {
+    // get_ex_and_put_to_remain('AETMT_3')
+    $(".AETMT_3_table .for_focus").focus()
+  }
+
+});
+//AETMT_4 = 午點
+$(".AETMT_4").on('keydown', function (event) {
+
+  if (event.keyCode === 13) {
+    // get_ex_and_put_to_remain('AETMT_4')
+    $(".AETMT_4_table .for_focus").focus()
+  }
+
+});
+//AETMT_5 = 晚餐
+$(".AETMT_5").on('keydown', function (event) {
+
+  if (event.keyCode === 13) {
+    // get_ex_and_put_to_remain('AETMT_5')
+    $(".AETMT_5_table .for_focus").focus()
+  }
+
+});
+//AETMT_6 = 晚點
+$(".AETMT_6").on('keydown', function (event) {
+
+  if (event.keyCode === 13) {
+    // get_ex_and_put_to_remain('AETMT_6')
+    $(".AETMT_6_table .for_focus").focus()
+  }
+
+});
+//任一個被點 就全部貼到菜單那裏
+$(".AETMT_1,.AETMT_2,.AETMT_3,.AETMT_4,.AETMT_5,.AETMT_6").on('keydown', function (event) {
+
+  if (event.keyCode === 13) {
+    get_ex_and_put_to_remain('AETMT_1')
+    get_ex_and_put_to_remain('AETMT_2')
+    get_ex_and_put_to_remain('AETMT_3')
+    get_ex_and_put_to_remain('AETMT_4')
+    get_ex_and_put_to_remain('AETMT_5')
+    get_ex_and_put_to_remain('AETMT_6')
+  }
+
+});
+/* #endregion */
+//################################ 在餐次份數分配那邊按下enter 就可以跳到菜單 ##################################
+
+
+//用到超棒語法 連續三元語法 代替switch cool 8/5~~~~~~~~
+//################################ 在菜單的份數(EX) 被focus時 先取得目前類別 再讓剩餘份數放大 8/5 早餐 ##################################
+var remain_span_index // 取得目前類別的index 例如 乃 全脂 = 0 ...
+var remain_span_text  // 取得初始的EX值
+$("table").on("focus", ".EX_input", function () {
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent().parent('table').attr('class')
+
+  //#################先取得目前類別###################
+  var this_td_index = $(this).parent().index()
+  var this_select = $(this).parent().parent().siblings(".food_class_select_tr").children().eq(this_td_index).children('select')
+  let a = this_select.val();
+  //#################先取得目前類別###################
+
+  //####### 翻譯類別 用連續三元語法 代替switch~~~ 哇!!! ########
+  remain_span_index = a == "奶 全脂" ? 0 : a == "奶 低脂" ? 1 : a == '蔬菜類' ? 2 : a == '水果類' ? 3 : a == '全榖雜糧類' ? 4 : a == '豆蛋魚肉 高' ? 5 : a == '豆蛋魚肉 中' ? 6 : a == '豆蛋魚肉 低' ? 7 : a == '油脂與種子堅果類' ? 8 : a == '精緻糖' ? 9 : 'Invalid value of a';
+  //####### 用連續三元語法 代替switch~~~ 哇!!! ########
+
+  //####### 讓剩餘放大 //  8/18 多加 "."+this_table_class+" "+ #############################
+  var this_remain = $("."+this_table_class+" "+".remain span").eq(remain_span_index)
+  // 先清除其他span的css
+  $("."+this_table_class+" "+".remain span").removeAttr("style");
+  //保留transition
+  $("."+this_table_class+" "+".remain").css("transition", "all .3s ease");
+  //放大
+  this_remain.css({
+    "font-size": "30px",
+    "font-weight": "500",
+    "margin": "10px",
+    "color": "#098e6a"
+  })
+  //####### 讓剩餘放大#############################
+
+  //####### 取得初始的EX值 ##########################
+  remain_span_text = parseFloat($(".remain span").eq(remain_span_index).text())
+  //####### 取得初始的EX值 ##########################
+
+})
+//################################ 在菜單的份數(EX) 被focus時 先取得目前類別 再讓剩餘份數放大 8/5 早餐 ##################################
+
+
+
+//############################### 當EX被改變時 改變下面剩餘 8/16 //  8/18 多加 "."+this_table_class+" "+ ######################################################
+$("table").on("input", ".EX_input", function () {
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent().parent('table').attr('class')
+
+  //取得目前的輸入值
+  var input = parseFloat($(this).val());
+  //四捨五入
+  result = remain_span_text - input
+  result = result.toFixed(2)
+  result = parseFloat(result)
+  //改變剩餘(確定輸入是數字) 如果不是那就顯示原本的EX
+  if (!isNaN(input)) {
+    $("."+this_table_class+" "+".remain span").eq(remain_span_index).text(result)
+  }
+  else {
+    $("."+this_table_class+" "+".remain span").eq(remain_span_index).text(remain_span_text)
+  }
+})
+//############################### 當EX被改變時 改變下面剩餘######################################################
+
+
+
+//###############################把早餐的名稱 類別 可食重量 傳到後端 算營養成分 8/17####################################
+//傳入AETMT_1_table
+function caculate_nutrition(this_table) {
+  // 建立promise 讓他跑完後才會執行下一步 30~56
+  return new Promise((resolve, reject) => {
+
+    //取得材料名稱們
+    var name_vals = []
+    $("." + this_table + " .ingredient_input").each(function () {
+      name_vals.push($(this).val());
+    });
+    //取得食物代換表類別們
+    var class_vals = []
+    $("." + this_table + " .ingredient_class_select").each(function () {
+      class_vals.push($(this).val());
+    });
+    //取得可食重量
+    var edible_weight_vals = []
+    $("." + this_table + " .edible_weight").each(function () {
+      edible_weight_vals.push($(this).val());
+    });
+
+    //fetch("後端網址",{}) 把{的內容}變成一個變數
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ names: name_vals, classes: class_vals, edible_weights: edible_weight_vals })
+    };
+    //fetch("後端網址",{}) 把{的內容}變成一個變數
+
+    // 傳到後端
+    fetch('http://127.0.0.1:5000/caculate_nutrition', requestOptions)
+      .then(response => {
+        if (response.ok) {
+          console.log('Data transmit successfully!');
+          resolve();
+        } else {
+          console.log('Something went wrong:', response.status);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+  });//Promise((resolve, reject) => {       的")}"
+
+}  // fetchData(){      的 "}"
+
+//###############################把早餐的名稱 類別 可食重量 傳到後端 算營養成分####################################
+
+
+
+//############################### 浮到早餐上 出現計算營養成分的按鈕 和 收起的按鈕 8/17####################################
+/* #region   */
+$("table").on('mouseenter', '.mealtime_name', function () {
+
+  //看情況出現收起獲出現鈕
+  //已經展開
+  if ($(this).children('.fold_button').hasClass("not_fold")) {
+    $(this).find(".caculate_nutrition").show();
+    $(this).find(".fold_button").show();
+  }
+  //已經收起
+  else if ($(this).children('.fold_button').hasClass("is_fold")) {
+    $(this).find(".caculate_nutrition").show();
+    $(this).find(".fold_button").show();
+  }
+  //初始 什麼都沒有
+  else {
+    //出現 收起紐
+    $(this).prepend('<button class="fold_button not_fold" title="收起"><i class="fa-solid fa-circle-chevron-left fa-beat fa-2xl" style="color: #1dc3a2;"></i></button>');
+    //出現計算紐
+    $(this).append('<button class="caculate_nutrition" title="計算營養成分"><i class="fa-brands fa-nutritionix fa-beat fa-2xl" style="color: #3d971c;"></i></button>');
+  }
+
+})
+$("table").on('mouseleave', '.mealtime_name', function () {
+  //計算按鈕消失
+  $(this).find(".caculate_nutrition").hide();
+  //有bug gpt建議用hide(仍保留class)
+  $(this).find(".fold_button").hide();
+})
+/* #endregion */
+//############################### 浮到早餐上 出現計算營養成分的按鈕 ####################################
+
+
+
+// ############################## 按下計算營養按鈕 送東西到後端 計算  (有神奇等待圈圈) 8/17#################################### 
+$("table").on("click", ".caculate_nutrition", function () {
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent().parent('table').attr('class')
+
+  //先把背景弄暗~~
+  // $('body').css('opacity', 0.3)
+  $('#loader_container').show();
+
+  caculate_nutrition(this_table_class).then(() => {
+    //結束後恢復背景亮度
+    // $('body').css("opacity", 1)
+    $('#loader_container').hide();
+  }
+  )
+})
+// ############################## 按下計算營養按鈕 送東西到後端 計算#################################### 
+
+
+
+// ############################## 按下收起按鈕 8/18   8/18 多加 "."+this_table_class+" "+#################################### 
+//收起
+$('table').on("click", ".not_fold", function () {
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent().parent('table').attr('class')
+
+  //把東西收起來
+  $("." + this_table_class + " " + ".for_fold").hide()
+  // //把圖案改成向右
+  $(this).html('<i class="fa-solid fa-circle-chevron-right fa-beat fa-2xl" style="color: #1dc3a2;"></i>')
+  // //把提示改成展開
+  $(this).attr('title', '展開')
+  //把class 改成 not_fold
+  $(this).removeClass("not_fold").addClass("is_fold");
+  //讓早餐名稱的格子 不要變小
+  $("." + this_table_class + " " + '.mealtime_name').css('height', '333.6px')
+})
+//展開
+$('table').on("click", ".is_fold", function () {
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent().parent('table').attr('class')
+
+  //把東西展開
+  $("." + this_table_class + " " + ".for_fold").show()
+  // //把圖案改成向右
+  $(this).html('<i class="fa-solid fa-circle-chevron-left fa-beat fa-2xl" style="color: #1dc3a2;"></i>')
+  // //把提示改成展開
+  $(this).attr('title', '收起')
+  //把class 改成 not_fold
+  $(this).removeClass("is_fold").addClass("not_fold");
+})
+
+// ############################## 按下收起按鈕 #################################### 
+
+
+
+// ############################# 在table中左右見跳來跳去 8/17  8/18 多加 "."+this_table_class+" "+#########################################
+$('table').on('keydown', 'input', function (event) {
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent().parent('table').attr('class')
+
+  //取得當下的index
+  const currentIndex = $("." + this_table_class + " " + '.for_switch').index(this);
+
+  //取得EX 和 殼時重量的 總長度 所以分別的長度要/2 
+  var total = $("." + this_table_class + " " + '.for_switch').length;
+  var col_length = total / 2;
+
+  // 按上
+  if (event.keyCode === 38) {
+    var next_index = currentIndex - col_length
+    $("." + this_table_class + " " + '.for_switch').eq(next_index).focus()
+  }
+  // 按下
+  if (event.keyCode === 40) {
+    var next_index = (currentIndex + col_length + total) % total
+    $("." + this_table_class + " " + '.for_switch').eq(next_index).focus()
+  }
+  // 按左
+  if (event.keyCode === 37) {
+    var next_index = currentIndex - 1
+    $("." + this_table_class + " " + '.for_switch').eq(next_index).focus()
+  }
+  // 按右
+  if (event.keyCode === 39) {
+    var next_index = (currentIndex + 1 + total) % total
+    $("." + this_table_class + " " + '.for_switch').eq(next_index).focus()
+  }
+})
+// ############################# 在table中左右見跳來跳去 #########################################
+
+
+
+//#################下面的 菜單表格 刪除功能 8/17  //  8/18 多加 "."+this_table_class+" "+###################################################################################################
+
+// ################ 刪除這個菜名 //  8/18 多加 "."+this_table_class+" "+######################
+/* #region   */
+//浮到菜名 出現刪除按鈕
+$("table").on('mouseenter', '.dish_name', function () {
+  //出現減號按鈕
+  $(this).prepend('<button class="delete_button"><i class="fa-solid fa-circle-minus fa-beat-fade fa-lg" style="color: #c84419;"></i></button>');
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent('table').attr('class')
+
+  //按下按鈕 ( 放在裡面 因為這樣才能取得 this!! )
+  $(this).children('.delete_button').on('click', function () {
+
+    //取得現在是dish_多少 $(this現在是button) <th colspan="3" class="dish_name" id="dish_1"> <button> 香油拌麵線 <button></th>
+    var dish_n = $(this).parent().attr('id')
+
+    //刪掉後 要把在上面因為新增所增加的dish_count-1
+    dish_count--
+
+    //剩餘份數 行- dish_n個數 要/5 因為 材料名稱 食物成分表類別 等等底下都有dish_n 而我只要一列的長度   //  8/18 多加 "."+this_table_class+" "+
+    var dish_n_length = $("." + this_table_class + " " + "." + dish_n).length / 5
+    var remain_col = $("." + this_table_class + " " + ".remain").attr("colspan")
+    remain_col = remain_col - dish_n_length
+    $("." + this_table_class + " " + ".remain").attr("colspan", remain_col)
+
+    //刪掉所有 class=dish_n的東東  //  8/18 多加 "."+this_table_class+" "+
+    $("." + this_table_class + " " + "." + dish_n).remove()
+    $("." + this_table_class + " " + "#" + dish_n).remove()
+
+  })
+
+})
+
+//滑鼠離開菜名
+$("table").on('mouseleave', '.dish_name', function () {
+  //加號按鈕消失
+  $(this).find(".delete_button").remove();
+})
+/* #endregion */
+// ################ 刪除這個菜名######################
+
+// ################ 刪除新的食材 (如果是最後一格 就不能按 8/18)  //  8/18 多加 "."+this_table_class+" "+######################
+/* #region   */
+//滑鼠進入材料名稱  tr:contains("材料名稱") td神奇用法
+$("table").on('mouseenter', 'tr:contains("材料名稱") td', function () {
+  //出現刪除按鈕
+  $(this).prepend('<button class="delete_button"><i class="fa-solid fa-circle-minus fa-beat-fade fa-lg" style="color: #c84419;"></i></button>');
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent('table').attr('class')
+
+  //案到最後一格不給按刪除 8/18  //  8/18 多加 "."+this_table_class+" "
+  var this_table_class = $(this).parent().parent().parent('table').attr('class')
+  var dish_n = $(this).attr('class')
+  var dish_n_length = $("." + this_table_class + ' .' + dish_n).length //  8/18 多加 "."+this_table_class+" "+
+  if (dish_n_length == 5) {
+    $(this).children('.delete_button').prop("disabled", true); //禁用按鈕
+    $(this).children('.delete_button').children('i').removeClass("fa-beat-fade").css("color", '#ccc')//不跳 變灰
+  }
+
+  //按下按鈕 ( 放在裡面 因為這樣才能取得 this!! )
+  $(this).children('.delete_button').on('click', function () {
+
+    //取得現在是dish_多少
+    var this_dish_td = $(this).parent()
+    var dish_n = this_dish_td.attr('class')
+
+    //取得現在的button的 td 是父tr的第幾個td -1因為  <th>材料名稱</th>不算
+    var index = this_dish_td.parent().children().index(this_dish_td) - 1;
+
+    //菜名 少一欄 //  8/18 多加 "."+this_table_class+" "+
+    var dish_n_col = $("." + this_table_class + " " + "#" + dish_n).attr("colspan")
+    dish_n_col--
+    $("." + this_table_class + " " + "#" + dish_n).attr("colspan", dish_n_col)
+
+    // 刪除材料名稱 //  8/18 多加 "."+this_table_class+" "+
+    $("." + this_table_class + " " + "tr:nth-child(2)").find("td").eq(index).remove()
+
+    // 刪除食物成分表類別、食物代換表類別、EX、可食重量(g) //  8/18 多加 "."+this_table_class+" "+
+    $("." + this_table_class + " " + "tr:nth-child(3)").find("td").eq(index).remove()
+    $("." + this_table_class + " " + "tr:nth-child(4)").find("td").eq(index).remove()
+    $("." + this_table_class + " " + "tr:nth-child(5)").find("td").eq(index).remove()
+    $("." + this_table_class + " " + "tr:nth-child(6)").find("td").eq(index).remove()
+
+    //剩餘份數 行-1 //  8/18 多加 "."+this_table_class+" "+
+    var remain_col = $("." + this_table_class + " " + ".remain").attr("colspan")
+    remain_col--
+    $("." + this_table_class + " " + ".remain").attr("colspan", remain_col)
+  })
+
+})
+
+//滑鼠離開材料名稱
+$("table").on('mouseleave', 'tr:contains("材料名稱") td', function () {
+  //減號按鈕消失
+  $(this).find(".delete_button").remove();
+})
+/* #endregion */
+// ################ 刪除新的食材######################
+
+//#################下面的 菜單表格 刪除功能 8/17 ###################################################################################################
+
+
+
+
+//####################################### 下面的 菜單表格 從0到1的新增功能 8/18 #######################################
+
+// ################ 新增最初菜名 //  8/18 多加 "."+this_table_class+" "+######################
+/* #region   */
+var dish_count = 3;
+//浮到菜名 出現新增按鈕
+$("table").on('mouseenter', '#dish_0', function () {
+  //出現加號按鈕
+  $(this).append('<button class="expand-button"><i class="fa-solid fa-circle-plus fa-beat fa-lg" style="color: #41955f;"></i></button>');
+
+  //取得現在是哪個table 8/18
+  var this_table_class = $(this).parent().parent().parent('table').attr('class')
+
+  //按下按鈕 ( 放在裡面 因為這樣才能取得 this!! )
+  $(this).children('.expand-button').on('click', function () {
+
+    //取得現在是dish_多少
+    var this_dish_name = $(this).parent()
+    var dish_n = this_dish_name.attr('id')
+    var new_dish_class = 'dish_' + dish_count
+    dish_count++
+
+    //菜名 + 1 +在旁邊  小心 它的id 要和下面一欄的class都一樣
+    this_dish_name.after("<th colspan='1' class='for_fold dish_name' id='" + new_dish_class + "'> <input class='dish_name_input' placeholder='你的菜名'> </th>");
+
+    // dish_0 新增第一道菜 ) 旁加一 //  8/18 多加 "."+this_table_class+" "+
+    // $('tr:contains("材料名稱") td.' + dish_n + ':last, tr:contains("食物成分表類別") td.' + dish_n + ':last, tr:contains("食物代換表類別") td.' + dish_n + ':last, tr:contains("EX") td.' + dish_n + ':last, tr:contains("可食重量(g)") td.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> ' + new_dish_class + ' </td>');
+    $("." + this_table_class + " " + 'tr:contains("材料名稱") th.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input class="ingredient_input"> </td>');
+    $("." + this_table_class + " " + 'tr:contains("食物成分表類別") th.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <select class="ingredient_class_select"> </td>');
+    $("." + this_table_class + " " + 'tr:contains("食物代換表類別") th.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <select class="food_class_select"> </td>');
+    $("." + this_table_class + " " + 'tr:contains("EX") th.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input class="EX_input for_switch"> </td>');
+    $("." + this_table_class + " " + 'tr:contains("可食重量(g)") th.' + dish_n + ':last').after('<td class="' + new_dish_class + '"> <input class="edible_weight for_switch"> </td>');
+
+    //剩餘份數 行+1 //  8/18 多加 "."+this_table_class+" "+
+    var remain_col = $("." + this_table_class + " " + ".remain").attr("colspan")
+    remain_col++
+    $("." + this_table_class + " " + ".remain").attr("colspan", remain_col)
+
+    //放入option
+    set_option();
+  })
+
+})
+
+//滑鼠離開菜名
+$("table").on('mouseleave', '#dish_0', function () {
+  //加號按鈕消失
+  $(this).find(".expand-button").remove();
+})
+/* #endregion */
+// ################ 新增新的菜名######################
+
+//####################################### 下面的 菜單表格 從0到1的新增功能 #######################################
+
+
+
+/* ################### 餐次分配 配色 (純css 無法選parent) ########################################################### */
+$(".AETMT_1").parent().css('background-color', '#e6adcf45')
+$(".AETMT_2").parent().css('background-color', '#C9ADBB45')
+$(".AETMT_3").parent().css('background-color', '#ACADA745')
+$(".AETMT_4").parent().css('background-color', '#8FAD9345')
+$(".AETMT_5").parent().css('background-color', '#72AD7F45')
+$(".AETMT_6").parent().css('background-color', '#54AB6A45')
+/* ################### 餐次分配 配色 ########################################################### */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
