@@ -514,8 +514,6 @@ $('.many_ex').on('click', 'span', function () {
   //讓畫面移到右上
   $("#Allocate_EX_to_meals_table input")[9].focus()
 
-  console.log(this_EXs_Array)
-
 })
 /* #endregion */
 // #####################################當按下好多份數的其中一個 要把份數放到input中 並且展開餐次分配表格####################################
@@ -804,7 +802,10 @@ $('#Allocate_EX_to_meals_table input').on('keydown', function (event) {
 
 //#################下面的 菜單表格 新增功能終於成功了 8/3  擴充到全部都可以用 廣義的形式8/18 ###################################################################################################
 
-// ################ 新增新的菜名######################
+// 8/27 為了不重複而多家的container 裡面放現在實際有的dish_n 1刪掉就永遠沒有一 n只會一直上升 [1,2,3,4,5,6] or [3,6,8,10,22,50]  初始有dish_1 dish_2
+var six_dish_n_container = {"AETMT_1_table" : [1,2],"AETMT_2_table" : [1,2],"AETMT_3_table" : [1,2],"AETMT_4_table" : [1,2],"AETMT_5_table" : [1,2],"AETMT_6_table" : [1,2]}
+
+// ################ 新增新的菜名 8/27 多改six_dish_n_container進去######################
 /* #region   */
 var dish_count = 3;
 //浮到菜名 出現新增按鈕
@@ -817,6 +818,9 @@ $("table").on('mouseenter', '.dish_name', function () {
 
   //按下按鈕 ( 放在裡面 因為這樣才能取得 this!! )
   $(this).children('.expand-button').on('click', function () {
+
+    // 8/27 把現在的dish_n 放入container
+    six_dish_n_container[this_table_class].push(dish_count)
 
     //取得現在是dish_多少
     var this_dish_name = $(this).parent()
@@ -1203,11 +1207,11 @@ $("table").on("focus", ".EX_input", function () {
   //####### 用連續三元語法 代替switch~~~ 哇!!! ########
 
   //####### 讓剩餘放大 //  8/18 多加 "."+this_table_class+" "+ #############################
-  var this_remain = $("."+this_table_class+" "+".remain span").eq(remain_span_index)
+  var this_remain = $("." + this_table_class + " " + ".remain span").eq(remain_span_index)
   // 先清除其他span的css
-  $("."+this_table_class+" "+".remain span").removeAttr("style");
+  $("." + this_table_class + " " + ".remain span").removeAttr("style");
   //保留transition
-  $("."+this_table_class+" "+".remain").css("transition", "all .3s ease");
+  $("." + this_table_class + " " + ".remain").css("transition", "all .3s ease");
   //放大
   this_remain.css({
     "font-size": "30px",
@@ -1240,17 +1244,17 @@ $("table").on("input", ".EX_input", function () {
   result = parseFloat(result)
   //改變剩餘(確定輸入是數字) 如果不是那就顯示原本的EX
   if (!isNaN(input)) {
-    $("."+this_table_class+" "+".remain span").eq(remain_span_index).text(result)
+    $("." + this_table_class + " " + ".remain span").eq(remain_span_index).text(result)
   }
   else {
-    $("."+this_table_class+" "+".remain span").eq(remain_span_index).text(remain_span_text)
+    $("." + this_table_class + " " + ".remain span").eq(remain_span_index).text(remain_span_text)
   }
 })
 //############################### 當EX被改變時 改變下面剩餘######################################################
 
 
 
-//###############################把早餐的名稱 類別 可食重量 傳到後端 算營養成分 8/17####################################
+//###############################把早餐的名稱 類別 可食重量 傳到後端 算營養成分 8/17 8/23更動 多傳是哪一餐給後端####################################
 //傳入AETMT_1_table
 function caculate_nutrition(this_table) {
   // 建立promise 讓他跑完後才會執行下一步 30~56
@@ -1278,7 +1282,7 @@ function caculate_nutrition(this_table) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ names: name_vals, classes: class_vals, edible_weights: edible_weight_vals })
+      body: JSON.stringify({ names: name_vals, classes: class_vals, edible_weights: edible_weight_vals, which_mealtime: this_table  }) //8/23加上 , which_mealtime: this_table
     };
     //fetch("後端網址",{}) 把{的內容}變成一個變數
 
@@ -1438,7 +1442,7 @@ $('table').on('keydown', 'input', function (event) {
 
 //#################下面的 菜單表格 刪除功能 8/17  //  8/18 多加 "."+this_table_class+" "+###################################################################################################
 
-// ################ 刪除這個菜名 //  8/18 多加 "."+this_table_class+" "+######################
+// ################ 刪除這個菜名 //  8/18 多加 "."+this_table_class+" "+ 8/27 多加six_dish_n_container 記錄那些dish_n######################
 /* #region   */
 //浮到菜名 出現刪除按鈕
 $("table").on('mouseenter', '.dish_name', function () {
@@ -1454,8 +1458,15 @@ $("table").on('mouseenter', '.dish_name', function () {
     //取得現在是dish_多少 $(this現在是button) <th colspan="3" class="dish_name" id="dish_1"> <button> 香油拌麵線 <button></th>
     var dish_n = $(this).parent().attr('id')
 
-    //刪掉後 要把在上面因為新增所增加的dish_count-1
-    dish_count--
+    // 8/27 把dish_n 的 n 取出 \d+ 是一個正則表達式，它會匹配一個或多個數字。match 函式會返回一個包含所有匹配的陣列  map(Number) 會把陣列中的每個元素轉換成數字。 最後的[0] 就是match陣列的第一個
+    var this_dish_count = dish_n.match(/\d+/g).map(Number)[0];
+
+    //刪掉後 要把在上面因為新增所增加的dish_count-1 8/27萬惡bug來源
+    // dish_count--
+
+    // 把這個dish_n 從 six_dish_n_container 移除就好 首先找到數字 4 在陣列中的索引，然後使用 splice 方法從陣列中刪除它。 第二個參數是你想要刪除的元素的數量。
+    var this_index = six_dish_n_container[this_table_class].indexOf(this_dish_count);
+    six_dish_n_container[this_table_class].splice(this_index, 1);
 
     //剩餘份數 行- dish_n個數 要/5 因為 材料名稱 食物成分表類別 等等底下都有dish_n 而我只要一列的長度   //  8/18 多加 "."+this_table_class+" "+
     var dish_n_length = $("." + this_table_class + " " + "." + dish_n).length / 5
@@ -1547,7 +1558,9 @@ $("table").on('mouseleave', 'tr:contains("材料名稱") td', function () {
 
 // ################ 新增最初菜名 //  8/18 多加 "."+this_table_class+" "+######################
 /* #region   */
-var dish_count = 3;
+
+// var dish_count = 3;
+
 //浮到菜名 出現新增按鈕
 $("table").on('mouseenter', '#dish_0', function () {
   //出現加號按鈕
@@ -1563,7 +1576,9 @@ $("table").on('mouseenter', '#dish_0', function () {
     var this_dish_name = $(this).parent()
     var dish_n = this_dish_name.attr('id')
     var new_dish_class = 'dish_' + dish_count
-    dish_count++
+
+    // 8/27 把現在的dish_n 放入container
+    six_dish_n_container[this_table_class].push(dish_count)
 
     //菜名 + 1 +在旁邊  小心 它的id 要和下面一欄的class都一樣
     this_dish_name.after("<th colspan='1' class='for_fold dish_name' id='" + new_dish_class + "'> <input class='dish_name_input' placeholder='你的菜名'> </th>");
@@ -1580,6 +1595,8 @@ $("table").on('mouseenter', '#dish_0', function () {
     var remain_col = $("." + this_table_class + " " + ".remain").attr("colspan")
     remain_col++
     $("." + this_table_class + " " + ".remain").attr("colspan", remain_col)
+
+    dish_count++
 
     //放入option
     set_option();
@@ -1608,6 +1625,178 @@ $(".AETMT_5").parent().css('background-color', '#72AD7F45')
 $(".AETMT_6").parent().css('background-color', '#54AB6A45')
 /* ################### 餐次分配 配色 ########################################################### */
 
+
+
+// ################ 把所有資料傳回後端 讓後端匯出excel (取出)##########################################
+var ratio_table = []
+var EX_array = []
+var AETMT_meal_time = [[],[],[],[],[],[]]
+var dish_data = {}
+
+function get_all_data() {
+  //先清空
+  ratio_table = []
+  EX_array = []
+  AETMT_meal_time = [[],[],[],[],[],[]]
+  dish_data = {}
+  
+  //大卡比例
+  var total_kcal = $('#total_kcal').val()
+  var sugal_ratio = $('#sugal_ratio').text()
+  var lipid_ratio = $('#lipid_ratio').text()
+  var protain_ratio = $('#protain_ratio').text()
+  ratio_table = [total_kcal, sugal_ratio, lipid_ratio, protain_ratio]
+  
+  //份數
+  $("#EX_table input").each(function () {
+    EX_array.push($(this).val());
+  });
+  
+  //餐次
+  // var AETMT_1 = [], AETMT_2 = [], AETMT_3 = [], AETMT_4 = [], AETMT_5 = [], AETMT_6 = [], AETMT_7 = [], AETMT_8 = [], AETMT_9 = [], AETMT_10 = [];
+  // 使用循環來遍歷每一個類別和陣列   超酷window用法 可以放入動態咚咚
+  for (let i = 1; i <= 6; i++) {
+    $(`.AETMT_${i}`).each(function () {
+      AETMT_meal_time[i-1].push($(this).val());
+    });
+  }
+
+  /* #region  回傳範本 */  
+  //菜單
+  // let dishData ={
+  //   'dish_1' : {
+  //     'name' : '高麗菜',
+  //     'ingredient' : ['菜','鹽巴','香油'],
+  //     'class_1' : ['蔬菜','調料','堅果'],
+  //     'class_2' : ['蔬菜','調料','堅果'],
+  //     'EX' : [1,2,3],
+  //     'edible_weight' : [2,3,5]
+  //   },
+  //   'dish_2' : {
+  //     'name' : '高麗菜',
+  //     'ingredient' : ['菜','鹽巴','香油'],
+  //     'class_1' : ['蔬菜','調料','堅果'],
+  //     'class_2' : ['蔬菜','調料','堅果'],
+  //     'EX' : [1,2,3],
+  //     'edible_weight' : [2,3,5]
+  //   }
+  // }
+  // var meal_1_dishData={},  meal_2_dishData={},  meal_3_dishData={},  meal_4_dishData={},  meal_5_dishData={},  meal_6_dishData={}
+  // 先取得有多少dish ...dish_n //利用第一行的列述-2( "菜名" "早餐")
+  // var total_dish_count_1 = $("table.AETMT_1_table tr:first-child th").length-2,  total_dish_count_2 = $("table.AETMT_2_table tr:first-child th").length-2,  total_dish_count_3 = $("table.AETMT_3_table tr:first-child th").length-2;
+  // var total_dish_count_4 = $("table.AETMT_4_table tr:first-child th").length-2,  total_dish_count_5 = $("table.AETMT_5_table tr:first-child th").length-2,  total_dish_count_6 = $("table.AETMT_6_table tr:first-child th").length-2;
+
+  /* #endregion */
+ 
+  //早(午晚)餐的所有dish
+  dish_data = {
+    'meal_1': {}, 'meal_2': {}, 'meal_3': {}, 'meal_4': {}, 'meal_5': {}, 'meal_6': {}
+  }
+
+  //取得每個餐別個有多少dish ...dish_n //利用第一行的列述-2( "菜名" "早餐")  把它放在陣列李 可以[0]取用 不用改變數名稱 cool~
+  var total_dish_count = []
+  for (let i = 1; i <= 6; i++) { //比起AETMT_1 AETMT_2...一個一個設 用迴圈更快
+    total_dish_count.push($(`table.AETMT_${i}_table tr:first-child th`).length - 2)
+  }
+
+  // 放入{'meal_1': {}, 'meal_2': {}, 'meal_3': {}, 'meal_4': {}, 'meal_5': {}, 'meal_6': {}} 中
+  for (let meal = 1; meal <= 6; meal++) {
+    // 把早餐的dish_1 dish_2 ... 放入    !!!!! 8/26 !!!!!!total_dish_count 這範圍不合理 因為如果再dish_1按減 就再也不會有dish_1了 再按加只會有dish_3
+    // 8/27 所以 1 案刪除鍵n不減一 這樣就不會有重疊 2 然後再記錄現在有哪些dish_n [1,2] =>1刪 按加兩次 =>[2,3,4]
+    //six_dish_n_container {AETMT_1_table: Array(7), AETMT_2_table: Array(2), AETMT_3_table: Array(2), AETMT_4_table: Array(2), AETMT_5_table: Array(2), …}
+    //AETMT_1_table: (7) [2, 3, 4, 9, 11, 12, 13]
+    for (let n = 1; n <= total_dish_count[meal - 1]; n++) {
+      var dish = {};
+
+      //取得菜名
+      // 先取得有哪些dish_n  [2, 3, 4, 9, 11, 12, 13] for n 從1跑到7( dish 總數量 )
+      n_of_dish_n = six_dish_n_container[`AETMT_${meal}_table`][n-1]
+      dish['name'] = ""
+      dish['name'] = $(`.AETMT_${meal}_table #dish_${n_of_dish_n} input`).val();
+    
+      //取得材料名稱
+      dish['ingredient'] = [];
+      $(`.AETMT_${meal}_table .dish_${n_of_dish_n} .ingredient_input`).each(function () {
+        dish['ingredient'].push($(this).val())
+      })
+
+      //取得類別一
+      dish['class_1'] = [];
+      $(`.AETMT_${meal}_table .dish_${n_of_dish_n} .ingredient_class_select`).each(function () {
+        dish['class_1'].push($(this).val())
+      })
+
+      //取得類別二
+      dish['class_2'] = [];
+      $(`.AETMT_${meal}_table .dish_${n_of_dish_n} .food_class_select`).each(function () {
+        dish['class_2'].push($(this).val())
+      })
+
+      //取得EX
+      dish['ex'] = [];
+      $(`.AETMT_${meal}_table .dish_${n_of_dish_n} .EX_input`).each(function () {
+        dish['ex'].push($(this).val())
+      })
+
+      //取得可食重量
+      dish['edible_weight'] = [];
+      $(`.AETMT_${meal}_table .dish_${n_of_dish_n} .edible_weight`).each(function () {
+        dish['edible_weight'].push($(this).val())
+      })
+      // 將菜餚物件添加到總物件中
+      dish_data[`meal_${meal}`][`dish_${n}`] = dish;
+    }
+  }//外圈meal for 迴圈的
+  console.log(dish_data)
+}
+// ################ 把所有資料傳回後端 讓後端匯出excel ##########################################
+
+
+
+// ################ 把所有資料傳回後端 讓後端匯出excel (傳到後端 假回應)##########################################
+function post_all_data_to_backend(){
+  //建立promise
+  return new Promise((resolve, reject) => {
+
+    //fetch("後端網址",{}) 把{的內容}變成一個變數
+    var requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+
+        ratio_table: ratio_table,
+        EX_array: EX_array,
+        AETMT_meal_time: AETMT_meal_time,
+        dish_data: dish_data
+
+      })
+    };
+
+    // 使用 Ajax 請求從後端獲取資料 fetch("網址",...).then().then()
+    fetch('http://127.0.0.1:5000/export_all_data_excel', requestOptions)
+    .then(response => {
+      if (response.ok) {
+        console.log('Data transmit successfully!');
+        resolve();
+      } else {
+        console.log('Something went wrong:', response.status);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+  });//Promise((resolve, reject) => {       的")}"
+
+}
+// ################ 把所有資料傳回後端 讓後端匯出excel (傳到後端)##########################################
+
+$('#test_button').on('click', function () {
+  get_all_data();
+  post_all_data_to_backend();
+})
 
 
 

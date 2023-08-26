@@ -9,7 +9,8 @@ from get_excel_data import get_excel_data ##從資料庫拿資料的函式
 from export_excel import export_excel ##匯出excel的函式
 from generate_EXs import generate_EXs ##生產好多好多份數選擇 2023/7/27
 from get_ingrident_name_data import get_ingrident_name_data ##回傳老師的食材庫的所有材料名稱(幾千筆) 2023/8/4
-from caculate_nutrition import caculate_nutrition ##把前端的資料傳到後端然後放入老師的excel去做計算 2023/8/17
+from caculate_all_nutrition import caculate_all_nutrition ##把前端的資料傳到後端然後放入老師的excel去做計算 2023/8/17
+from export_all_data_excel import export_all_data_excel ##把前端的資料傳到後端然後放入老師的excel去做計算 2023/8/17
 
 
 app = Flask(__name__)
@@ -85,11 +86,19 @@ def return_ingrident_name_data():
     return data_json ##回傳json格式
 ##---------接收前端傳來的食材成分表類別，回傳此類別的所有名稱------------------------------------------
 
+# 為了處理 NameError: name 'all_nutrition_datas' is not defined (還沒按下計算營養紐)
+all_nutrition_datas = None
+
 ##---------當前端按下 計算營養成分紐 不用回傳 ( 用假回應 )------------------------------------------
 @app.route('/caculate_nutrition', methods=['POST'])
 def caculate_nutrition_db():
 
-    caculate_nutrition() 
+
+    # -------- 儲存營養成分的名稱和值 --------------------------------------------------------------
+    global all_nutrition_datas  # 使用此行來聲明你要修改的是全局變數
+    all_nutrition_datas = caculate_all_nutrition() 
+    # -------- {早餐 : [all_nutrition_names , all_nutrition_datas], 午餐 : [ [] , [] ]} ----------
+    
 
     # 建立一個空的回應物件
     response = make_response('')
@@ -99,6 +108,23 @@ def caculate_nutrition_db():
 
     return response
 ##---------當前端按下 計算營養成分紐 不用回傳 ( 用假回應 )------------------------------------------
+
+
+##---------當前端按下 輸出excel 不用回傳 ( 用假回應 )------------------------------------------
+@app.route('/export_all_data_excel', methods=['POST'])
+def export_all_data_excel_db():
+
+    global all_nutrition_datas
+    export_all_data_excel(all_nutrition_datas) ##函式 !!!!!!!!!!!幹!!! 不能和def export_excel_db(): 取一樣的鳴子啦!!!!! 卡爆久 2023 / 7 / 20 等等要去泛科學拿免費的書
+
+    # 建立一個空的回應物件
+    response = make_response('')
+    
+    # 設定回應的狀態碼為 200 (OK)
+    response.status_code = 200
+
+    return response
+##---------當前端按下 輸出excel 不用回傳 ( 用假回應 )------------------------------------------
 
 
 if __name__ == '__main__':
